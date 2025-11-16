@@ -42,12 +42,25 @@
       .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
       .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
       .chip { background: #EDF2F7; border-radius: 999px; padding: 6px 10px; font-size: 12px; color: #2D3748; }
+      .chip.active { background: #2B6CB0; color: #FFFFFF; }
       .divider { height: 1px; background: #E2E8F0; margin: 12px 0; }
       .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
       .small { font-size: 12px; color: #4A5568; }
       .space-top { margin-top: 12px; }
       .space-bottom { margin-bottom: 12px; }
       .hidden { display: none !important; }
+      .table { width: 100%; border-collapse: collapse; }
+      .table th, .table td { padding: 8px 10px; border-bottom: 1px solid #E2E8F0; text-align: left; vertical-align: top; }
+      .table th { background: #F7FAFC; font-weight: 600; }
+      .db-layout { display: grid; grid-template-columns: 320px 1fr; gap: 16px; align-items: start; }
+      .tree { list-style: none; padding: 0; margin: 0; }
+      .tree-node { margin: 2px 0; }
+      .tree-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; cursor: pointer; user-select: none; }
+      .tree-row:hover { background: #EDF2F7; }
+      .tree-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+      .tree-caret { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 6px solid #4A5568; transition: transform .12s ease; }
+      .expanded > .tree-row .tree-caret { transform: rotate(90deg); }
+      .tree-children { margin-left: 14px; padding-left: 6px; border-left: 1px dashed #E2E8F0; }
       @media (max-width: 800px) { .app { grid-template-columns: 1fr; } .sidebar { flex-direction: row; gap: 8px; position: sticky; top: 0; z-index: 10; } }
     </style>
   </head>
@@ -105,44 +118,17 @@
 
         <section id="page-database" class="page">
           <h2 class="section-title">Database</h2>
-          <div class="card space-bottom">
-            <div class="row">
-              <div class="stack">
-                <button class="btn ghost" id="refreshPacks">Refresh</button>
-                <button class="btn" id="addPack" disabled>Add Pack</button>
+          <div class="db-layout">
+            <div class="card" id="dbTreeCard" style="padding:0;">
+              <div class="row" style="padding:10px 12px; justify-content: space-between;">
+                <div class="small muted">Pokemon Packs</div>
+                <button class="btn ghost small" id="dbRefreshTree" style="padding:6px 8px;">Refresh</button>
               </div>
-              <div class="small">Collection: <span class="mono">Pokemon Packs</span></div>
-              <label class="small" style="display:flex;align-items:center;gap:6px;">
-                <input type="checkbox" id="filterWithCards" />
-                Only show docs with Cards
-              </label>
+              <div id="dbTree" style="padding: 4px 6px;"></div>
             </div>
-            <div class="divider"></div>
-            <div id="packsLoading" class="small">Loading packs…</div>
-            <div id="packsError" class="small hidden"></div>
-            <div id="packsEmpty" class="small hidden">No packs found.</div>
-            <div id="packsGrid" class="grid"></div>
-            <div id="packsCount" class="small muted space-top"></div>
-          </div>
-
-          <div class="card">
-            <div class="row">
-              <h3 class="space-bottom" id="detailTitle">Details</h3>
-              <button class="btn secondary hidden" id="closeDetails">Close</button>
-            </div>
-            <div id="detailsEmpty" class="small muted">Select a pack to view details.</div>
-            <div id="details" class="hidden">
-              <div class="small">Document ID: <span class="mono" id="docId"></span></div>
-              <div class="space-top">
-                <div class="small">Fields</div>
-                <pre class="mono small" id="docJson" style="white-space: pre-wrap;"></pre>
-              </div>
-              <div class="divider"></div>
-              <div>
-                <div class="small">Cards</div>
-                <div id="cardsContainer" class="chips"></div>
-                <div id="noCards" class="small muted hidden">This document has no <span class="mono">Cards</span> field.</div>
-              </div>
+            <div style="display:flex; flex-direction:column; gap:12px; min-width:0;">
+              <div class="chips small mono" id="dbBreadcrumb"></div>
+              <div id="dbOutput"></div>
             </div>
           </div>
         </section>
@@ -201,26 +187,329 @@
           window.addEventListener('hashchange', () => showPage(location.hash || '#home'));
         }
 
-        // Database UI elements
-        const packsLoading = document.getElementById('packsLoading');
-        const packsError = document.getElementById('packsError');
-        const packsEmpty = document.getElementById('packsEmpty');
-        const packsGrid = document.getElementById('packsGrid');
-        const refreshPacksBtn = document.getElementById('refreshPacks');
-        const packsCount = document.getElementById('packsCount');
-        const filterWithCards = document.getElementById('filterWithCards');
-        const addPackBtn = document.getElementById('addPack');
+        // Database UI
+        const dbTree = document.getElementById('dbTree');
+        const dbRefreshTree = document.getElementById('dbRefreshTree');
+        const dbBreadcrumb = document.getElementById('dbBreadcrumb');
+        const dbOutput = document.getElementById('dbOutput');
 
-        // Account UI removed
+        const dbState = {
+          language: 'English',
+          category: 'Mega Evolution',
+          setName: '',
+          view: 'Cards', // Cards | Sealed
+        };
 
-        const details = document.getElementById('details');
-        const detailsEmpty = document.getElementById('detailsEmpty');
-        const detailTitle = document.getElementById('detailTitle');
-        const closeDetails = document.getElementById('closeDetails');
-        const docIdEl = document.getElementById('docId');
-        const docJsonEl = document.getElementById('docJson');
-        const cardsContainer = document.getElementById('cardsContainer');
-        const noCards = document.getElementById('noCards');
+        function updateBreadcrumb() {
+          const parts = [
+            'Pokemon Packs',
+            dbState.language,
+            dbState.category,
+            dbState.setName || '(Select Set)',
+            dbState.view,
+          ];
+          dbBreadcrumb.innerHTML = '';
+          parts.forEach((p, idx) => {
+            const el = document.createElement('span');
+            el.className = 'chip' + (idx === parts.length - 1 ? ' active' : '');
+            el.textContent = p;
+            dbBreadcrumb.appendChild(el);
+          });
+        }
+
+        function normalizeValueForCell(value) {
+          if (value === null || value === undefined) return '';
+          if (typeof value === 'object') {
+            try { return JSON.stringify(value); } catch { return String(value); }
+          }
+          return String(value);
+        }
+
+        async function loadCards() {
+          const db = await getDb();
+          dbOutput.innerHTML = '<div class="small muted mono">Loading cards…</div>';
+          try {
+            const colRef = db.collection('Pokemon Packs')
+              .doc(dbState.language)
+              .collection(dbState.category)
+              .doc(dbState.setName)
+              .collection('Cards');
+            const snap = await colRef.get();
+            const rows = [];
+            const fieldSet = new Set(['Number', 'Amount Owned', 'Cost', 'Location', 'Wishlist']);
+            snap.forEach(doc => {
+              const data = doc.data() || {};
+              Object.keys(data || {}).forEach(k => fieldSet.add(k));
+              rows.push({ id: doc.id, data });
+            });
+            const fields = Array.from(fieldSet);
+            // Move common fields to front if present
+            const preferredOrder = ['Number', 'Amount Owned', 'Cost', 'Location', 'Wishlist'];
+            fields.sort((a, b) => {
+              const ai = preferredOrder.indexOf(a);
+              const bi = preferredOrder.indexOf(b);
+              if (ai !== -1 && bi !== -1) return ai - bi;
+              if (ai !== -1) return -1;
+              if (bi !== -1) return 1;
+              return a.localeCompare(b);
+            });
+            let html = '';
+            html += '<div class="card" style="overflow:auto;">';
+            html += '<table class="table">';
+            html += '<thead><tr><th>Pokemon</th>' + fields.map(f => '<th>' + f + '</th>').join('') + '</tr></thead>';
+            html += '<tbody>';
+            rows.sort((a, b) => a.id.localeCompare(b.id));
+            rows.forEach(row => {
+              html += '<tr>';
+              html += '<td class="mono">' + row.id + '</td>';
+              fields.forEach(f => {
+                const v = normalizeValueForCell(row.data[f]);
+                html += '<td>' + v + '</td>';
+              });
+              html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            if (rows.length === 0) {
+              html = '<div class="card"><div class="small muted">No cards found.</div></div>';
+            }
+            dbOutput.innerHTML = html;
+          } catch (e) {
+            dbOutput.innerHTML = '<div class="card"><div class="small mono" style="color:#C53030;">Failed to load cards: ' + (e && e.message ? e.message : String(e)) + '</div></div>';
+          }
+        }
+
+        async function loadSealed() {
+          const db = await getDb();
+          dbOutput.innerHTML = '<div class="small muted mono">Loading sealed items…</div>';
+          try {
+            const colRef = db.collection('Pokemon Packs')
+              .doc(dbState.language)
+              .collection(dbState.category)
+              .doc(dbState.setName)
+              .collection('Sealed');
+            const snap = await colRef.get();
+            const items = [];
+            snap.forEach(doc => items.push({ id: doc.id, data: doc.data() || {} }));
+            let html = '<div class="card">';
+            if (items.length === 0) {
+              html += '<div class="small muted">No sealed items found.</div>';
+            } else {
+              html += '<div class="grid">';
+              items.forEach(it => {
+                html += '<div style="border:1px solid #E2E8F0;border-radius:8px;padding:12px;">';
+                html += '<div class="mono" style="font-weight:600;margin-bottom:6px;">' + it.id + '</div>';
+                Object.entries(it.data).forEach(([k, v]) => {
+                  html += '<div class="row small"><div class="muted">' + k + '</div><div>' + normalizeValueForCell(v) + '</div></div>';
+                });
+                html += '</div>';
+              });
+              html += '</div>';
+            }
+            html += '</div>';
+            dbOutput.innerHTML = html;
+          } catch (e) {
+            dbOutput.innerHTML = '<div class="card"><div class="small mono" style="color:#C53030;">Failed to load sealed items: ' + (e && e.message ? e.message : String(e)) + '</div></div>';
+          }
+        }
+
+        async function loadCurrentView() {
+          updateBreadcrumb();
+          if (!dbState.setName) {
+            dbOutput.innerHTML = '<div class="card"><div class="small muted">Select a set to view data.</div></div>';
+            return;
+          }
+          if (dbState.view === 'Cards') {
+            await loadCards();
+          } else {
+            await loadSealed();
+          }
+        }
+
+        // --- Tree UI ---
+        function makeTreeNode(label, options) {
+          const hasChildren = !!(options && options.loadChildren);
+          const node = document.createElement('div');
+          node.className = 'tree-node';
+          const row = document.createElement('div');
+          row.className = 'tree-row';
+          if (hasChildren) {
+            const caret = document.createElement('span');
+            caret.className = 'tree-caret';
+            row.appendChild(caret);
+          } else {
+            const spacer = document.createElement('span');
+            spacer.style.width = '6px';
+            spacer.style.display = 'inline-block';
+            row.appendChild(spacer);
+          }
+          const labelEl = document.createElement('span');
+          labelEl.className = 'tree-label';
+          labelEl.textContent = label;
+          row.appendChild(labelEl);
+          node.appendChild(row);
+          const children = document.createElement('div');
+          children.className = 'tree-children hidden';
+          node.appendChild(children);
+
+          let loaded = false;
+          let expanded = false;
+          const toggle = async () => {
+            if (!hasChildren) return;
+            expanded = !expanded;
+            node.classList.toggle('expanded', expanded);
+            children.classList.toggle('hidden', !expanded);
+            if (expanded && !loaded) {
+              loaded = true;
+              if (options && typeof options.loadChildren === 'function') {
+                await options.loadChildren(children);
+              }
+            }
+          };
+          row.addEventListener('click', async () => {
+            if (options && typeof options.onSelect === 'function') {
+              await options.onSelect();
+            }
+            if (hasChildren) {
+              await toggle();
+            }
+          });
+          return { node, children, toggle };
+        }
+
+        async function discoverStructure() {
+          const db = await getDb();
+          // shape: { [language]: { [category]: { [setName]: { hasCards, hasSealed }}}}
+          const struct = {};
+          const ensure = (lang, cat, set) => {
+            struct[lang] = struct[lang] || {};
+            struct[lang][cat] = struct[lang][cat] || {};
+            struct[lang][cat][set] = struct[lang][cat][set] || { hasCards: false, hasSealed: false };
+            return struct[lang][cat][set];
+          };
+          // Cards
+          try {
+            const snap = await db.collectionGroup('Cards').get();
+            snap.forEach(doc => {
+              const parts = doc.ref.path.split('/');
+              // ["Pokemon Packs", lang, category, setName, "Cards", docId]
+              if (parts.length >= 6 && parts[0] === 'Pokemon Packs') {
+                const lang = parts[1];
+                const cat = parts[2];
+                const setName = parts[3];
+                ensure(lang, cat, setName).hasCards = true;
+              }
+            });
+          } catch (_) {}
+          // Sealed
+          try {
+            const snap = await db.collectionGroup('Sealed').get();
+            snap.forEach(doc => {
+              const parts = doc.ref.path.split('/');
+              if (parts.length >= 6 && parts[0] === 'Pokemon Packs') {
+                const lang = parts[1];
+                const cat = parts[2];
+                const setName = parts[3];
+                ensure(lang, cat, setName).hasSealed = true;
+              }
+            });
+          } catch (_) {}
+          // Also include languages that exist even if empty (best-effort)
+          try {
+            const langs = await db.collection('Pokemon Packs').get();
+            langs.forEach(d => {
+              if (d.id !== 'Users') struct[d.id] = struct[d.id] || {};
+            });
+          } catch (_) {}
+          return struct;
+        }
+
+        async function buildDbTree() {
+          if (!dbTree) return;
+          dbTree.innerHTML = '';
+          // Root -> Languages discovered dynamically from existing data
+          const struct = await discoverStructure();
+          const { node: rootNode, children: rootChildren, toggle: toggleRoot } = makeTreeNode('Pokemon Packs', {
+            loadChildren: async (container) => {
+              container.innerHTML = '';
+              const languages = Object.keys(struct).sort((a, b) => a.localeCompare(b));
+              if (languages.length === 0) {
+                container.innerHTML = '<div class="small muted" style="padding:6px 8px;">No data found.</div>';
+                return;
+              }
+              for (const lang of languages) {
+                const categories = Object.keys(struct[lang] || {}).sort((a, b) => a.localeCompare(b));
+                const { node: langNode, children: langChildren, toggle: toggleLang } = makeTreeNode(lang, {
+                  loadChildren: async (container2) => {
+                    container2.innerHTML = '';
+                    if (categories.length === 0) {
+                      container2.innerHTML = '<div class="small muted" style="padding:6px 8px;">No categories.</div>';
+                      return;
+                    }
+                    for (const cat of categories) {
+                      const setsMap = struct[lang][cat] || {};
+                      const setNames = Object.keys(setsMap).sort((a, b) => a.localeCompare(b));
+                      const { node: catNode, children: catChildren, toggle: toggleCat } = makeTreeNode(cat, {
+                        loadChildren: async (container3) => {
+                          container3.innerHTML = '';
+                          if (setNames.length === 0) {
+                            container3.innerHTML = '<div class="small muted" style="padding:6px 8px;">No sets.</div>';
+                            return;
+                          }
+                          for (const setName of setNames) {
+                            const flags = setsMap[setName] || { hasCards: true, hasSealed: true };
+                            const { node: setNode, children: setChildren, toggle: toggleSet } = makeTreeNode(setName, {
+                              loadChildren: async (container4) => {
+                                container4.innerHTML = '';
+                                if (flags.hasCards) {
+                                  const cardsNode = makeTreeNode('Cards', {
+                                    onSelect: async () => {
+                                      dbState.language = lang;
+                                      dbState.category = cat;
+                                      dbState.setName = setName;
+                                      dbState.view = 'Cards';
+                                      updateBreadcrumb();
+                                      await loadCurrentView();
+                                    }
+                                  }).node;
+                                  container4.appendChild(cardsNode);
+                                }
+                                if (flags.hasSealed) {
+                                  const sealedNode = makeTreeNode('Sealed', {
+                                    onSelect: async () => {
+                                      dbState.language = lang;
+                                      dbState.category = cat;
+                                      dbState.setName = setName;
+                                      dbState.view = 'Sealed';
+                                      updateBreadcrumb();
+                                      await loadCurrentView();
+                                    }
+                                  }).node;
+                                  container4.appendChild(sealedNode);
+                                }
+                              }
+                            });
+                            container3.appendChild(setNode);
+                            // Auto-expand set to reveal leaf nodes
+                            try { await toggleSet(); } catch (_) {}
+                          }
+                        }
+                      });
+                      container2.appendChild(catNode);
+                      // Auto-expand category to reveal sets
+                      try { await toggleCat(); } catch (_) {}
+                    }
+                  }
+                });
+                rootChildren.appendChild(langNode);
+                // Auto-expand language to reveal categories
+                try { await toggleLang(); } catch (_) {}
+              }
+            }
+          });
+          dbTree.appendChild(rootNode);
+          // Expand root by default
+          await toggleRoot();
+        }
 
         // Auth UI
         const signOutBtn = document.getElementById('signOut');
@@ -266,34 +555,9 @@
             createdAt: existingData.createdAt || (now || new Date()),
           };
           await accountRef.set(toSet, { merge: true });
-          // Gate Add button by permission
-          addPackBtn.disabled = !(toSet.canEdit === true);
         }
 
-        async function loadOwnAccount(user) {
-          if (!user) return;
-          try {
-            const db = await getDb();
-            const docSnap = await db.collection('Users').doc(user.uid).get();
-            if (docSnap.exists) {
-              const data = docSnap.data() || {};
-              addPackBtn.disabled = !(data.canEdit === true);
-            }
-          } catch (_) {}
-        }
-
-        function clearDetails() {
-          details.classList.add('hidden');
-          detailsEmpty.classList.remove('hidden');
-          closeDetails.classList.add('hidden');
-          docIdEl.textContent = '';
-          docJsonEl.textContent = '';
-          cardsContainer.innerHTML = '';
-          noCards.classList.add('hidden');
-          detailTitle.textContent = 'Details';
-        }
-
-        closeDetails.addEventListener('click', clearDetails);
+        // Database functions removed
 
         async function getDb() {
           const firebaseGlobal = window.firebase;
@@ -315,118 +579,7 @@
           return db;
         }
 
-        function docHasCards(data) {
-          if (!data) return false;
-          if (Array.isArray(data.Cards)) return data.Cards.length > 0;
-          if (data.Cards && typeof data.Cards === 'object') return Object.keys(data.Cards).length > 0;
-          return false;
-        }
-
-        async function renderPacksList() {
-          packsLoading.classList.remove('hidden');
-          packsError.classList.add('hidden');
-          packsEmpty.classList.add('hidden');
-          packsGrid.innerHTML = '';
-          packsCount.textContent = '';
-          clearDetails();
-          try {
-            const db = await getDb();
-            const snapshot = await db.collection('Pokemon Packs').get();
-            if (snapshot.empty) {
-              packsEmpty.classList.remove('hidden');
-              return;
-            }
-            let total = 0;
-            let shown = 0;
-            snapshot.forEach(doc => {
-              total += 1;
-              const data = doc.data() || {};
-              if (filterWithCards.checked && !docHasCards(data)) {
-                return;
-              }
-              const name = data.name || data.title || doc.id;
-              const btn = document.createElement('button');
-              btn.className = 'btn';
-              btn.textContent = name;
-              btn.title = doc.id;
-              btn.addEventListener('click', () => renderPackDetails(doc.id));
-              packsGrid.appendChild(btn);
-              shown += 1;
-            });
-            packsCount.textContent = shown + ' shown' + (filterWithCards.checked ? ' (filtered from ' + total + ')' : ' of ' + total);
-            if (shown === 0) {
-              packsEmpty.textContent = filterWithCards.checked ? 'No docs with Cards.' : 'No packs found.';
-              packsEmpty.classList.remove('hidden');
-            }
-          } catch (err) {
-            console.error(err);
-            packsError.textContent = 'Failed to load packs: ' + (err && err.message ? err.message : String(err));
-            packsError.classList.remove('hidden');
-          } finally {
-            packsLoading.classList.add('hidden');
-          }
-        }
-
-        async function renderPackDetails(docId) {
-          const db = await getDb();
-          try {
-            const docRef = db.collection('Pokemon Packs').doc(docId);
-            const docSnap = await docRef.get();
-            if (!docSnap.exists) {
-              alert('Document not found: ' + docId);
-              return;
-            }
-            const data = docSnap.data() || {};
-            detailsEmpty.classList.add('hidden');
-            details.classList.remove('hidden');
-            closeDetails.classList.remove('hidden');
-            docIdEl.textContent = docId;
-            detailTitle.textContent = 'Details — ' + (data.name || data.title || docId);
-            try {
-              docJsonEl.textContent = JSON.stringify(data, null, 2);
-            } catch {
-              docJsonEl.textContent = String(data);
-            }
-            cardsContainer.innerHTML = '';
-            const cards = data.Cards;
-            if (Array.isArray(cards) && cards.length) {
-              cards.forEach(card => {
-                const label = typeof card === 'string' ? card : (card && (card.name || card.title || card.id)) || '(card)';
-                const chip = document.createElement('span');
-                chip.className = 'chip';
-                chip.textContent = label;
-                cardsContainer.appendChild(chip);
-              });
-            } else if (cards && typeof cards === 'object') {
-              Object.keys(cards).forEach(key => {
-                const chip = document.createElement('span');
-                chip.className = 'chip';
-                chip.textContent = key + ': ' + String(cards[key]);
-                cardsContainer.appendChild(chip);
-              });
-            } else {
-              noCards.classList.remove('hidden');
-            }
-          } catch (err) {
-            console.error(err);
-            alert('Failed to load document: ' + (err && err.message ? err.message : String(err)));
-          }
-        }
-
-        refreshPacksBtn.addEventListener('click', renderPacksList);
-        filterWithCards.addEventListener('change', renderPacksList);
-        addPackBtn.addEventListener('click', async () => {
-          const name = prompt('Enter pack name:');
-          if (!name) return;
-          try {
-            const db = await getDb();
-            await db.collection('Pokemon Packs').add({ name: name });
-            await renderPacksList();
-          } catch (e) {
-            alert('Failed to add pack: ' + (e && e.message ? e.message : String(e)));
-          }
-        });
-        // Account UI removed; no save handler
+        // Database-specific helpers and events removed
 
         // Initialize
         try {
@@ -449,14 +602,11 @@
                 if (user) {
                   authStatus.textContent = 'Signed in as ' + (user.email ? user.email.split('@')[0] : user.uid);
                   signOutBtn.classList.remove('hidden');
-                  addPackBtn.disabled = true; // will be updated by profile load
                   if (navLinks.signin) navLinks.signin.style.display = 'none';
                   await upsertAccountProfile(user);
-                  await loadOwnAccount(user);
                 } else {
                   authStatus.textContent = 'Signed out';
                   signOutBtn.classList.add('hidden');
-                  addPackBtn.disabled = true;
                   if (navLinks.signin) navLinks.signin.style.display = '';
                 }
               });
@@ -543,9 +693,14 @@
             : 'Missing /config/firebaseConfig.js. Add your Firebase config.';
         }
 
+        // Initialize Database Tree UI
+        if (dbRefreshTree) {
+          dbRefreshTree.addEventListener('click', () => buildDbTree());
+        }
+        buildDbTree();
+
         bindNavClicks();
         initRouter();
-        renderPacksList();
       });
     </script>
   </body>
