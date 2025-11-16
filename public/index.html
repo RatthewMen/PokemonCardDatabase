@@ -55,6 +55,9 @@
       .db-layout { display: grid; grid-template-columns: 320px 1fr; gap: 16px; align-items: start; }
       .tree { list-style: none; padding: 0; margin: 0; }
       .tree-node { margin: 2px 0; }
+      .thumb-wrap { position: relative; display: inline-block; vertical-align: middle; }
+      .card-thumb { width: 36px; height: 50px; object-fit: cover; border-radius: 4px; margin-right: 8px; transition: transform .12s ease, box-shadow .12s ease; transform-origin: top left; position: relative; z-index: 1; }
+      .card-thumb:hover { transform: scale(7.5); z-index: 10; box-shadow: 0 6px 18px rgba(0,0,0,.3); }
       .tree-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 8px; cursor: pointer; user-select: none; }
       .tree-row:hover { background: #EDF2F7; }
       .tree-label { flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -128,6 +131,15 @@
             </div>
             <div style="display:flex; flex-direction:column; gap:12px; min-width:0;">
               <div class="chips small mono" id="dbBreadcrumb"></div>
+              <div class="card hidden" id="dbImportCard">
+                <div class="row">
+                  <div class="small muted" id="dbImportTitle">Import into (Select Set)</div>
+                </div>
+                <div class="small muted">Destination: <span id="dbImportDestination">-</span></div>
+                <div class="stack small space-top">
+                  <input type="file" id="dbImportFile" accept=".txt,.json,.csv,application/json,text/plain">
+                </div>
+              </div>
               <div id="dbOutput"></div>
             </div>
           </div>
@@ -192,6 +204,10 @@
         const dbRefreshTree = document.getElementById('dbRefreshTree');
         const dbBreadcrumb = document.getElementById('dbBreadcrumb');
         const dbOutput = document.getElementById('dbOutput');
+        const dbImportCardEl = document.getElementById('dbImportCard');
+        const dbImportTitle = document.getElementById('dbImportTitle');
+        const dbImportDestination = document.getElementById('dbImportDestination');
+        if (dbImportCardEl) dbImportCardEl.classList.add('hidden');
 
         const dbState = {
           language: 'English',
@@ -243,26 +259,33 @@
               rows.push({ id: doc.id, data });
             });
             const fields = Array.from(fieldSet);
-            // Move common fields to front if present
-            const preferredOrder = ['Number', 'Amount Owned', 'Cost', 'Location', 'Wishlist'];
-            fields.sort((a, b) => {
-              const ai = preferredOrder.indexOf(a);
-              const bi = preferredOrder.indexOf(b);
-              if (ai !== -1 && bi !== -1) return ai - bi;
-              if (ai !== -1) return -1;
-              if (bi !== -1) return 1;
-              return a.localeCompare(b);
-            });
+            // Desired column order
+            const preferredOrder = ['Number', 'Printing', 'Rarity', 'Cost', 'Location', 'Amount Owned'];
+            // Build fields to show strictly following the preferred order and excluding hidden fields
+            const hiddenFields = new Set(['Picture Link', 'Wishlist']);
+            const fieldsForTable = preferredOrder.filter(f => fields.includes(f) && !hiddenFields.has(f));
             let html = '';
             html += '<div class="card" style="overflow:auto;">';
             html += '<table class="table">';
-            html += '<thead><tr><th>Pokemon</th>' + fields.map(f => '<th>' + f + '</th>').join('') + '</tr></thead>';
+            html += '<thead><tr><th>Pokemon</th>' + fieldsForTable.map(f => '<th>' + f + '</th>').join('') + '</tr></thead>';
             html += '<tbody>';
-            rows.sort((a, b) => a.id.localeCompare(b.id));
+            rows.sort((a, b) => {
+              const toNumber = (val) => {
+                const n = Number(val);
+                return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+              };
+              const na = toNumber(a.data['Number']);
+              const nb = toNumber(b.data['Number']);
+              if (na !== nb) return na - nb;
+              return a.id.localeCompare(b.id);
+            });
             rows.forEach(row => {
               html += '<tr>';
-              html += '<td class="mono">' + row.id + '</td>';
-              fields.forEach(f => {
+              const pic = String((row.data && row.data['Picture Link']) || '').trim();
+              const img = pic ? '<span class="thumb-wrap"><img class="card-thumb" src="' + pic + '" alt="' + row.id + '"></span>' : '';
+              const displayName = String(row.id || '');
+              html += '<td class="mono">' + img + displayName + '</td>';
+              fieldsForTable.forEach(f => {
                 const v = normalizeValueForCell(row.data[f]);
                 html += '<td>' + v + '</td>';
               });
@@ -288,24 +311,59 @@
               .doc(dbState.setName)
               .collection('Sealed');
             const snap = await colRef.get();
-            const items = [];
-            snap.forEach(doc => items.push({ id: doc.id, data: doc.data() || {} }));
-            let html = '<div class="card">';
-            if (items.length === 0) {
-              html += '<div class="small muted">No sealed items found.</div>';
-            } else {
-              html += '<div class="grid">';
-              items.forEach(it => {
-                html += '<div style="border:1px solid #E2E8F0;border-radius:8px;padding:12px;">';
-                html += '<div class="mono" style="font-weight:600;margin-bottom:6px;">' + it.id + '</div>';
-                Object.entries(it.data).forEach(([k, v]) => {
-                  html += '<div class="row small"><div class="muted">' + k + '</div><div>' + normalizeValueForCell(v) + '</div></div>';
-                });
-                html += '</div>';
+            const rows = [];
+            const fieldSet = new Set(['Number', 'Count', 'Cost', 'Location', 'Amount Owned']);
+            snap.forEach(doc => {
+              const data = doc.data() || {};
+              Object.keys(data || {}).forEach(k => fieldSet.add(k));
+              rows.push({ id: doc.id, data });
+            });
+            // Build fields in preferred order and hide image/link fields
+            const hidden = new Set(['Picture', 'Picture Link', 'Link', 'Count']);
+            const fields = Array.from(fieldSet).filter(f => !hidden.has(f));
+            const preferredOrder = ['Number', 'Cost', 'Location', 'Amount Owned'];
+            fields.sort((a, b) => {
+              const ai = preferredOrder.indexOf(a);
+              const bi = preferredOrder.indexOf(b);
+              if (ai !== -1 && bi !== -1) return ai - bi;
+              if (ai !== -1) return -1;
+              if (bi !== -1) return 1;
+              return a.localeCompare(b);
+            });
+            // Render table similar to Cards view
+            let html = '';
+            html += '<div class="card" style="overflow:auto;">';
+            html += '<table class="table">';
+            html += '<thead><tr><th>Product</th>' + fields.map(f => '<th>' + f + '</th>').join('') + '</tr></thead>';
+            html += '<tbody>';
+            // Sort primarily by Number if present
+            rows.sort((a, b) => {
+              const toNumber = (val) => {
+                const n = Number(val);
+                return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
+              };
+              const na = toNumber(a.data['Number']);
+              const nb = toNumber(b.data['Number']);
+              if (na !== nb) return na - nb;
+              return a.id.localeCompare(b.id);
+            });
+            rows.forEach(row => {
+              const data = row.data || {};
+              html += '<tr>';
+              const pic = String((data['Picture Link'] || data['Picture'] || '')).trim();
+              const img = pic ? '<span class="thumb-wrap"><img class="card-thumb" src="' + pic + '" alt="' + row.id + '"></span>' : '';
+              const displayName = String(row.id || '');
+              html += '<td class="mono">' + img + displayName + '</td>';
+              fields.forEach(f => {
+                const v = normalizeValueForCell(data[f]);
+                html += '<td>' + v + '</td>';
               });
-              html += '</div>';
+              html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            if (rows.length === 0) {
+              html = '<div class="card"><div class="small muted">No sealed items found.</div></div>';
             }
-            html += '</div>';
             dbOutput.innerHTML = html;
           } catch (e) {
             dbOutput.innerHTML = '<div class="card"><div class="small mono" style="color:#C53030;">Failed to load sealed items: ' + (e && e.message ? e.message : String(e)) + '</div></div>';
@@ -314,6 +372,8 @@
 
         async function loadCurrentView() {
           updateBreadcrumb();
+          refreshImportCardContext();
+          await refreshImportVisibility();
           if (!dbState.setName) {
             dbOutput.innerHTML = '<div class="card"><div class="small muted">Select a set to view data.</div></div>';
             return;
@@ -322,6 +382,94 @@
             await loadCards();
           } else {
             await loadSealed();
+          }
+        }
+
+        function buildDataPathForCurrentSet() {
+          if (!dbState.setName) return '';
+          const cat = encodeURIComponent(dbState.category || '');
+          const set = encodeURIComponent(dbState.setName || '');
+          return '/data/' + cat + '/' + set + '.txt';
+        }
+
+        function refreshImportCardContext() {
+          if (dbImportTitle) {
+            const setLabel = dbState.setName || '(Select Set)';
+            const target = (dbState.view || 'Cards');
+            dbImportTitle.textContent = 'Import into ' + (dbState.category || '') + ' / ' + setLabel + ' / ' + target;
+          }
+          if (dbImportDestination) {
+            const parts = [(dbState.category || ''), (dbState.setName || ''), (dbState.view || 'Cards')].filter(Boolean);
+            dbImportDestination.textContent = parts.join(' / ') || '-';
+          }
+        }
+
+        // Read set-level import flags from the current set document
+        async function isSetImportAllowed() {
+          if (!dbState.setName) return false;
+          try {
+            const db = await getDb();
+            const setRef = db
+              .collection('Pokemon Packs')
+              .doc(dbState.language || 'English')
+              .collection(dbState.category || 'Mega Evolution')
+              .doc(dbState.setName);
+            const snap = await setRef.get();
+            const data = snap && snap.exists ? (snap.data() || {}) : {};
+            if (dbState.view === 'Cards') {
+              return data.CanImportCards === true;
+            } else if (dbState.view === 'Sealed') {
+              return data.CanImportSealed === true;
+            }
+            return false;
+          } catch (_) {
+            return false;
+          }
+        }
+
+        // Make a Firestore-safe document id (no '/')
+        function makeSafeDocId(raw) {
+          const s = String(raw || '').trim();
+          if (!s) return '';
+          return s
+            .replace(/\//g, '-')   // Firestore doc ids cannot contain '/'
+            .replace(/^\s+|\s+$/g, '')
+            .slice(0, 300);        // conservative cap
+        }
+
+        // Allow/deny specific sets for import
+        function canImportCurrentSet() {
+          const name = String(dbState.setName || '').trim();
+          const category = String(dbState.category || '').trim();
+          // Blocklist: sets that should NOT be importable
+          const blocked = new Set(['Base Set']);
+          if (!name) return false;
+          if (blocked.has(name)) return false;
+          // Otherwise allowed (e.g., "Phantasmal Flames")
+          return true;
+        }
+
+        // Toggle visibility of import UI based on Users/{uid} flags and set-level flags
+        async function refreshImportVisibility() {
+          try {
+            const firebaseGlobal = window.firebase;
+            if (!firebaseGlobal || !firebaseGlobal.auth) return;
+            if (!dbImportCardEl) return;
+            const user = firebaseGlobal.auth().currentUser;
+            if (!user) {
+              dbImportCardEl.classList.add('hidden');
+              return;
+            }
+            const db = await getDb();
+            const doc = await db.collection('Users').doc(user.uid).get();
+            const data = doc && doc.exists ? (doc.data() || {}) : {};
+            const userAllowed = !!(data && data.canEdit === true);
+            const setAllowed = await isSetImportAllowed();
+            const allowed = userAllowed && setAllowed;
+            dbImportCardEl.classList.toggle('hidden', !allowed);
+            refreshImportCardContext();
+          } catch (_) {
+            if (dbImportCardEl) dbImportCardEl.classList.add('hidden');
           }
         }
 
@@ -604,10 +752,12 @@
                   signOutBtn.classList.remove('hidden');
                   if (navLinks.signin) navLinks.signin.style.display = 'none';
                   await upsertAccountProfile(user);
+                  await refreshImportVisibility();
                 } else {
                   authStatus.textContent = 'Signed out';
                   signOutBtn.classList.add('hidden');
                   if (navLinks.signin) navLinks.signin.style.display = '';
+                  await refreshImportVisibility();
                 }
               });
             } catch (_) {}
@@ -698,6 +848,188 @@
           dbRefreshTree.addEventListener('click', () => buildDbTree());
         }
         buildDbTree();
+        // Ensure visibility is correct on initial load too
+        refreshImportVisibility();
+
+        // --- Permission helpers ---
+        async function requireEditor() {
+          const firebaseGlobal = window.firebase;
+          if (!firebaseGlobal || !firebaseGlobal.auth) {
+            alert('Firebase not initialized.');
+            return false;
+          }
+          const user = firebaseGlobal.auth().currentUser;
+          if (!user) {
+            alert('You must be signed in to import. Go to the Sign In page first.');
+            return false;
+          }
+          try {
+            const db = await getDb();
+            const doc = await db.collection('Users').doc(user.uid).get();
+            const data = doc && doc.exists ? (doc.data() || {}) : {};
+            const setAllowed = await isSetImportAllowed();
+            if (data && data.canEdit === true && setAllowed) return true;
+          } catch (_) {}
+          if (!(await isSetImportAllowed())) {
+            alert('Import disabled for this set (check CanImportCards/CanImportSealed on the set doc).');
+            return false;
+          }
+          alert('You do not have permission to import. Ask an admin to set Users/' + (user.uid || '') + '.canEdit = true in Firestore.');
+          return false;
+        }
+
+        // Import text into the currently selected set and view (Cards or Sealed)
+        async function importTextForCurrentSelection(text) {
+          const ok = await requireEditor();
+          if (!ok) return;
+          if (!dbState.setName) {
+            alert('Select a set first.');
+            return;
+          }
+          const db = await getDb();
+          const firebaseGlobal = window.firebase;
+          const collectionName = (dbState.view === 'Sealed') ? 'Sealed' : 'Cards';
+          const setDocRef = db
+            .collection('Pokemon Packs')
+            .doc(dbState.language || 'English')
+            .collection(dbState.category || 'Mega Evolution')
+            .doc(dbState.setName);
+          // Ensure parent doc exists
+          try {
+            const now = (firebaseGlobal && firebaseGlobal.firestore && firebaseGlobal.firestore.FieldValue && firebaseGlobal.firestore.FieldValue.serverTimestamp) ? firebaseGlobal.firestore.FieldValue.serverTimestamp() : null;
+            await setDocRef.set({ createdAt: now || new Date() }, { merge: true });
+          } catch (_) {}
+          const raw = String(text || '').trim();
+          let items = [];
+          // Try JSON first
+          if (raw.startsWith('[') || raw.startsWith('{')) {
+            try {
+              const parsed = JSON.parse(raw);
+              if (Array.isArray(parsed)) {
+                items = parsed;
+              } else if (parsed && typeof parsed === 'object') {
+                items = [parsed];
+              }
+            } catch (_) {
+              // fall back to line-based
+            }
+          }
+          // Fallback to CSV-ish lines: name,number,price,imageUrl
+          if (items.length === 0) {
+            const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => !!l);
+            if (lines.length === 0) {
+              alert('No data found.');
+              return;
+            }
+            items = lines.map(line => {
+              const parts = line.split(',');
+              return {
+                name: (parts[0] || '').trim(),
+                number: (parts[1] || '').trim(),
+                price: parseFloat((parts[2] || '').trim()),
+                imageUrl: parts.slice(3).join(',').trim(),
+                printing: ''
+              };
+            });
+          }
+          dbOutput.innerHTML = '<div class="card"><div class="small mono">Importing ' + items.length + ' ' + collectionName + '…</div></div>';
+          const targetColRef = setDocRef.collection(collectionName);
+          let batch = db.batch();
+          let ops = 0;
+          const commits = [];
+          const maxOps = 450; // stay under 500 writes per batch
+          for (const item of items) {
+            const nameRaw = (item && (item.name || item.Name)) || '';
+            const printingRaw = (item && (item.printing || item.Printing)) || '';
+            const rarity = (item && (item.rarity || item.Rarity)) || '';
+            const numberRaw = (item && (item.number || item.Number)) || '';
+            const priceRaw = (item && (item.price || item.Price)) || '';
+            const pictureUrl = (item && (item.imageUrl || item.ImageUrl || item.imageURL)) || '';
+            const name = String(nameRaw).trim();
+            // Derive display id: include printing for variants, similar to CSV naming convention
+            const normalizedPrinting = String(printingRaw || '').trim();
+            const isNormal = /^normal$/i.test(normalizedPrinting) || normalizedPrinting === '';
+            const displayId = isNormal ? name : (name ? (name + ' [' + normalizedPrinting.replace(/Holofoil/gi, 'Holo') + ']') : '');
+            // Parse number like "054/132" → 54
+            let numberVal = 0;
+            if (typeof numberRaw === 'number') numberVal = numberRaw;
+            else if (typeof numberRaw === 'string') {
+              const m = numberRaw.match(/^\s*(\d+)/);
+              numberVal = m ? parseInt(m[1], 10) : 0;
+            }
+            const costVal = typeof priceRaw === 'number' ? priceRaw : parseFloat(String(priceRaw || '').trim());
+            if (!name) continue;
+            const data = {
+              'Number': Number.isFinite(numberVal) ? numberVal : 0,
+              'Amount Owned': 0,
+              'Cost': Number.isFinite(costVal) ? costVal : 0,
+              'Location': 'N/A',
+              'Picture Link': pictureUrl
+            };
+            if (rarity) data['Rarity'] = String(rarity);
+            if (normalizedPrinting) data['Printing'] = String(normalizedPrinting);
+            const safeId = makeSafeDocId(displayId || name);
+            if (!safeId) continue;
+            const docRef = targetColRef.doc(safeId);
+            batch.set(docRef, data, { merge: true });
+            ops++;
+            if (ops >= maxOps) {
+              commits.push(batch.commit());
+              batch = db.batch();
+              ops = 0;
+            }
+          }
+          if (ops > 0) {
+            commits.push(batch.commit());
+          }
+          try {
+            await Promise.all(commits);
+            dbOutput.innerHTML = '<div class="card"><div class="small mono">Imported ' + items.length + ' items to ' + (dbState.category || '') + ' / ' + dbState.setName + ' / ' + collectionName + '.</div></div>';
+            await buildDbTree();
+          } catch (e) {
+            dbOutput.innerHTML = '<div class="card"><div class="small mono" style="color:#C53030;">Import failed: ' + (e && e.message ? e.message : String(e)) + '</div></div>';
+          }
+        }
+
+        async function importBaseSetCards() {
+          // Try fetching the default source file for the current set
+          if (!dbState.setName) {
+            alert('Select a set first.');
+            return;
+          }
+          let text = '';
+          try {
+            const path = '.' + buildDataPathForCurrentSet();
+            const res = await fetch(path, { cache: 'no-cache' });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            text = await res.text();
+          } catch (e) {
+            alert('Failed to fetch source file for current set. If you opened the file directly, run a local server or use "Import From File".\n\nSource: ' + buildDataPathForCurrentSet() + '\nError: ' + (e && e.message ? e.message : String(e)));
+            return;
+          }
+          await importCardsFromText(text);
+        }
+
+        const dbImportFileInput = document.getElementById('dbImportFile');
+        if (dbImportFileInput) {
+          dbImportFileInput.addEventListener('change', async () => {
+            const file = dbImportFileInput.files && dbImportFileInput.files[0];
+            if (!file) return;
+            try {
+              const text = await new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(String(reader.result || ''));
+                reader.onerror = () => reject(reader.error || new Error('File read error'));
+                reader.readAsText(file);
+              });
+              await importTextForCurrentSelection(text);
+              // Reset file input after import to allow re-importing the same file if needed
+              try { dbImportFileInput.value = ''; } catch (_) {}
+            } catch (e) {
+              alert('Failed to read selected file: ' + (e && e.message ? e.message : String(e)));
+            }
+          });
+        }
 
         bindNavClicks();
         initRouter();
