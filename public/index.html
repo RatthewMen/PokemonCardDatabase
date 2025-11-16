@@ -3,86 +3,549 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
+    <title>Pokemon Collection Database</title>
 
     <!-- update the version number as needed -->
-    <script defer src="/__/firebase/12.6.0/firebase-app-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app-compat.js"></script>
     <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/12.6.0/firebase-auth-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-database-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-firestore-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-functions-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-messaging-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-storage-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-analytics-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-remote-config-compat.js"></script>
-    <script defer src="/__/firebase/12.6.0/firebase-performance-compat.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-auth-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-database-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-functions-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-messaging-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-storage-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-analytics-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-remote-config-compat.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-performance-compat.js"></script>
+    <!-- Optional local config (gitignored). Defines window.__FIREBASE_CONFIG__ -->
+    <script defer src="./config/firebaseConfig.js"></script>
 
     <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
+      body { background: #F7FAFC; color: #1A202C; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
+      .app { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+      .sidebar { background: #1A202C; color: #E2E8F0; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+      .brand { font-weight: 700; font-size: 18px; letter-spacing: 0.4px; margin-bottom: 8px; }
+      .nav a { color: #CBD5E0; text-decoration: none; padding: 10px 12px; border-radius: 8px; display: block; }
+      .nav a.active, .nav a:hover { color: #1A202C; background: #EDF2F7; }
+      .content { padding: 24px; }
+      .page { display: none; }
+      .page.active { display: block; }
+      .section-title { margin: 0 0 12px 0; font-size: 20px; }
+      .muted { color: #4A5568; }
+      .card { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 16px; }
+      .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+      .btn { background: #2B6CB0; color: #FFFFFF; border: none; border-radius: 8px; padding: 10px 12px; cursor: pointer; text-align: left; }
+      .btn.secondary { background: #4A5568; }
+      .btn.ghost { background: #EDF2F7; color: #1A202C; }
+      .btn:disabled { opacity: 0.6; cursor: default; }
+      .stack { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+      .chip { background: #EDF2F7; border-radius: 999px; padding: 6px 10px; font-size: 12px; color: #2D3748; }
+      .divider { height: 1px; background: #E2E8F0; margin: 12px 0; }
+      .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+      .small { font-size: 12px; color: #4A5568; }
+      .space-top { margin-top: 12px; }
+      .space-bottom { margin-bottom: 12px; }
+      .hidden { display: none !important; }
+      @media (max-width: 800px) { .app { grid-template-columns: 1fr; } .sidebar { flex-direction: row; gap: 8px; position: sticky; top: 0; z-index: 10; } }
     </style>
   </head>
   <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">Pokemon Collection DB</div>
+        <nav class="nav">
+          <a href="#home" id="nav-home">Home</a>
+          <a href="#statistics" id="nav-statistics">Statistics</a>
+          <a href="#database" id="nav-database">Database</a>
+          <a href="#signin" id="nav-signin">Sign In</a>
+        </nav>
+        <div class="divider"></div>
+        <div class="small mono" id="sdkStatus">Loading Firebase…</div>
+        <div class="divider"></div>
+        <div class="stack">
+          <button class="btn secondary hidden" id="signOut">Sign Out</button>
+        </div>
+        <div class="small mono" id="authStatus">Signed out</div>
+      </aside>
+      <main class="content">
+        <section id="page-home" class="page active">
+          <h2 class="section-title">Home</h2>
+          <div class="card">
+            <p class="muted">This homepage is blank for now. Use the sidebar to navigate.</p>
+          </div>
+        </section>
+
+        <section id="page-statistics" class="page">
+          <h2 class="section-title">Statistics</h2>
+          <div class="card">
+            <p class="muted">Statistics coming soon.</p>
+          </div>
+        </section>
+
+        <section id="page-signin" class="page">
+          <h2 class="section-title">Sign In</h2>
+          <div class="card">
+            <label class="small" style="display:flex;flex-direction:column;gap:6px;">
+              <span>Username</span>
+              <input id="signinUsername" placeholder="yourname" style="padding:8px;border:1px solid #E2E8F0;border-radius:8px;">
+            </label>
+            <label class="small space-top" style="display:flex;flex-direction:column;gap:6px;">
+              <span>Password</span>
+              <input id="signinPassword" type="password" placeholder="••••••••" style="padding:8px;border:1px solid #E2E8F0;border-radius:8px;">
+            </label>
+            <div class="stack space-top">
+              <button class="btn" id="signinSubmit">Sign In</button>
+              <button class="btn ghost" id="signupSubmit">Create Account</button>
+            </div>
+            <div class="small space-top muted">Use the same username/password for either action.</div>
+          </div>
+        </section>
+
+        <section id="page-database" class="page">
+          <h2 class="section-title">Database</h2>
+          <div class="card space-bottom">
+            <div class="row">
+              <div class="stack">
+                <button class="btn ghost" id="refreshPacks">Refresh</button>
+                <button class="btn" id="addPack" disabled>Add Pack</button>
+              </div>
+              <div class="small">Collection: <span class="mono">Pokemon Packs</span></div>
+              <label class="small" style="display:flex;align-items:center;gap:6px;">
+                <input type="checkbox" id="filterWithCards" />
+                Only show docs with Cards
+              </label>
+            </div>
+            <div class="divider"></div>
+            <div id="packsLoading" class="small">Loading packs…</div>
+            <div id="packsError" class="small hidden"></div>
+            <div id="packsEmpty" class="small hidden">No packs found.</div>
+            <div id="packsGrid" class="grid"></div>
+            <div id="packsCount" class="small muted space-top"></div>
+          </div>
+
+          <div class="card">
+            <div class="row">
+              <h3 class="space-bottom" id="detailTitle">Details</h3>
+              <button class="btn secondary hidden" id="closeDetails">Close</button>
+            </div>
+            <div id="detailsEmpty" class="small muted">Select a pack to view details.</div>
+            <div id="details" class="hidden">
+              <div class="small">Document ID: <span class="mono" id="docId"></span></div>
+              <div class="space-top">
+                <div class="small">Fields</div>
+                <pre class="mono small" id="docJson" style="white-space: pre-wrap;"></pre>
+              </div>
+              <div class="divider"></div>
+              <div>
+                <div class="small">Cards</div>
+                <div id="cardsContainer" class="chips"></div>
+                <div id="noCards" class="small muted hidden">This document has no <span class="mono">Cards</span> field.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
     </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
 
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+        const sdkStatus = document.getElementById('sdkStatus');
+        const pages = {
+          home: document.getElementById('page-home'),
+          statistics: document.getElementById('page-statistics'),
+          database: document.getElementById('page-database'),
+          signin: document.getElementById('page-signin'),
+        };
+        const navLinks = {
+          home: document.getElementById('nav-home'),
+          statistics: document.getElementById('nav-statistics'),
+          database: document.getElementById('nav-database'),
+          signin: document.getElementById('nav-signin'),
+        };
 
+        function setActiveNav(hash) {
+          Object.values(navLinks).forEach(a => a.classList.remove('active'));
+          if (hash === '#statistics') navLinks.statistics.classList.add('active');
+          else if (hash === '#database') navLinks.database.classList.add('active');
+          else if (hash === '#signin') navLinks.signin.classList.add('active');
+          else navLinks.home.classList.add('active');
+        }
+
+        function showPage(hash) {
+          Object.values(pages).forEach(p => p.classList.remove('active'));
+          if (hash === '#statistics') pages.statistics.classList.add('active');
+          else if (hash === '#database') pages.database.classList.add('active');
+          else if (hash === '#signin') pages.signin.classList.add('active');
+          else pages.home.classList.add('active');
+          setActiveNav(hash);
+        }
+
+        function bindNavClicks() {
+          Object.entries(navLinks).forEach(([key, el]) => {
+            el.addEventListener('click', (ev) => {
+              ev.preventDefault();
+              const targetHash = '#' + key;
+              if (location.hash !== targetHash) {
+                location.hash = targetHash;
+              }
+              showPage(targetHash);
+            });
+          });
+        }
+
+        function initRouter() {
+          const initial = location.hash || '#home';
+          showPage(initial);
+          window.addEventListener('hashchange', () => showPage(location.hash || '#home'));
+        }
+
+        // Database UI elements
+        const packsLoading = document.getElementById('packsLoading');
+        const packsError = document.getElementById('packsError');
+        const packsEmpty = document.getElementById('packsEmpty');
+        const packsGrid = document.getElementById('packsGrid');
+        const refreshPacksBtn = document.getElementById('refreshPacks');
+        const packsCount = document.getElementById('packsCount');
+        const filterWithCards = document.getElementById('filterWithCards');
+        const addPackBtn = document.getElementById('addPack');
+
+        // Account UI removed
+
+        const details = document.getElementById('details');
+        const detailsEmpty = document.getElementById('detailsEmpty');
+        const detailTitle = document.getElementById('detailTitle');
+        const closeDetails = document.getElementById('closeDetails');
+        const docIdEl = document.getElementById('docId');
+        const docJsonEl = document.getElementById('docJson');
+        const cardsContainer = document.getElementById('cardsContainer');
+        const noCards = document.getElementById('noCards');
+
+        // Auth UI
+        const signOutBtn = document.getElementById('signOut');
+        const authStatus = document.getElementById('authStatus');
+        // Auth pages elements
+        const signinUsername = document.getElementById('signinUsername');
+        const signinPassword = document.getElementById('signinPassword');
+        const signinSubmit = document.getElementById('signinSubmit');
+        const signupSubmit = document.getElementById('signupSubmit');
+
+        function usernameToEmail(username) {
+          const clean = String(username || '').trim().toLowerCase();
+          if (!clean) return '';
+          return clean + '@example.com';
+        }
+
+        async function fetchClientIp() {
+          try {
+            const res = await fetch('https://api.ipify.org?format=json');
+            const data = await res.json();
+            return data && data.ip ? data.ip : '';
+          } catch {
+            return '';
+          }
+        }
+
+        async function upsertAccountProfile(user) {
+          if (!user) return;
+          const db = await getDb();
+          const ip = await fetchClientIp();
+          const accountRef = db.collection('Users').doc(user.uid);
+          const now = (window.firebase && window.firebase.firestore && window.firebase.firestore.FieldValue && window.firebase.firestore.FieldValue.serverTimestamp) ? window.firebase.firestore.FieldValue.serverTimestamp() : null;
+          let existing = null;
+          try {
+            existing = await accountRef.get();
+          } catch (_) {}
+          const existingData = existing && existing.exists ? existing.data() : {};
+          const toSet = {
+            username: existingData.username || (user.email ? user.email.split('@')[0] : ''),
+            ip: ip || existingData.ip || '',
+            lastVisit: now || existingData.lastVisit || null,
+            canEdit: typeof existingData.canEdit === 'boolean' ? existingData.canEdit : false,
+            createdAt: existingData.createdAt || (now || new Date()),
+          };
+          await accountRef.set(toSet, { merge: true });
+          // Gate Add button by permission
+          addPackBtn.disabled = !(toSet.canEdit === true);
+        }
+
+        async function loadOwnAccount(user) {
+          if (!user) return;
+          try {
+            const db = await getDb();
+            const docSnap = await db.collection('Users').doc(user.uid).get();
+            if (docSnap.exists) {
+              const data = docSnap.data() || {};
+              addPackBtn.disabled = !(data.canEdit === true);
+            }
+          } catch (_) {}
+        }
+
+        function clearDetails() {
+          details.classList.add('hidden');
+          detailsEmpty.classList.remove('hidden');
+          closeDetails.classList.add('hidden');
+          docIdEl.textContent = '';
+          docJsonEl.textContent = '';
+          cardsContainer.innerHTML = '';
+          noCards.classList.add('hidden');
+          detailTitle.textContent = 'Details';
+        }
+
+        closeDetails.addEventListener('click', clearDetails);
+
+        async function getDb() {
+          const firebaseGlobal = window.firebase;
+          if (!firebaseGlobal) {
+            throw new Error('Firebase SDK not loaded.');
+          }
+          const db = firebaseGlobal.firestore();
+          // Use emulator automatically on localhost
+          try {
+            if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+              if (typeof db.useEmulator === 'function') {
+                db.useEmulator('127.0.0.1', 8080);
+              } else if (firebaseGlobal.firestore && typeof firebaseGlobal.firestore().useEmulator === 'function') {
+                firebaseGlobal.firestore().useEmulator('127.0.0.1', 8080);
+              }
+              sdkStatus.textContent = (sdkStatus.textContent || '') + ' (Firestore emulator)';
+            }
+          } catch (_) {}
+          return db;
+        }
+
+        function docHasCards(data) {
+          if (!data) return false;
+          if (Array.isArray(data.Cards)) return data.Cards.length > 0;
+          if (data.Cards && typeof data.Cards === 'object') return Object.keys(data.Cards).length > 0;
+          return false;
+        }
+
+        async function renderPacksList() {
+          packsLoading.classList.remove('hidden');
+          packsError.classList.add('hidden');
+          packsEmpty.classList.add('hidden');
+          packsGrid.innerHTML = '';
+          packsCount.textContent = '';
+          clearDetails();
+          try {
+            const db = await getDb();
+            const snapshot = await db.collection('Pokemon Packs').get();
+            if (snapshot.empty) {
+              packsEmpty.classList.remove('hidden');
+              return;
+            }
+            let total = 0;
+            let shown = 0;
+            snapshot.forEach(doc => {
+              total += 1;
+              const data = doc.data() || {};
+              if (filterWithCards.checked && !docHasCards(data)) {
+                return;
+              }
+              const name = data.name || data.title || doc.id;
+              const btn = document.createElement('button');
+              btn.className = 'btn';
+              btn.textContent = name;
+              btn.title = doc.id;
+              btn.addEventListener('click', () => renderPackDetails(doc.id));
+              packsGrid.appendChild(btn);
+              shown += 1;
+            });
+            packsCount.textContent = shown + ' shown' + (filterWithCards.checked ? ' (filtered from ' + total + ')' : ' of ' + total);
+            if (shown === 0) {
+              packsEmpty.textContent = filterWithCards.checked ? 'No docs with Cards.' : 'No packs found.';
+              packsEmpty.classList.remove('hidden');
+            }
+          } catch (err) {
+            console.error(err);
+            packsError.textContent = 'Failed to load packs: ' + (err && err.message ? err.message : String(err));
+            packsError.classList.remove('hidden');
+          } finally {
+            packsLoading.classList.add('hidden');
+          }
+        }
+
+        async function renderPackDetails(docId) {
+          const db = await getDb();
+          try {
+            const docRef = db.collection('Pokemon Packs').doc(docId);
+            const docSnap = await docRef.get();
+            if (!docSnap.exists) {
+              alert('Document not found: ' + docId);
+              return;
+            }
+            const data = docSnap.data() || {};
+            detailsEmpty.classList.add('hidden');
+            details.classList.remove('hidden');
+            closeDetails.classList.remove('hidden');
+            docIdEl.textContent = docId;
+            detailTitle.textContent = 'Details — ' + (data.name || data.title || docId);
+            try {
+              docJsonEl.textContent = JSON.stringify(data, null, 2);
+            } catch {
+              docJsonEl.textContent = String(data);
+            }
+            cardsContainer.innerHTML = '';
+            const cards = data.Cards;
+            if (Array.isArray(cards) && cards.length) {
+              cards.forEach(card => {
+                const label = typeof card === 'string' ? card : (card && (card.name || card.title || card.id)) || '(card)';
+                const chip = document.createElement('span');
+                chip.className = 'chip';
+                chip.textContent = label;
+                cardsContainer.appendChild(chip);
+              });
+            } else if (cards && typeof cards === 'object') {
+              Object.keys(cards).forEach(key => {
+                const chip = document.createElement('span');
+                chip.className = 'chip';
+                chip.textContent = key + ': ' + String(cards[key]);
+                cardsContainer.appendChild(chip);
+              });
+            } else {
+              noCards.classList.remove('hidden');
+            }
+          } catch (err) {
+            console.error(err);
+            alert('Failed to load document: ' + (err && err.message ? err.message : String(err)));
+          }
+        }
+
+        refreshPacksBtn.addEventListener('click', renderPacksList);
+        filterWithCards.addEventListener('change', renderPacksList);
+        addPackBtn.addEventListener('click', async () => {
+          const name = prompt('Enter pack name:');
+          if (!name) return;
+          try {
+            const db = await getDb();
+            await db.collection('Pokemon Packs').add({ name: name });
+            await renderPacksList();
+          } catch (e) {
+            alert('Failed to add pack: ' + (e && e.message ? e.message : String(e)));
+          }
+        });
+        // Account UI removed; no save handler
+
+        // Initialize
         try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
+          const firebaseGlobal = window.firebase;
+          if (!firebaseGlobal) {
+            sdkStatus.textContent = 'Firebase SDK not loaded (global missing).';
+          } else {
+            const alreadyInitialized = Array.isArray(firebaseGlobal.apps) ? firebaseGlobal.apps.length > 0 : false;
+            const app = alreadyInitialized
+              ? firebaseGlobal.app()
+              : (window.__FIREBASE_CONFIG__ ? firebaseGlobal.initializeApp(window.__FIREBASE_CONFIG__) : null);
+            // Optional: enable analytics if available
+            if (typeof firebaseGlobal.analytics === 'function') {
+              try { firebaseGlobal.analytics(); } catch (_) {}
+            }
+            // Auth state
+            try {
+              const auth = firebaseGlobal.auth();
+              auth.onAuthStateChanged(async user => {
+                if (user) {
+                  authStatus.textContent = 'Signed in as ' + (user.email ? user.email.split('@')[0] : user.uid);
+                  signOutBtn.classList.remove('hidden');
+                  addPackBtn.disabled = true; // will be updated by profile load
+                  if (navLinks.signin) navLinks.signin.style.display = 'none';
+                  await upsertAccountProfile(user);
+                  await loadOwnAccount(user);
+                } else {
+                  authStatus.textContent = 'Signed out';
+                  signOutBtn.classList.add('hidden');
+                  addPackBtn.disabled = true;
+                  if (navLinks.signin) navLinks.signin.style.display = '';
+                }
+              });
+            } catch (_) {}
+
+            signOutBtn.addEventListener('click', async () => {
+              try {
+                await firebaseGlobal.auth().signOut();
+              } catch (e) {
+                alert('Sign-out failed: ' + (e && e.message ? e.message : String(e)));
+              }
+            });
+            // Sign-in page
+            if (signinSubmit) {
+              signinSubmit.addEventListener('click', async () => {
+                const uname = (signinUsername && signinUsername.value || '').trim();
+                const pwd = (signinPassword && signinPassword.value || '').trim();
+                if (!uname || !pwd) {
+                  alert('Enter username and password');
+                  return;
+                }
+                try {
+                  await firebaseGlobal.auth().signInWithEmailAndPassword(usernameToEmail(uname), pwd);
+                  location.hash = '#home';
+                } catch (e) {
+                  alert('Sign-in failed: ' + (e && e.message ? e.message : String(e)));
+                }
+              });
+            }
+            // Create account action on same page
+            if (signupSubmit) {
+              signupSubmit.addEventListener('click', async () => {
+                const uname = (signinUsername && signinUsername.value || '').trim().toLowerCase();
+                const pwd = (signinPassword && signinPassword.value || '').trim();
+                if (!uname || !pwd) {
+                  alert('Enter username and password');
+                  return;
+                }
+                if (!/^[a-z0-9._-]{3,20}$/.test(uname)) {
+                  alert('Username must be 3-20 chars: letters, numbers, ., _, -');
+                  return;
+                }
+                try {
+                  const db = await getDb();
+                  const existing = await db.collection('Users').where('username', '==', uname).limit(1).get();
+                  if (!existing.empty) {
+                    alert('Username already taken');
+                    return;
+                  }
+                  const cred = await firebaseGlobal.auth().createUserWithEmailAndPassword(usernameToEmail(uname), pwd);
+                  const ip = await fetchClientIp();
+                  const now = window.firebase.firestore.FieldValue.serverTimestamp();
+                  await db.collection('Users').doc(cred.user.uid).set({
+                    username: uname,
+                    ip: ip || '',
+                    lastVisit: now,
+                    canEdit: false,
+                    createdAt: now,
+                  }, { merge: true });
+                  location.hash = '#home';
+                } catch (e) {
+                  alert('Sign-up failed: ' + (e && e.message ? e.message : String(e)));
+                }
+              });
+            }
+
+            const features = [
+              'auth',
+              'database',
+              'firestore',
+              'functions',
+              'messaging',
+              'storage',
+              'analytics',
+              'remoteConfig',
+              'performance',
+            ].filter(feature => app && typeof app[feature] === 'function');
+            sdkStatus.textContent = 'Firebase SDK loaded: ' + features.join(', ');
+          }
         } catch (e) {
           console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+          sdkStatus.textContent = window.__FIREBASE_CONFIG__
+            ? 'Error initializing Firebase. See console.'
+            : 'Missing /config/firebaseConfig.js. Add your Firebase config.';
         }
+
+        bindNavClicks();
+        initRouter();
+        renderPacksList();
       });
     </script>
   </body>
