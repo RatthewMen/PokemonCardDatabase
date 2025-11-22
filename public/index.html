@@ -82,6 +82,10 @@
       .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
       .tab-btn { padding: 6px 10px; border: 1px solid #E2E8F0; background: #EDF2F7; color: #1A202C; border-radius: 999px; cursor: pointer; }
       .tab-btn.active { background: #2B6CB0; color: #FFFFFF; border-color: #2B6CB0; }
+      /* Logs page larger square buttons */
+      .logs-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .logs-tabs .tab-btn { width: 100%; padding: 14px 12px; border-radius: 8px; font-size: 16px; text-align: center; }
+      .logs-header { display: flex; justify-content: flex-end; }
       /* Small toggle slider */
       .switch { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; }
       .switch input { opacity: 0; width: 0; height: 0; }
@@ -112,6 +116,7 @@
           <a href="#home" id="nav-home">Home</a>
           <a href="#statistics" id="nav-statistics">Statistics</a>
           <a href="#database" id="nav-database">Database</a>
+          <a href="#logs" id="nav-logs">Logs</a>
           <a href="#signin" id="nav-signin">Sign In</a>
         </nav>
         <div class="divider"></div>
@@ -183,6 +188,27 @@
               </div>
               <div id="dbOutput"></div>
             </div>
+          </div>
+        </section>
+
+        <section id="page-logs" class="page">
+          <h2 class="section-title">Logs</h2>
+          <div class="card" id="logsControls">
+            <div class="logs-header">
+              <button class="btn ghost small" id="logsRefreshBtn" style="padding:6px 8px;">Refresh</button>
+            </div>
+            <div class="logs-tabs" style="margin-top:8px;">
+              <button class="tab-btn active" id="logsTabCards">Cards</button>
+              <button class="tab-btn" id="logsTabSealed">Sealed</button>
+            </div>
+          </div>
+          <div class="card space-top" id="logsListWrap">
+            <div class="row">
+              <div class="small muted">Recent Logs</div>
+              <div class="small"><span id="logsCount">0</span></div>
+            </div>
+            <div class="divider"></div>
+            <div id="logsList"><div class="small muted">Loading…</div></div>
           </div>
         </section>
       </main>
@@ -284,12 +310,14 @@
           home: document.getElementById('page-home'),
           statistics: document.getElementById('page-statistics'),
           database: document.getElementById('page-database'),
+          logs: document.getElementById('page-logs'),
           signin: document.getElementById('page-signin'),
         };
         const navLinks = {
           home: document.getElementById('nav-home'),
           statistics: document.getElementById('nav-statistics'),
           database: document.getElementById('nav-database'),
+          logs: document.getElementById('nav-logs'),
           signin: document.getElementById('nav-signin'),
         };
 
@@ -297,6 +325,7 @@
           Object.values(navLinks).forEach(a => a.classList.remove('active'));
           if (hash === '#statistics') navLinks.statistics.classList.add('active');
           else if (hash === '#database') navLinks.database.classList.add('active');
+          else if (hash === '#logs') navLinks.logs.classList.add('active');
           else if (hash === '#signin') navLinks.signin.classList.add('active');
           else navLinks.home.classList.add('active');
         }
@@ -384,6 +413,7 @@
           Object.values(pages).forEach(p => p.classList.remove('active'));
           if (hash === '#statistics') pages.statistics.classList.add('active');
           else if (hash === '#database') pages.database.classList.add('active');
+          else if (hash === '#logs') { pages.logs.classList.add('active'); renderLogs('card'); }
           else if (hash === '#signin') pages.signin.classList.add('active');
           else pages.home.classList.add('active');
           setActiveNav(hash);
@@ -421,6 +451,15 @@
         const dbSetDetails = document.getElementById('dbSetDetails');
         if (dbImportCardEl) dbImportCardEl.classList.add('hidden');
 
+        // Logs UI elements
+        const logsControls = document.getElementById('logsControls');
+        const logsList = document.getElementById('logsList');
+        const logsCount = document.getElementById('logsCount');
+        const logsRefreshBtn = document.getElementById('logsRefreshBtn');
+        const logsTabCards = document.getElementById('logsTabCards');
+        const logsTabSealed = document.getElementById('logsTabSealed');
+        let logsView = 'card'; // card | sealed
+
         const dbState = {
           language: 'English',
           category: 'Mega Evolution',
@@ -429,6 +468,7 @@
         };
         let currentUserCanEdit = false;
         let currentCategorySets = { lang: '', cat: '', map: {} };
+        let logsInitializedOnce = false;
 
         function updateBreadcrumb() {
           const parts = [
@@ -497,7 +537,7 @@
               html += '<tr>';
               const pic = String((row.data && row.data['Picture Link']) || '').trim();
               const img = pic ? '<span class="thumb-wrap"><img class="card-thumb" src="' + pic + '" alt="' + row.id + '"></span>' : '';
-              const displayName = String(row.id || '');
+              const displayName = String((row.data && row.data['Name']) || row.id || '');
               html += '<td class="mono">' + img + displayName + '</td>';
               fieldsForTable.forEach(f => {
                 const v = normalizeValueForCell(row.data[f]);
@@ -671,6 +711,7 @@
             const data = doc && doc.exists ? (doc.data() || {}) : {};
             const userAllowed = !!(data && data.canEdit === true);
             currentUserCanEdit = userAllowed;
+            refreshLogsVisibility();
             const setAllowed = await isSetImportAllowed();
             const allowed = userAllowed && setAllowed;
             dbImportCardEl.classList.toggle('hidden', !allowed);
@@ -1263,6 +1304,9 @@
             : 'Missing /config/firebaseConfig.js. Add your Firebase config.';
         }
 
+      // Logs: nothing to gate (read-only UI). Keep function as no-op.
+      function refreshLogsVisibility() {}
+
         // Initialize Database Tree UI
         if (dbRefreshTree) {
           dbRefreshTree.addEventListener('click', () => buildDbTree());
@@ -1270,6 +1314,7 @@
         buildDbTree();
         // Ensure visibility is correct on initial load too
         refreshImportVisibility();
+      refreshLogsVisibility();
 
         // --- Permission helpers ---
         async function requireEditor() {
@@ -1300,6 +1345,17 @@
 
         // Import text into the currently selected set and view (Cards or Sealed)
         async function importTextForCurrentSelection(text) {
+          function cleanNameForId(rawName) {
+            let s = String(rawName || '').trim();
+            if (!s) return '';
+            // Remove any bracketed segments like [Reverse Holo], [Holo], etc.
+            s = s.replace(/\s*\[[^\]]*\]\s*/g, ' ');
+            // Remove any inline number fragments like " #123"
+            s = s.replace(/\s*#\d+\s*/g, ' ');
+            // Collapse extra whitespace
+            s = s.replace(/\s{2,}/g, ' ').trim();
+            return s;
+          }
           const ok = await requireEditor();
           if (!ok) return;
           if (!dbState.setName) {
@@ -1375,12 +1431,13 @@
             }
             // Derive display id: include printing for variants; accept any printing string as-is
             const normalizedPrinting = String(printingRaw || '').trim();
-            const isNormal = /^normal$/i.test(normalizedPrinting) || normalizedPrinting === '';
-            const baseId = name ? (name + (Number.isFinite(numberVal) && numberVal > 0 ? (' #' + numberVal) : '')) : '';
-            const displayId = isNormal ? baseId : (baseId ? (baseId + ' [' + normalizedPrinting + ']') : '');
+            // For cards, do NOT include numbers or bracketed printing in the document id
+            // Keep fields like Number/Printing in the document data as usual
+            const displayId = cleanNameForId(name);
             const costVal = typeof priceRaw === 'number' ? priceRaw : parseFloat(String(priceRaw || '').trim());
             if (!name) continue;
             const data = {
+              'Name': displayId,
               'Number': Number.isFinite(numberVal) ? numberVal : 0,
               'Amount Owned': 0,
               'Cost': Number.isFinite(costVal) ? costVal : 0,
@@ -1389,9 +1446,16 @@
             };
             if (rarity) data['Rarity'] = String(rarity);
             if (normalizedPrinting) data['Printing'] = String(normalizedPrinting);
-            const safeId = makeSafeDocId(displayId || name);
-            if (!safeId) continue;
-            const docRef = targetColRef.doc(safeId);
+            let docRef = null;
+            if (collectionName === 'Cards') {
+              // Use auto-generated document IDs to allow duplicate names
+              docRef = targetColRef.doc();
+            } else {
+              // For Sealed, keep name-based IDs
+              const safeId = makeSafeDocId(displayId || name);
+              if (!safeId) continue;
+              docRef = targetColRef.doc(safeId);
+            }
             batch.set(docRef, data, { merge: true });
             ops++;
             if (ops >= maxOps) {
@@ -1566,6 +1630,10 @@
           const collection = isSealed ? 'Sealed' : 'Cards';
           const colRef = setRef.collection(collection);
           const updates = [];
+          const logs = [];
+          const nowServerTs = (firebaseGlobal && firebaseGlobal.firestore && firebaseGlobal.firestore.FieldValue && firebaseGlobal.firestore.FieldValue.serverTimestamp)
+            ? firebaseGlobal.firestore.FieldValue.serverTimestamp()
+            : new Date();
           if (isSealed) {
             const prodId = String((document.getElementById('qe-s-prod-0') || {}).value || '').trim();
             const amt = parseInt(String((document.getElementById('qe-s-amt-0') || {}).value || '').trim(), 10);
@@ -1581,6 +1649,13 @@
                   data['Amount Owned'] = next;
                   if (loc) data['Location'] = loc;
                   updates.push({ ref: docRef, data });
+                  logs.push({
+                    type: 'sealed',
+                    time: nowServerTs,
+                    sealedName: prodId,
+                    amount: amt,
+                    location: loc || ''
+                  });
                 }
               } catch (_) {}
             }
@@ -1616,6 +1691,16 @@
                   data['Amount Owned'] = next;
                   if (loc) data['Location'] = loc;
                   updates.push({ ref: targetDoc.ref, data });
+                  logs.push({
+                    type: 'card',
+                    time: nowServerTs,
+                    cardName: String(((targetDoc.data() || {})['Name']) || targetDoc.id || ''),
+                    number: num,
+                    print: prt || 'Normal',
+                    amount: amt,
+                    location: loc || '',
+                    set: ((dbState && dbState.category) ? (dbState.category + ' / ') : '') + (dbState && dbState.setName ? dbState.setName : '')
+                  });
                 }
               } catch (_) {}
             }
@@ -1627,14 +1712,18 @@
           let batch = db.batch();
           const commits = [];
           let ops = 0;
+          const flush = () => { commits.push(batch.commit()); batch = db.batch(); ops = 0; };
           for (const u of updates) {
             batch.set(u.ref, u.data, { merge: true });
             ops++;
-            if (ops >= 450) {
-              commits.push(batch.commit());
-              batch = db.batch();
-              ops = 0;
-            }
+            if (ops >= 450) flush();
+          }
+          for (const log of logs) {
+            const collName = log.type === 'card' ? 'CardLogs' : (log.type === 'sealed' ? 'SealedLogs' : 'Logs');
+            const logRef = db.collection(collName).doc();
+            batch.set(logRef, log, { merge: false });
+            ops++;
+            if (ops >= 450) flush();
           }
           if (ops > 0) commits.push(batch.commit());
           try {
@@ -1776,6 +1865,8 @@
               createdAt: (window.firebase && window.firebase.firestore && window.firebase.firestore.FieldValue && window.firebase.firestore.FieldValue.serverTimestamp) ? window.firebase.firestore.FieldValue.serverTimestamp() : new Date()
             }, { merge: true });
             try { await ref.collection('Cards').doc('_init').set({ placeholder: true }); } catch (_) {}
+            // Log category creation
+            // Category logging removed
             closeAddCategoryModal();
             await buildDbTree();
             await showCategoryOverview(dbState.language || 'English', cat);
@@ -1783,6 +1874,73 @@
             alert('Create category failed: ' + (e && e.message ? e.message : String(e)));
           }
         });
+
+        // --- Logs: functions and events ---
+        function setActiveLogsTab(view) {
+          logsView = view;
+          if (logsTabCards) logsTabCards.classList.toggle('active', view === 'card');
+          if (logsTabSealed) logsTabSealed.classList.toggle('active', view === 'sealed');
+        }
+        function formatTs(ts) {
+          try {
+            if (!ts) return '';
+            if (typeof ts.toDate === 'function') return ts.toDate().toLocaleString();
+            const d = new Date(ts);
+            return Number.isNaN(d.getTime()) ? '' : d.toLocaleString();
+          } catch (_) { return ''; }
+        }
+        async function renderLogs(view) {
+          if (view) setActiveLogsTab(view);
+          if (!logsList) return;
+          logsList.innerHTML = '<div class="small muted mono">Loading logs…</div>';
+          try {
+            const db = await getDb();
+            // Map view to collection
+            const coll = logsView === 'sealed' ? 'SealedLogs' : 'CardLogs';
+            const snap = await db.collection(coll).orderBy('time', 'desc').limit(200).get();
+            const rows = [];
+            snap.forEach(d => rows.push({ id: d.id, data: d.data() || {} }));
+            let html = '';
+            html += '<div style="overflow:auto;"><table class="table">';
+            if (logsView === 'card') {
+              html += '<thead><tr><th>Time</th><th>Card Name</th><th>Number</th><th>Print</th><th>Amount</th><th>Location</th><th>Set</th></tr></thead><tbody>';
+            } else {
+              html += '<thead><tr><th>Time</th><th>Sealed Product</th><th>Amount</th><th>Location</th></tr></thead><tbody>';
+            }
+            rows.forEach(r => {
+              const d = r.data || {};
+              html += '<tr>';
+              html += '<td class="small mono">' + (formatTs(d.time) || '') + '</td>';
+              if (logsView === 'card') {
+                html += '<td>' + (d.cardName || '') + '</td>';
+                html += '<td>' + (Number.isFinite(d.number) ? d.number : (d.number || '')) + '</td>';
+                html += '<td>' + (d.print || '') + '</td>';
+                html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
+                html += '<td>' + (d.location || '') + '</td>';
+                html += '<td>' + (d.set || '') + '</td>';
+              } else {
+                html += '<td>' + (d.sealedName || '') + '</td>';
+                html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
+                html += '<td>' + (d.location || '') + '</td>';
+              }
+              html += '</tr>';
+            });
+            html += '</tbody></table></div>';
+            if (rows.length === 0) {
+              html = '<div class="small muted">No logs yet.</div>';
+            }
+            logsList.innerHTML = html;
+            if (logsCount) logsCount.textContent = String(rows.length);
+            if (!logsInitializedOnce) logsInitializedOnce = true;
+          } catch (e) {
+            logsList.innerHTML = '<div class="small mono" style="color:#C53030;">Failed to load logs: ' + (e && e.message ? e.message : String(e)) + '</div>';
+          }
+        }
+        if (logsRefreshBtn) logsRefreshBtn.addEventListener('click', () => renderLogs());
+        if (logsTabCards) logsTabCards.addEventListener('click', () => { setActiveLogsTab('card'); renderLogs(); });
+        if (logsTabSealed) logsTabSealed.addEventListener('click', () => { setActiveLogsTab('sealed'); renderLogs(); });
+        // Preload logs if the Logs page is active on load (default to Cards)
+        if (location.hash === '#logs') renderLogs('card');
 
       });
     </script>
