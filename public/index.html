@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Pokemon Collection Database</title>
+    <title>Pokemon Collection</title>
 
     <!-- update the version number as needed -->
     <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-app-compat.js"></script>
@@ -64,13 +64,50 @@
       .tree-caret { width: 0; height: 0; border-top: 5px solid transparent; border-bottom: 5px solid transparent; border-left: 6px solid #4A5568; transition: transform .12s ease; }
       .expanded > .tree-row .tree-caret { transform: rotate(90deg); }
       .tree-children { margin-left: 14px; padding-left: 6px; border-left: 1px dashed #E2E8F0; }
+      /* Modal styles */
+      .modal-backdrop { position: fixed; inset: 0; background: rgba(26, 32, 44, 0.55); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+      .modal-panel { background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; width: min(920px, 96vw); max-height: 90vh; overflow: auto; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+      .modal-header { padding: 12px 16px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: center; justify-content: space-between; }
+      .modal-body { padding: 14px 16px; }
+      .grid-quick { display: grid; grid-template-columns: 90px 160px 120px 1fr; gap: 8px; align-items: center; }
+      .grid-quick.sealed { grid-template-columns: 90px 120px 1fr; }
+      .grid-quick.cards { grid-template-columns: 90px 160px 120px 1fr; }
+      .grid-quick .hdr { font-weight: 600; font-size: 12px; color: #4A5568; }
+      .grid-quick input { padding: 8px; border: 1px solid #E2E8F0; border-radius: 8px; }
+      .grid-quick select { padding: 8px; border: 1px solid #E2E8F0; border-radius: 8px; background: #FFFFFF; }
+      .modal-footer { padding: 12px 16px; border-top: 1px solid #E2E8F0; display: flex; gap: 8px; justify-content: flex-end; }
+      /* Category overview (3rd level) */
+      .set-details { display: flex; gap: 12px; align-items: flex-start; }
+      .set-image { width: 160px; height: 100px; object-fit: contain; border: 1px solid #E2E8F0; border-radius: 8px; background: #F7FAFC; }
+      .tabs { display: flex; gap: 6px; flex-wrap: wrap; }
+      .tab-btn { padding: 6px 10px; border: 1px solid #E2E8F0; background: #EDF2F7; color: #1A202C; border-radius: 999px; cursor: pointer; }
+      .tab-btn.active { background: #2B6CB0; color: #FFFFFF; border-color: #2B6CB0; }
+      /* Small toggle slider */
+      .switch { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; }
+      .switch input { opacity: 0; width: 0; height: 0; }
+      .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #CBD5E0; transition: .2s; border-radius: 999px; }
+      .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; top: 3px; background: #FFFFFF; transition: .2s; border-radius: 50%; }
+      .switch input:checked + .slider { background: #2B6CB0; }
+      .switch input:checked + .slider:before { transform: translateX(20px); }
+      /* Set overview layout tweaks */
+      .set-overview { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+      .kv-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
+      .kv-item { display: flex; align-items: baseline; gap: 10px; }
+      .kv-label { color: #4A5568; min-width: 90px; }
+      .toggle-row { display: flex; align-items: center; gap: 8px; }
+      .set-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 12px; align-items: stretch; }
+      /* Language view: categories laid out in two columns */
+      .category-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+      @media (max-width: 900px) { .category-grid { grid-template-columns: 1fr; } }
+      .set-item { list-style: disc; margin-left: 18px; padding: 4px 6px; border-radius: 6px; cursor: pointer; }
+      .set-item:hover { background: #EDF2F7; }
       @media (max-width: 800px) { .app { grid-template-columns: 1fr; } .sidebar { flex-direction: row; gap: 8px; position: sticky; top: 0; z-index: 10; } }
     </style>
   </head>
   <body>
     <div class="app">
       <aside class="sidebar">
-        <div class="brand">Pokemon Collection DB</div>
+        <div class="brand">Pokemon Collection</div>
         <nav class="nav">
           <a href="#home" id="nav-home">Home</a>
           <a href="#statistics" id="nav-statistics">Statistics</a>
@@ -124,13 +161,17 @@
           <div class="db-layout">
             <div class="card" id="dbTreeCard" style="padding:0;">
               <div class="row" style="padding:10px 12px; justify-content: space-between;">
-                <div class="small muted">Pokemon Packs</div>
                 <button class="btn ghost small" id="dbRefreshTree" style="padding:6px 8px;">Refresh</button>
               </div>
               <div id="dbTree" style="padding: 4px 6px;"></div>
             </div>
             <div style="display:flex; flex-direction:column; gap:12px; min-width:0;">
               <div class="chips small mono" id="dbBreadcrumb"></div>
+              <div class="tabs" id="dbSetTabs"></div>
+              <div id="dbSetDetails"></div>
+              <div class="stack">
+                <button class="btn hidden" id="dbQuickEditBtn" title="Quickly add cards and update location">Edit Card / Sealed Amount</button>
+              </div>
               <div class="card hidden" id="dbImportCard">
                 <div class="row">
                   <div class="small muted" id="dbImportTitle">Import into (Select Set)</div>
@@ -145,6 +186,95 @@
           </div>
         </section>
       </main>
+    </div>
+
+    <!-- Quick Edit Modal -->
+    <div id="quickEditModal" class="hidden">
+      <div class="modal-backdrop">
+        <div class="modal-panel">
+          <div class="modal-header">
+            <div class="row" style="gap:8px;justify-content:flex-start;">
+              <div class="small muted">Quick Edit</div>
+              <div class="chip" id="quickEditContext">Cards</div>
+            </div>
+            <button class="btn ghost small" id="quickEditClose" style="padding:6px 8px;">Close</button>
+          </div>
+          <div class="modal-body">
+            <div id="quickEditRows"></div>
+            <div class="small muted space-top">Leave rows blank to skip. If Location is blank, it will not be changed.</div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn secondary" id="quickEditCancel">Cancel</button>
+            <button class="btn" id="quickEditApply">Apply Updates</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Set Modal -->
+    <div id="addSetModal" class="hidden">
+      <div class="modal-backdrop">
+        <div class="modal-panel">
+          <div class="modal-header">
+            <div class="row" style="gap:8px;justify-content:flex-start;">
+              <div class="small muted">Add New Set</div>
+              <div class="chip" id="addSetContext">-</div>
+            </div>
+            <button class="btn ghost small" id="addSetClose" style="padding:6px 8px;">Close</button>
+          </div>
+          <div class="modal-body">
+            <div class="grid-quick" style="grid-template-columns: 140px 1fr;">
+              <div class="hdr" id="addSetCategoryLabel">Category</div>
+              <input id="addSetCategory" placeholder="e.g., Scarlet and Violet">
+              <div class="hdr">Set Name</div>
+              <input id="addSetName" placeholder="e.g., Phantasmal Flames">
+              <div class="hdr">Cards</div>
+              <input id="addSetCards" type="number" min="0" step="1" placeholder="0">
+              <div class="hdr">Total Cards</div>
+              <input id="addSetTotalCards" type="number" min="0" step="1" placeholder="0">
+              <div class="hdr">Image Link</div>
+              <input id="addSetImage" placeholder="https://…">
+              <div class="hdr">Flags</div>
+              <div class="toggle-row">
+                <label class="switch"><input type="checkbox" id="addSetCanImportCards"><span class="slider"></span></label>
+                <span class="small">Can Import Cards</span>
+                <label class="switch" style="margin-left:14px;"><input type="checkbox" id="addSetCanImportSealed"><span class="slider"></span></label>
+                <span class="small">Can Import Sealed</span>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn secondary" id="addSetCancel">Cancel</button>
+            <button class="btn" id="addSetApply">Create Set</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="hidden">
+      <div class="modal-backdrop">
+        <div class="modal-panel">
+          <div class="modal-header">
+            <div class="row" style="gap:8px;justify-content:flex-start;">
+              <div class="small muted">Add New Category</div>
+              <div class="chip" id="addCategoryContext">-</div>
+            </div>
+            <button class="btn ghost small" id="addCategoryClose" style="padding:6px 8px;">Close</button>
+          </div>
+          <div class="modal-body">
+            <div class="grid-quick" style="grid-template-columns: 140px 1fr;">
+              <div class="hdr">Category Name</div>
+              <input id="addCategoryName" placeholder="e.g., Scarlet and Violet">
+            </div>
+            <div class="small muted space-top">A hidden placeholder will be created so this category shows in the tree.</div>
+          </div>
+          <div class="modal-footer">
+            <button class="btn secondary" id="addCategoryCancel">Cancel</button>
+            <button class="btn" id="addCategoryApply">Create Category</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script>
@@ -169,6 +299,85 @@
           else if (hash === '#database') navLinks.database.classList.add('active');
           else if (hash === '#signin') navLinks.signin.classList.add('active');
           else navLinks.home.classList.add('active');
+        }
+
+        // Language overview: show Add Set even if no categories/sets exist
+        async function showLanguageOverview(lang) {
+          dbState.language = lang;
+          dbState.category = '';
+          dbState.setName = '';
+          updateBreadcrumb();
+          refreshImportCardContext();
+          await refreshImportVisibility();
+          if (dbSetTabs) {
+            dbSetTabs.innerHTML = '';
+            if (currentUserCanEdit) {
+              const addCatBtn = document.createElement('button');
+              addCatBtn.className = 'btn';
+              addCatBtn.id = 'btnAddCategory';
+              addCatBtn.textContent = 'Add Category';
+              addCatBtn.addEventListener('click', openAddCategoryModal);
+              dbSetTabs.appendChild(addCatBtn);
+            }
+          }
+          if (dbSetDetails) { dbSetDetails.className = 'category-grid'; dbSetDetails.innerHTML = '<div class="small muted mono">Loading…</div>'; }
+          if (dbOutput) { dbOutput.innerHTML = '<div class="card"><div class="small muted">Select a set to view data.</div></div>'; }
+          try {
+            const struct = await discoverStructure();
+            const categories = Object.keys(struct[lang] || {}).sort((a, b) => a.localeCompare(b));
+            if (dbSetDetails) {
+              dbSetDetails.innerHTML = '';
+              const frag = document.createDocumentFragment();
+              categories.forEach(cat => {
+                const sets = Object.keys(struct[lang][cat] || {})
+                  .filter(n => !/^_/.test(n))
+                  .sort((a, b) => a.localeCompare(b));
+                const card = document.createElement('div');
+                card.className = 'card';
+                const header = document.createElement('div');
+                header.className = 'row';
+                header.style.justifyContent = 'space-between';
+                const title = document.createElement('div');
+                title.className = 'mono';
+                title.style.fontWeight = '600';
+                title.textContent = cat;
+                header.appendChild(title);
+                if (currentUserCanEdit) {
+                  const addBtn = document.createElement('button');
+                  addBtn.className = 'btn ghost small';
+                  addBtn.style.padding = '6px 8px';
+                  addBtn.textContent = 'Add Set';
+                  addBtn.addEventListener('click', () => { dbState.category = cat; openAddSetModal(); });
+                  header.appendChild(addBtn);
+                }
+                card.appendChild(header);
+                const ul = document.createElement('ul');
+                ul.style.margin = '8px 0 0 0';
+                ul.style.padding = '0 0 0 0';
+                if (sets.length === 0) {
+                  const li = document.createElement('li');
+                  li.className = 'small muted';
+                  li.textContent = 'No sets yet.';
+                  ul.appendChild(li);
+                } else {
+                  sets.forEach(setName => {
+                    const li = document.createElement('li');
+                    li.className = 'set-item';
+                    li.textContent = setName;
+                    li.addEventListener('click', () => navigateToSet(lang, cat, setName));
+                    ul.appendChild(li);
+                  });
+                }
+                card.appendChild(ul);
+                frag.appendChild(card);
+              });
+              if (categories.length === 0) {
+                dbSetDetails.innerHTML = '<div class="card"><div class="small muted">No categories yet. Use "Add Category".</div></div>';
+              } else {
+                dbSetDetails.appendChild(frag);
+              }
+            }
+          } catch (_) {}
         }
 
         function showPage(hash) {
@@ -207,6 +416,9 @@
         const dbImportCardEl = document.getElementById('dbImportCard');
         const dbImportTitle = document.getElementById('dbImportTitle');
         const dbImportDestination = document.getElementById('dbImportDestination');
+        const dbQuickEditBtn = document.getElementById('dbQuickEditBtn');
+        const dbSetTabs = document.getElementById('dbSetTabs');
+        const dbSetDetails = document.getElementById('dbSetDetails');
         if (dbImportCardEl) dbImportCardEl.classList.add('hidden');
 
         const dbState = {
@@ -215,6 +427,8 @@
           setName: '',
           view: 'Cards', // Cards | Sealed
         };
+        let currentUserCanEdit = false;
+        let currentCategorySets = { lang: '', cat: '', map: {} };
 
         function updateBreadcrumb() {
           const parts = [
@@ -319,9 +533,9 @@
               rows.push({ id: doc.id, data });
             });
             // Build fields in preferred order and hide image/link fields
-            const hidden = new Set(['Picture', 'Picture Link', 'Link', 'Count']);
+            const hidden = new Set(['Picture', 'Picture Link', 'Link', 'Count', 'Number']);
             const fields = Array.from(fieldSet).filter(f => !hidden.has(f));
-            const preferredOrder = ['Number', 'Cost', 'Location', 'Amount Owned'];
+            const preferredOrder = ['Cost', 'Location', 'Amount Owned'];
             fields.sort((a, b) => {
               const ai = preferredOrder.indexOf(a);
               const bi = preferredOrder.indexOf(b);
@@ -336,17 +550,8 @@
             html += '<table class="table">';
             html += '<thead><tr><th>Product</th>' + fields.map(f => '<th>' + f + '</th>').join('') + '</tr></thead>';
             html += '<tbody>';
-            // Sort primarily by Number if present
-            rows.sort((a, b) => {
-              const toNumber = (val) => {
-                const n = Number(val);
-                return Number.isFinite(n) ? n : Number.POSITIVE_INFINITY;
-              };
-              const na = toNumber(a.data['Number']);
-              const nb = toNumber(b.data['Number']);
-              if (na !== nb) return na - nb;
-              return a.id.localeCompare(b.id);
-            });
+            // Sort by product name (document id)
+            rows.sort((a, b) => a.id.localeCompare(b.id));
             rows.forEach(row => {
               const data = row.data || {};
               html += '<tr>';
@@ -458,18 +663,26 @@
             const user = firebaseGlobal.auth().currentUser;
             if (!user) {
               dbImportCardEl.classList.add('hidden');
+              if (dbQuickEditBtn) dbQuickEditBtn.classList.add('hidden');
               return;
             }
             const db = await getDb();
             const doc = await db.collection('Users').doc(user.uid).get();
             const data = doc && doc.exists ? (doc.data() || {}) : {};
             const userAllowed = !!(data && data.canEdit === true);
+            currentUserCanEdit = userAllowed;
             const setAllowed = await isSetImportAllowed();
             const allowed = userAllowed && setAllowed;
             dbImportCardEl.classList.toggle('hidden', !allowed);
             refreshImportCardContext();
+            // Show quick edit button for editors when a set is selected
+            if (dbQuickEditBtn) {
+              const showQuick = userAllowed && !!dbState.setName;
+              dbQuickEditBtn.classList.toggle('hidden', !showQuick);
+            }
           } catch (_) {
             if (dbImportCardEl) dbImportCardEl.classList.add('hidden');
+            if (dbQuickEditBtn) dbQuickEditBtn.classList.add('hidden');
           }
         }
 
@@ -522,6 +735,199 @@
             }
           });
           return { node, children, toggle };
+        }
+
+        // --- Category (3rd level) view: set tabs + summary header ---
+        async function showCategoryOverview(lang, cat) {
+          dbState.language = lang;
+          dbState.category = cat;
+          dbState.setName = '';
+          updateBreadcrumb();
+          refreshImportCardContext();
+          await refreshImportVisibility();
+          if (dbOutput) {
+            dbOutput.innerHTML = '<div class="card"><div class="small muted">Select a set from the boxes above.</div></div>';
+          }
+          if (dbSetDetails) { dbSetDetails.innerHTML = ''; dbSetDetails.className = 'set-grid'; }
+          if (dbSetTabs) {
+            dbSetTabs.innerHTML = '';
+            if (currentUserCanEdit) {
+              const addBtn = document.createElement('button');
+              addBtn.className = 'btn';
+              addBtn.id = 'btnAddSet';
+              addBtn.textContent = 'Add Set';
+              addBtn.addEventListener('click', openAddSetModal);
+              dbSetTabs.appendChild(addBtn);
+            }
+          }
+          try {
+            const db = await getDb();
+            const colRef = db.collection('Pokemon Packs').doc(lang).collection(cat);
+            const snap = await colRef.get();
+            const setsMap = {};
+            const names = [];
+            snap.forEach(d => {
+              names.push(d.id);
+              setsMap[d.id] = d.data() || {};
+            });
+            names.sort((a, b) => a.localeCompare(b));
+            // Hide placeholder sets (ids starting with "_")
+            const visibleNames = names.filter(n => !/^_/.test(n));
+            currentCategorySets = { lang, cat, map: setsMap };
+            // Render full overview cards for each set
+            if (dbSetDetails) {
+              const frag = document.createDocumentFragment();
+              visibleNames.forEach(name => {
+                const data = setsMap[name] || {};
+                const card = createSetOverviewCard(name, data, lang, cat);
+                frag.appendChild(card);
+              });
+              dbSetDetails.appendChild(frag);
+            }
+          } catch (e) {
+            if (dbSetDetails) dbSetDetails.innerHTML = '<div class="small mono" style="color:#C53030;">Failed to load sets: ' + (e && e.message ? e.message : String(e)) + '</div>';
+          }
+        }
+
+        function getSafe(obj, keys, fallback) {
+          for (const k of keys) {
+            if (obj && Object.prototype.hasOwnProperty.call(obj, k)) return obj[k];
+          }
+          return fallback;
+        }
+
+        function createSetOverviewCard(name, data, lang, cat) {
+          const cardsCount = Number(getSafe(data, ['Cards', 'cards'], '')) || 0;
+          const totalCards = Number(getSafe(data, ['Total Cards', 'TotalCards', 'totalCards'], '')) || 0;
+          const imgUrl = String(getSafe(data, ['image', 'Image', 'Picture', 'Picture Link'], '') || '').trim();
+          const canImportCards = !!getSafe(data, ['CanImportCards'], false);
+          const canImportSealed = !!getSafe(data, ['CanImportSealed'], false);
+          const wrapper = document.createElement('div');
+          wrapper.className = 'card';
+          wrapper.innerHTML =
+            '<div class="set-overview">'
+              + '<div style="flex:1;">'
+                + '<div class="mono" style="font-weight:600;margin-bottom:6px;">' + name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'
+                + '<ul class="kv-list">'
+                  + '<li class="kv-item"><span class="kv-label small">Cards</span><span class="mono">' + cardsCount + '</span></li>'
+                  + '<li class="kv-item"><span class="kv-label small">Total Cards</span><span class="mono">' + totalCards + '</span></li>'
+                + '</ul>'
+                + (currentUserCanEdit
+                  ? ('<div class="space-top">'
+                    + '<div class="toggle-row"><label class="switch"><input type="checkbox" class="set-flag" data-flag="CanImportCards"' + (canImportCards ? ' checked' : '') + '><span class="slider"></span></label><span class="small">Can Import Cards</span></div>'
+                    + '<div class="toggle-row"><label class="switch"><input type="checkbox" class="set-flag" data-flag="CanImportSealed"' + (canImportSealed ? ' checked' : '') + '><span class="slider"></span></label><span class="small">Can Import Sealed</span></div>'
+                  + '</div>')
+                  : '')
+              + '</div>'
+              + '<img class="set-image" src="' + (imgUrl || '') + '" alt="' + name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '">'
+            + '</div>';
+          // Click to select set (ignore clicks on toggles)
+          wrapper.addEventListener('click', async (ev) => {
+            const target = ev.target;
+            if (target && (target.tagName === 'INPUT' || target.closest && target.closest('.switch'))) return;
+            await selectSetFromTabs(name);
+          });
+          // Wire flag updates
+          if (currentUserCanEdit) {
+            const inputs = Array.from(wrapper.querySelectorAll('input.set-flag'));
+            inputs.forEach(input => {
+              input.addEventListener('change', async () => {
+                const key = String(input.getAttribute('data-flag') || '');
+                try {
+                  const db = await getDb();
+                  const ref = db.collection('Pokemon Packs').doc(lang).collection(cat).doc(name);
+                  await ref.set({ [key]: !!input.checked }, { merge: true });
+                  // Keep local cache in sync
+                  if (currentCategorySets.map && currentCategorySets.map[name]) {
+                    currentCategorySets.map[name][key] = !!input.checked;
+                  }
+                  // If this is the selected set, refresh import visibility
+                  if (dbState.setName === name) await refreshImportVisibility();
+                } catch (e) {
+                  alert('Failed to update ' + key + ': ' + (e && e.message ? e.message : String(e)));
+                  input.checked = !input.checked; // revert
+                }
+              });
+            });
+          }
+          return wrapper;
+        }
+
+        async function renderSetDetails(name) {
+          const dataLocal = (currentCategorySets.map && currentCategorySets.map[name]) || {};
+          let data = dataLocal;
+          if (!('Cards' in dataLocal) && !('Total Cards' in dataLocal) && !('image' in dataLocal)) {
+            try {
+              const db = await getDb();
+              const snap = await db.collection('Pokemon Packs').doc(dbState.language).collection(dbState.category).doc(name).get();
+              data = snap && snap.exists ? (snap.data() || {}) : {};
+            } catch (_) {}
+          }
+          const cardsCount = Number(getSafe(data, ['Cards', 'cards'], '')) || 0;
+          const totalCards = Number(getSafe(data, ['Total Cards', 'TotalCards', 'totalCards'], '')) || 0;
+          const imgUrl = String(getSafe(data, ['image', 'Image', 'Picture', 'Picture Link'], '') || '').trim();
+          const canImportCards = !!getSafe(data, ['CanImportCards'], false);
+          const canImportSealed = !!getSafe(data, ['CanImportSealed'], false);
+          const parts = [];
+          parts.push('<div class="card">');
+          parts.push('<div class="set-overview">');
+          parts.push('<div style="flex:1;">');
+          parts.push('<ul class="kv-list">');
+          parts.push('<li class="kv-item"><span class="kv-label small">Cards</span><span class="mono">' + cardsCount + '</span></li>');
+          parts.push('<li class="kv-item"><span class="kv-label small">Total Cards</span><span class="mono">' + totalCards + '</span></li>');
+          parts.push('</ul>');
+          if (currentUserCanEdit) {
+            parts.push('<div class="space-top">');
+            parts.push('<div class="toggle-row"><label class="switch"><input type="checkbox" id="toggleCanImportCards"' + (canImportCards ? ' checked' : '') + '><span class="slider"></span></label><span class="small">Can Import Cards</span></div>');
+            parts.push('<div class="toggle-row"><label class="switch"><input type="checkbox" id="toggleCanImportSealed"' + (canImportSealed ? ' checked' : '') + '><span class="slider"></span></label><span class="small">Can Import Sealed</span></div>');
+            parts.push('</div>');
+          }
+          parts.push('</div>'); // left column
+          parts.push('<img class="set-image" src="' + (imgUrl || '') + '" alt="' + name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '">');
+          parts.push('</div>'); // set-overview
+          parts.push('</div>'); // card
+          if (dbSetDetails) dbSetDetails.innerHTML = parts.join('');
+          // Default: Cards view is already loaded by the caller
+          const t1 = document.getElementById('toggleCanImportCards');
+          const t2 = document.getElementById('toggleCanImportSealed');
+          async function updateFlag(key, value) {
+            try {
+              const db = await getDb();
+              const ref = db.collection('Pokemon Packs').doc(dbState.language).collection(dbState.category).doc(dbState.setName);
+              await ref.set({ [key]: !!value }, { merge: true });
+              await refreshImportVisibility();
+            } catch (e) {
+              alert('Failed to update ' + key + ': ' + (e && e.message ? e.message : String(e)));
+            }
+          }
+          if (t1) t1.addEventListener('change', () => updateFlag('CanImportCards', !!t1.checked));
+          if (t2) t2.addEventListener('change', () => updateFlag('CanImportSealed', !!t2.checked));
+        }
+
+        async function selectSetFromTabs(name) {
+          dbState.setName = name;
+          dbState.view = 'Cards';
+          updateBreadcrumb();
+          refreshImportCardContext();
+          await refreshImportVisibility();
+          if (dbSetTabs) {
+            const children = Array.from(dbSetTabs.children || []);
+            children.forEach(ch => ch.classList.toggle('active', (ch.textContent || '') === name));
+          }
+          await renderSetDetails(name);
+          await loadCurrentView();
+        }
+
+        async function navigateToSet(lang, cat, setName) {
+          dbState.language = lang;
+          dbState.category = cat;
+          dbState.setName = setName;
+          dbState.view = 'Cards';
+          updateBreadcrumb();
+          refreshImportCardContext();
+          await refreshImportVisibility();
+          await renderSetDetails(setName);
+          await loadCurrentView();
         }
 
         async function discoverStructure() {
@@ -587,6 +993,7 @@
               for (const lang of languages) {
                 const categories = Object.keys(struct[lang] || {}).sort((a, b) => a.localeCompare(b));
                 const { node: langNode, children: langChildren, toggle: toggleLang } = makeTreeNode(lang, {
+                  onSelect: async () => { await showLanguageOverview(lang); },
                   loadChildren: async (container2) => {
                     container2.innerHTML = '';
                     if (categories.length === 0) {
@@ -595,8 +1002,12 @@
                     }
                     for (const cat of categories) {
                       const setsMap = struct[lang][cat] || {};
-                      const setNames = Object.keys(setsMap).sort((a, b) => a.localeCompare(b));
+                      // Filter out placeholder sets (ids starting with "_")
+                      const setNames = Object.keys(setsMap)
+                        .filter(n => !/^_/.test(n))
+                        .sort((a, b) => a.localeCompare(b));
                       const { node: catNode, children: catChildren, toggle: toggleCat } = makeTreeNode(cat, {
+                        onSelect: async () => { await showCategoryOverview(lang, cat); },
                         loadChildren: async (container3) => {
                           container3.innerHTML = '';
                           if (setNames.length === 0) {
@@ -606,6 +1017,15 @@
                           for (const setName of setNames) {
                             const flags = setsMap[setName] || { hasCards: true, hasSealed: true };
                             const { node: setNode, children: setChildren, toggle: toggleSet } = makeTreeNode(setName, {
+                              onSelect: async () => {
+                                dbState.language = lang;
+                                dbState.category = cat;
+                                dbState.setName = setName;
+                                dbState.view = 'Cards';
+                                updateBreadcrumb();
+                                await renderSetDetails(setName);
+                                await loadCurrentView();
+                              },
                               loadChildren: async (container4) => {
                                 container4.innerHTML = '';
                                 if (flags.hasCards) {
@@ -946,10 +1366,6 @@
             const priceRaw = (item && (item.price || item.Price)) || '';
             const pictureUrl = (item && (item.imageUrl || item.ImageUrl || item.imageURL)) || '';
             const name = String(nameRaw).trim();
-            // Derive display id: include printing for variants, similar to CSV naming convention
-            const normalizedPrinting = String(printingRaw || '').trim();
-            const isNormal = /^normal$/i.test(normalizedPrinting) || normalizedPrinting === '';
-            const displayId = isNormal ? name : (name ? (name + ' [' + normalizedPrinting.replace(/Holofoil/gi, 'Holo') + ']') : '');
             // Parse number like "054/132" → 54
             let numberVal = 0;
             if (typeof numberRaw === 'number') numberVal = numberRaw;
@@ -957,6 +1373,11 @@
               const m = numberRaw.match(/^\s*(\d+)/);
               numberVal = m ? parseInt(m[1], 10) : 0;
             }
+            // Derive display id: include printing for variants; accept any printing string as-is
+            const normalizedPrinting = String(printingRaw || '').trim();
+            const isNormal = /^normal$/i.test(normalizedPrinting) || normalizedPrinting === '';
+            const baseId = name ? (name + (Number.isFinite(numberVal) && numberVal > 0 ? (' #' + numberVal) : '')) : '';
+            const displayId = isNormal ? baseId : (baseId ? (baseId + ' [' + normalizedPrinting + ']') : '');
             const costVal = typeof priceRaw === 'number' ? priceRaw : parseFloat(String(priceRaw || '').trim());
             if (!name) continue;
             const data = {
@@ -1033,6 +1454,336 @@
 
         bindNavClicks();
         initRouter();
+
+        // --- Quick Edit Modal logic ---
+        const quickEditModal = document.getElementById('quickEditModal');
+        const quickEditRows = document.getElementById('quickEditRows');
+        const quickEditApply = document.getElementById('quickEditApply');
+        const quickEditCancel = document.getElementById('quickEditCancel');
+        const quickEditClose = document.getElementById('quickEditClose');
+        const quickEditContext = document.getElementById('quickEditContext');
+
+        async function openQuickEdit() {
+          if (!dbState.setName) {
+            alert('Select a set first.');
+            return;
+          }
+          const isSealed = dbState.view === 'Sealed';
+          if (quickEditContext) quickEditContext.textContent = (dbState.category || '') + ' / ' + (dbState.setName || '') + ' / ' + (dbState.view || '');
+          let html = '';
+          if (isSealed) {
+            html += '<div class="grid-quick sealed">';
+            html += '<div class="hdr">Product</div><div class="hdr">Amount</div><div class="hdr">Location</div>';
+            // Build product dropdown from current set's Sealed docs
+            try {
+              const db = await getDb();
+              const colRef = db
+                .collection('Pokemon Packs')
+                .doc(dbState.language || 'English')
+                .collection(dbState.category || 'Mega Evolution')
+                .doc(dbState.setName)
+                .collection('Sealed');
+              const snap = await colRef.get();
+              const options = [];
+              options.push('<option value="">Select product…</option>');
+              const names = [];
+              snap.forEach(d => names.push(String(d.id || '')));
+              names.sort((a, b) => a.localeCompare(b));
+              names.forEach(n => options.push('<option value="' + n.replace(/"/g, '&quot;') + '">' + n.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</option>'));
+              html += '<select id="qe-s-prod-0">' + options.join('') + '</select>';
+            } catch (_) {
+              html += '<select id="qe-s-prod-0"><option value="">Select product…</option></select>';
+            }
+            html += '<input type="number" step="1" id="qe-s-amt-0" placeholder="+/-">';
+            html += '<input type="text" id="qe-s-loc-0" placeholder="optional">';
+            html += '</div>';
+          } else {
+            html += '<div class="grid-quick cards">';
+            html += '<div class="hdr">Number</div><div class="hdr">Printing</div><div class="hdr">Amount</div><div class="hdr">Location</div>';
+            for (let i = 0; i < 10; i++) {
+              html += '<input type="number" min="0" step="1" id="qe-num-' + i + '" placeholder="#">';
+              html += '<select id="qe-prt-' + i + '">'
+                + '<option value="">Normal</option>'
+                + '<option value="Reverse Holofoil">Reverse Holofoil</option>'
+                + '<option value="Holofoil">Holofoil</option>'
+              + '</select>';
+              html += '<input type="number" step="1" id="qe-amt-' + i + '" placeholder="+/-">';
+              html += '<input type="text" id="qe-loc-' + i + '" placeholder="optional">';
+            }
+            html += '</div>';
+          }
+          quickEditRows.innerHTML = html;
+          quickEditModal.classList.remove('hidden');
+        }
+
+        function closeQuickEdit() {
+          if (quickEditModal) quickEditModal.classList.add('hidden');
+        }
+
+        function normalizePrintingLabel(s) {
+          const raw = String(s || '').trim();
+          if (!raw) return '';
+          if (/^normal$/i.test(raw)) return '';
+          return raw;
+        }
+
+        async function applyQuickEdits() {
+          // Quick edit permission: only requires signed-in user with canEdit=true
+          try {
+            const firebaseGlobal = window.firebase;
+            if (!firebaseGlobal || !firebaseGlobal.auth) {
+              alert('Firebase not initialized.');
+              return;
+            }
+            const user = firebaseGlobal.auth().currentUser;
+            if (!user) {
+              alert('You must be signed in to edit. Go to the Sign In page first.');
+              return;
+            }
+            const dbCheck = await getDb();
+            const doc = await dbCheck.collection('Users').doc(user.uid).get();
+            const data = doc && doc.exists ? (doc.data() || {}) : {};
+            if (!(data && data.canEdit === true)) {
+              alert('You do not have permission to edit. Ask an admin to set Users/' + (user.uid || '') + '.canEdit = true in Firestore.');
+              return;
+            }
+          } catch (_) {
+            alert('Permission check failed.');
+            return;
+          }
+          if (!dbState.setName) {
+            alert('Select a set first.');
+            return;
+          }
+          const db = await getDb();
+          const firebaseGlobal = window.firebase;
+          const setRef = db
+            .collection('Pokemon Packs')
+            .doc(dbState.language || 'English')
+            .collection(dbState.category || 'Mega Evolution')
+            .doc(dbState.setName);
+          const isSealed = dbState.view === 'Sealed';
+          const collection = isSealed ? 'Sealed' : 'Cards';
+          const colRef = setRef.collection(collection);
+          const updates = [];
+          if (isSealed) {
+            const prodId = String((document.getElementById('qe-s-prod-0') || {}).value || '').trim();
+            const amt = parseInt(String((document.getElementById('qe-s-amt-0') || {}).value || '').trim(), 10);
+            const loc = String((document.getElementById('qe-s-loc-0') || {}).value || '').trim();
+            if (prodId && Number.isFinite(amt) && amt !== 0) {
+              try {
+                const docRef = colRef.doc(prodId);
+                const docSnap = await docRef.get();
+                if (docSnap.exists) {
+                  const data = {};
+                  const cur = Number((docSnap.data() || {})['Amount Owned'] || 0);
+                  const next = Math.max(0, cur + amt);
+                  data['Amount Owned'] = next;
+                  if (loc) data['Location'] = loc;
+                  updates.push({ ref: docRef, data });
+                }
+              } catch (_) {}
+            }
+          } else {
+            for (let i = 0; i < 10; i++) {
+              const num = parseInt(String((document.getElementById('qe-num-' + i) || {}).value || '').trim(), 10);
+              const prt = normalizePrintingLabel((document.getElementById('qe-prt-' + i) || {}).value || '');
+              const amt = parseInt(String((document.getElementById('qe-amt-' + i) || {}).value || '').trim(), 10);
+              const loc = String((document.getElementById('qe-loc-' + i) || {}).value || '').trim();
+              if (!Number.isFinite(num) || !Number.isFinite(amt) || amt === 0) continue;
+              try {
+                const q = await colRef.where('Number', '==', num).get();
+                if (q.empty) continue;
+                let targetDoc = null;
+                q.forEach(doc => {
+                  if (targetDoc) return;
+                  const d = doc.data() || {};
+                  const dp = String(d['Printing'] || '').trim();
+                  const dpNorm = normalizePrintingLabel(dp);
+                  if (prt) {
+                    if (dpNorm.toLowerCase() === prt.toLowerCase()) targetDoc = doc;
+                  } else {
+                    if (!dpNorm) targetDoc = doc;
+                  }
+                });
+                if (!targetDoc) {
+                  targetDoc = q.docs[0] || null;
+                }
+                if (targetDoc) {
+                  const data = {};
+                  const cur = Number((targetDoc.data() || {})['Amount Owned'] || 0);
+                  const next = Math.max(0, cur + amt);
+                  data['Amount Owned'] = next;
+                  if (loc) data['Location'] = loc;
+                  updates.push({ ref: targetDoc.ref, data });
+                }
+              } catch (_) {}
+            }
+          }
+          if (updates.length === 0) {
+            alert('No valid rows to update.');
+            return;
+          }
+          let batch = db.batch();
+          const commits = [];
+          let ops = 0;
+          for (const u of updates) {
+            batch.set(u.ref, u.data, { merge: true });
+            ops++;
+            if (ops >= 450) {
+              commits.push(batch.commit());
+              batch = db.batch();
+              ops = 0;
+            }
+          }
+          if (ops > 0) commits.push(batch.commit());
+          try {
+            await Promise.all(commits);
+            closeQuickEdit();
+            await loadCurrentView();
+          } catch (e) {
+            alert('Update failed: ' + (e && e.message ? e.message : String(e)));
+          }
+        }
+
+        if (dbQuickEditBtn) dbQuickEditBtn.addEventListener('click', openQuickEdit);
+        if (quickEditApply) quickEditApply.addEventListener('click', () => applyQuickEdits());
+        if (quickEditCancel) quickEditCancel.addEventListener('click', closeQuickEdit);
+        if (quickEditClose) quickEditClose.addEventListener('click', closeQuickEdit);
+
+        // --- Add Set Modal logic ---
+        const addSetModal = document.getElementById('addSetModal');
+        const addSetContext = document.getElementById('addSetContext');
+        const addSetName = document.getElementById('addSetName');
+        const addSetCategory = document.getElementById('addSetCategory');
+        const addSetCards = document.getElementById('addSetCards');
+        const addSetTotalCards = document.getElementById('addSetTotalCards');
+        const addSetImage = document.getElementById('addSetImage');
+        const addSetCanImportCards = document.getElementById('addSetCanImportCards');
+        const addSetCanImportSealed = document.getElementById('addSetCanImportSealed');
+        const addSetApply = document.getElementById('addSetApply');
+        const addSetCancel = document.getElementById('addSetCancel');
+        const addSetClose = document.getElementById('addSetClose');
+        const addSetCategoryLabel = document.getElementById('addSetCategoryLabel');
+
+        // Add Category modal elements
+        const addCategoryModal = document.getElementById('addCategoryModal');
+        const addCategoryContext = document.getElementById('addCategoryContext');
+        const addCategoryName = document.getElementById('addCategoryName');
+        const addCategoryApply = document.getElementById('addCategoryApply');
+        const addCategoryCancel = document.getElementById('addCategoryCancel');
+        const addCategoryClose = document.getElementById('addCategoryClose');
+
+        function openAddSetModal() {
+          if (!dbState.category || !dbState.language) {
+            alert('Select a category first.');
+          }
+          if (addSetContext) addSetContext.textContent = (dbState.language || '') + ' / ' + (dbState.category || '(enter category)');
+          const knowCategory = !!(dbState.category && dbState.category.trim());
+          if (addSetCategoryLabel) addSetCategoryLabel.style.display = knowCategory ? 'none' : '';
+          if (addSetCategory) {
+            addSetCategory.style.display = knowCategory ? 'none' : '';
+            addSetCategory.disabled = knowCategory;
+            addSetCategory.value = knowCategory ? '' : (dbState.category || '');
+          }
+          if (addSetName) addSetName.value = '';
+          if (addSetCards) addSetCards.value = '';
+          if (addSetTotalCards) addSetTotalCards.value = '';
+          if (addSetImage) addSetImage.value = '';
+          if (addSetCanImportCards) addSetCanImportCards.checked = false;
+          if (addSetCanImportSealed) addSetCanImportSealed.checked = false;
+          addSetModal.classList.remove('hidden');
+        }
+        function closeAddSetModal() {
+          if (addSetModal) addSetModal.classList.add('hidden');
+        }
+        if (addSetCancel) addSetCancel.addEventListener('click', closeAddSetModal);
+        if (addSetClose) addSetClose.addEventListener('click', closeAddSetModal);
+        if (addSetApply) addSetApply.addEventListener('click', async () => {
+          // Permission: editor only
+          try {
+            const firebaseGlobal = window.firebase;
+            if (!firebaseGlobal || !firebaseGlobal.auth) { alert('Firebase not initialized.'); return; }
+            const user = firebaseGlobal.auth().currentUser;
+            if (!user) { alert('Sign in to create a set.'); return; }
+            const dbPerm = await getDb();
+            const doc = await dbPerm.collection('Users').doc(user.uid).get();
+            const data = doc && doc.exists ? (doc.data() || {}) : {};
+            if (!(data && data.canEdit === true)) { alert('You do not have permission to create sets.'); return; }
+          } catch (_) { alert('Permission check failed.'); return; }
+          const categoryFromInput = String((addSetCategory && addSetCategory.value || '')).trim();
+          const category = categoryFromInput || (dbState.category || '');
+          const name = String((addSetName && addSetName.value || '')).trim();
+          const cards = parseInt(String((addSetCards && addSetCards.value || '')).trim(), 10);
+          const totalCards = parseInt(String((addSetTotalCards && addSetTotalCards.value || '')).trim(), 10);
+          const image = String((addSetImage && addSetImage.value || '')).trim();
+          const flagCards = !!(addSetCanImportCards && addSetCanImportCards.checked);
+          const flagSealed = !!(addSetCanImportSealed && addSetCanImportSealed.checked);
+          if (!category) { alert('Enter category name.'); return; }
+          if (!name) { alert('Enter set name.'); return; }
+          try {
+            const db = await getDb();
+            const ref = db.collection('Pokemon Packs').doc(dbState.language).collection(category).doc(name);
+            await ref.set({
+              'Cards': Number.isFinite(cards) ? cards : 0,
+              'Total Cards': Number.isFinite(totalCards) ? totalCards : 0,
+              'image': image || '',
+              'CanImportCards': flagCards,
+              'CanImportSealed': flagSealed,
+              'createdAt': (window.firebase && window.firebase.firestore && window.firebase.firestore.FieldValue && window.firebase.firestore.FieldValue.serverTimestamp) ? window.firebase.firestore.FieldValue.serverTimestamp() : new Date()
+            }, { merge: true });
+            // Initialize empty subcollections so they appear in console
+            try { await ref.collection('Cards').doc('_init').set({ placeholder: true }); } catch (_) {}
+            try { await ref.collection('Sealed').doc('_init').set({ placeholder: true }); } catch (_) {}
+            closeAddSetModal();
+            await buildDbTree();
+            await showCategoryOverview(dbState.language, category);
+          } catch (e) {
+            alert('Create failed: ' + (e && e.message ? e.message : String(e)));
+          }
+        });
+
+        function openAddCategoryModal() {
+          if (addCategoryContext) addCategoryContext.textContent = (dbState.language || 'English');
+          if (addCategoryName) addCategoryName.value = '';
+          if (addCategoryModal) addCategoryModal.classList.remove('hidden');
+        }
+        function closeAddCategoryModal() {
+          if (addCategoryModal) addCategoryModal.classList.add('hidden');
+        }
+        if (addCategoryCancel) addCategoryCancel.addEventListener('click', closeAddCategoryModal);
+        if (addCategoryClose) addCategoryClose.addEventListener('click', closeAddCategoryModal);
+        if (addCategoryApply) addCategoryApply.addEventListener('click', async () => {
+          // editor permission
+          try {
+            const firebaseGlobal = window.firebase;
+            if (!firebaseGlobal || !firebaseGlobal.auth) { alert('Firebase not initialized.'); return; }
+            const user = firebaseGlobal.auth().currentUser;
+            if (!user) { alert('Sign in to create a category.'); return; }
+            const dbPerm = await getDb();
+            const doc = await dbPerm.collection('Users').doc(user.uid).get();
+            const data = doc && doc.exists ? (doc.data() || {}) : {};
+            if (!(data && data.canEdit === true)) { alert('You do not have permission to create categories.'); return; }
+          } catch (_) { alert('Permission check failed.'); return; }
+          const cat = String((addCategoryName && addCategoryName.value || '')).trim();
+          if (!cat) { alert('Enter category name.'); return; }
+          try {
+            const db = await getDb();
+            // Create hidden placeholder set to surface the category
+            const ref = db.collection('Pokemon Packs').doc(dbState.language || 'English').collection(cat).doc('_placeholder');
+            await ref.set({
+              hidden: true,
+              createdAt: (window.firebase && window.firebase.firestore && window.firebase.firestore.FieldValue && window.firebase.firestore.FieldValue.serverTimestamp) ? window.firebase.firestore.FieldValue.serverTimestamp() : new Date()
+            }, { merge: true });
+            try { await ref.collection('Cards').doc('_init').set({ placeholder: true }); } catch (_) {}
+            closeAddCategoryModal();
+            await buildDbTree();
+            await showCategoryOverview(dbState.language || 'English', cat);
+          } catch (e) {
+            alert('Create category failed: ' + (e && e.message ? e.message : String(e)));
+          }
+        });
+
       });
     </script>
   </body>
