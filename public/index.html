@@ -185,6 +185,11 @@
                 <div class="stack small space-top">
                   <input type="file" id="dbImportFile" accept=".txt,.json,.csv,application/json,text/plain">
                 </div>
+            <div class="stack small space-top">
+              <button class="btn" id="dbImportAllBtn">Import All</button>
+              <button class="btn ghost" id="dbImportPhotosBtn">Update Photos Only</button>
+              <button class="btn ghost" id="dbImportPricesBtn">Update Prices Only</button>
+            </div>
               </div>
               <div id="dbOutput"></div>
             </div>
@@ -350,7 +355,7 @@
             }
           }
           if (dbSetDetails) { dbSetDetails.className = 'category-grid'; dbSetDetails.innerHTML = '<div class="small muted mono">Loading…</div>'; }
-          if (dbOutput) { dbOutput.innerHTML = '<div class="card"><div class="small muted">Select a set to view data.</div></div>'; }
+          if (dbOutput) { dbOutput.innerHTML = ''; }
           try {
             const struct = await discoverStructure();
             const categories = Object.keys(struct[lang] || {}).sort((a, b) => a.localeCompare(b));
@@ -619,10 +624,11 @@
           updateBreadcrumb();
           refreshImportCardContext();
           await refreshImportVisibility();
-          if (!dbState.setName) {
-            dbOutput.innerHTML = '<div class="card"><div class="small muted">Select a set to view data.</div></div>';
-            return;
-          }
+          // Ensure "Add Set" controls are only visible at category level (clear in set/leaf views)
+          if (dbSetTabs) { dbSetTabs.innerHTML = ''; }
+          // Clear any overview cards when viewing leaf data
+          if (dbSetDetails) { dbSetDetails.innerHTML = ''; }
+          if (!dbState.setName) { dbOutput.innerHTML = ''; return; }
           if (dbState.view === 'Cards') {
             await loadCards();
           } else {
@@ -738,6 +744,11 @@
             const caret = document.createElement('span');
             caret.className = 'tree-caret';
             row.appendChild(caret);
+            // Only the caret toggles expand/collapse
+            caret.addEventListener('click', async (ev) => {
+              ev.stopPropagation();
+              await toggle();
+            });
           } else {
             const spacer = document.createElement('span');
             spacer.style.width = '6px';
@@ -767,12 +778,10 @@
               }
             }
           };
+          // Clicking the row (label area) performs selection only
           row.addEventListener('click', async () => {
             if (options && typeof options.onSelect === 'function') {
               await options.onSelect();
-            }
-            if (hasChildren) {
-              await toggle();
             }
           });
           return { node, children, toggle };
@@ -786,9 +795,7 @@
           updateBreadcrumb();
           refreshImportCardContext();
           await refreshImportVisibility();
-          if (dbOutput) {
-            dbOutput.innerHTML = '<div class="card"><div class="small muted">Select a set from the boxes above.</div></div>';
-          }
+          if (dbOutput) { dbOutput.innerHTML = ''; }
           if (dbSetDetails) { dbSetDetails.innerHTML = ''; dbSetDetails.className = 'set-grid'; }
           if (dbSetTabs) {
             dbSetTabs.innerHTML = '';
@@ -895,6 +902,8 @@
         }
 
         async function renderSetDetails(name) {
+          // Hide any category-level controls like "Add Set" in set-level view
+          if (dbSetTabs) { dbSetTabs.innerHTML = ''; }
           const dataLocal = (currentCategorySets.map && currentCategorySets.map[name]) || {};
           let data = dataLocal;
           if (!('Cards' in dataLocal) && !('Total Cards' in dataLocal) && !('image' in dataLocal)) {
@@ -1174,15 +1183,17 @@
             throw new Error('Firebase SDK not loaded.');
           }
           const db = firebaseGlobal.firestore();
-          // Use emulator automatically on localhost
+          // Optionally use Firestore emulator if explicitly enabled
           try {
-            if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+            if (window.__USE_FIRESTORE_EMULATOR__ === true) {
+              const host = (window.__FIRESTORE_EMULATOR_HOST__ || '127.0.0.1');
+              const port = Number(window.__FIRESTORE_EMULATOR_PORT__ || 8080);
               if (typeof db.useEmulator === 'function') {
-                db.useEmulator('127.0.0.1', 8080);
+                db.useEmulator(host, port);
               } else if (firebaseGlobal.firestore && typeof firebaseGlobal.firestore().useEmulator === 'function') {
-                firebaseGlobal.firestore().useEmulator('127.0.0.1', 8080);
+                firebaseGlobal.firestore().useEmulator(host, port);
               }
-              sdkStatus.textContent = (sdkStatus.textContent || '') + ' (Firestore emulator)';
+              sdkStatus.textContent = (sdkStatus.textContent || '') + ' (Firestore emulator ' + host + ':' + port + ')';
             }
           } catch (_) {}
           return db;
@@ -1496,23 +1507,239 @@
         }
 
         const dbImportFileInput = document.getElementById('dbImportFile');
+        const dbImportAllBtn = document.getElementById('dbImportAllBtn');
+        const dbImportPhotosBtn = document.getElementById('dbImportPhotosBtn');
+        const dbImportPricesBtn = document.getElementById('dbImportPricesBtn');
+        // Keep last-read text if user switches actions
+        let __lastImportFileText = '';
+        async function readSelectedImportFileText() {
+          const file = dbImportFileInput && dbImportFileInput.files && dbImportFileInput.files[0];
+          if (!file) {
+            if (__lastImportFileText) return __lastImportFileText;
+            alert('Choose a file first.');
+            throw new Error('No file selected');
+          }
+          const text = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(String(reader.result || ''));
+            reader.onerror = () => reject(reader.error || new Error('File read error'));
+            reader.readAsText(file);
+          });
+          __lastImportFileText = String(text || '');
+          return __lastImportFileText;
+        }
         if (dbImportFileInput) {
           dbImportFileInput.addEventListener('change', async () => {
-            const file = dbImportFileInput.files && dbImportFileInput.files[0];
-            if (!file) return;
+            // Just cache the text; do not auto-import
+            try { await readSelectedImportFileText(); } catch (_) {}
+          });
+        }
+        // Small parser used by all import/update actions
+        function __parseImportItems(rawText) {
+          const raw = String(rawText || '').trim();
+          let items = [];
+          if (!raw) return items;
+          if (raw.startsWith('[') || raw.startsWith('{')) {
             try {
-              const text = await new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => resolve(String(reader.result || ''));
-                reader.onerror = () => reject(reader.error || new Error('File read error'));
-                reader.readAsText(file);
-              });
-              await importTextForCurrentSelection(text);
-              // Reset file input after import to allow re-importing the same file if needed
-              try { dbImportFileInput.value = ''; } catch (_) {}
-            } catch (e) {
-              alert('Failed to read selected file: ' + (e && e.message ? e.message : String(e)));
+              const parsed = JSON.parse(raw);
+              if (Array.isArray(parsed)) items = parsed;
+              else if (parsed && typeof parsed === 'object') items = [parsed];
+            } catch (_) {}
+          }
+          if (items.length === 0) {
+            const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(l => !!l);
+            items = lines.map(line => {
+              const parts = line.split(',');
+              return {
+                name: (parts[0] || '').trim(),
+                number: (parts[1] || '').trim(),
+                price: parseFloat((parts[2] || '').trim()),
+                imageUrl: parts.slice(3).join(',').trim(),
+                printing: ''
+              };
+            });
+          }
+          return items;
+        }
+        // Local helper to normalize sealed ids similar to import flow
+        function __cleanNameForId(rawName) {
+          let s = String(rawName || '').trim();
+          if (!s) return '';
+          s = s.replace(/\s*\[[^\]]*\]\s*/g, ' ');
+          s = s.replace(/\s*#\d+\s*/g, ' ');
+          s = s.replace(/\s{2,}/g, ' ').trim();
+          return s;
+        }
+        async function updatePhotosFromText(text) {
+          const ok = await requireEditor();
+          if (!ok) return;
+          if (!dbState.setName) { alert('Select a set first.'); return; }
+          const db = await getDb();
+          const collectionName = (dbState.view === 'Sealed') ? 'Sealed' : 'Cards';
+          const setDocRef = db
+            .collection('Pokemon Packs')
+            .doc(dbState.language || 'English')
+            .collection(dbState.category || 'Mega Evolution')
+            .doc(dbState.setName);
+          const items = __parseImportItems(text);
+          if (items.length === 0) { alert('No data found.'); return; }
+          dbOutput.innerHTML = '<div class="card"><div class="small mono">Updating photo links…</div></div>';
+          let updated = 0;
+          if (collectionName === 'Sealed') {
+            let batch = db.batch();
+            let ops = 0;
+            const commits = [];
+            for (const item of items) {
+              const nameRaw = (item && (item.name || item.Name)) || '';
+              const imageUrl = (item && (item.imageUrl || item.ImageUrl || item.imageURL)) || '';
+              const safeId = __cleanNameForId(nameRaw || '');
+              if (!safeId || !imageUrl) continue;
+              const docRef = setDocRef.collection('Sealed').doc(safeId);
+              batch.set(docRef, { 'Picture Link': String(imageUrl) }, { merge: true });
+              updated++; ops++;
+              if (ops >= 450) { commits.push(batch.commit()); batch = db.batch(); ops = 0; }
             }
+            if (ops > 0) commits.push(batch.commit());
+            try { await Promise.all(commits); } catch (_) {}
+          } else {
+            // Cards: match by Number and optional Printing
+            const colRef = setDocRef.collection('Cards');
+            const toNumber = (val) => {
+              if (typeof val === 'number') return val;
+              if (typeof val === 'string') {
+                const m = val.match(/^\s*(\d+)/);
+                return m ? parseInt(m[1], 10) : NaN;
+              }
+              return NaN;
+            };
+            for (const item of items) {
+              const num = toNumber((item && (item.number || item.Number)) || '');
+              const prt = normalizePrintingLabel((item && (item.printing || item.Printing)) || '');
+              const imageUrl = (item && (item.imageUrl || item.ImageUrl || item.imageURL)) || '';
+              if (!Number.isFinite(num) || !imageUrl) continue;
+              try {
+                const q = await colRef.where('Number', '==', num).get();
+                if (q.empty) continue;
+                let targetDoc = null;
+                q.forEach(doc => {
+                  if (targetDoc) return;
+                  const d = doc.data() || {};
+                  const dp = String(d['Printing'] || '').trim();
+                  const dpNorm = normalizePrintingLabel(dp);
+                  if (prt) {
+                    if (dpNorm.toLowerCase() === prt.toLowerCase()) targetDoc = doc;
+                  } else {
+                    if (!dpNorm) targetDoc = doc;
+                  }
+                });
+                if (!targetDoc) targetDoc = q.docs[0] || null;
+                if (targetDoc) {
+                  await targetDoc.ref.set({ 'Picture Link': String(imageUrl) }, { merge: true });
+                  updated++;
+                }
+              } catch (_) {}
+            }
+          }
+          dbOutput.innerHTML = '<div class="card"><div class="small mono">Updated photos for ' + updated + ' item(s).</div></div>';
+          await loadCurrentView();
+        }
+        async function updatePricesFromText(text) {
+          const ok = await requireEditor();
+          if (!ok) return;
+          if (!dbState.setName) { alert('Select a set first.'); return; }
+          const db = await getDb();
+          const collectionName = (dbState.view === 'Sealed') ? 'Sealed' : 'Cards';
+          const setDocRef = db
+            .collection('Pokemon Packs')
+            .doc(dbState.language || 'English')
+            .collection(dbState.category || 'Mega Evolution')
+            .doc(dbState.setName);
+          const items = __parseImportItems(text);
+          if (items.length === 0) { alert('No data found.'); return; }
+          dbOutput.innerHTML = '<div class="card"><div class="small mono">Updating prices…</div></div>';
+          let updated = 0;
+          if (collectionName === 'Sealed') {
+            let batch = db.batch();
+            let ops = 0;
+            const commits = [];
+            for (const item of items) {
+              const nameRaw = (item && (item.name || item.Name)) || '';
+              const priceRaw = (item && (item.price || item.Price)) || '';
+              const costVal = typeof priceRaw === 'number' ? priceRaw : parseFloat(String(priceRaw || '').trim());
+              const safeId = __cleanNameForId(nameRaw || '');
+              if (!safeId || !Number.isFinite(costVal)) continue;
+              const docRef = setDocRef.collection('Sealed').doc(safeId);
+              batch.set(docRef, { 'Cost': Number(costVal) }, { merge: true });
+              updated++; ops++;
+              if (ops >= 450) { commits.push(batch.commit()); batch = db.batch(); ops = 0; }
+            }
+            if (ops > 0) commits.push(batch.commit());
+            try { await Promise.all(commits); } catch (_) {}
+          } else {
+            // Cards: match by Number and optional Printing
+            const colRef = setDocRef.collection('Cards');
+            const toNumber = (val) => {
+              if (typeof val === 'number') return val;
+              if (typeof val === 'string') {
+                const m = val.match(/^\s*(\d+)/);
+                return m ? parseInt(m[1], 10) : NaN;
+              }
+              return NaN;
+            };
+            for (const item of items) {
+              const num = toNumber((item && (item.number || item.Number)) || '');
+              const prt = normalizePrintingLabel((item && (item.printing || item.Printing)) || '');
+              const priceRaw = (item && (item.price || item.Price)) || '';
+              const costVal = typeof priceRaw === 'number' ? priceRaw : parseFloat(String(priceRaw || '').trim());
+              if (!Number.isFinite(num) || !Number.isFinite(costVal)) continue;
+              try {
+                const q = await colRef.where('Number', '==', num).get();
+                if (q.empty) continue;
+                let targetDoc = null;
+                q.forEach(doc => {
+                  if (targetDoc) return;
+                  const d = doc.data() || {};
+                  const dp = String(d['Printing'] || '').trim();
+                  const dpNorm = normalizePrintingLabel(dp);
+                  if (prt) {
+                    if (dpNorm.toLowerCase() === prt.toLowerCase()) targetDoc = doc;
+                  } else {
+                    if (!dpNorm) targetDoc = doc;
+                  }
+                });
+                if (!targetDoc) targetDoc = q.docs[0] || null;
+                if (targetDoc) {
+                  await targetDoc.ref.set({ 'Cost': Number(costVal) }, { merge: true });
+                  updated++;
+                }
+              } catch (_) {}
+            }
+          }
+          dbOutput.innerHTML = '<div class="card"><div class="small mono">Updated prices for ' + updated + ' item(s).</div></div>';
+          await loadCurrentView();
+        }
+        if (dbImportAllBtn) {
+          dbImportAllBtn.addEventListener('click', async () => {
+            try {
+              const text = await readSelectedImportFileText();
+              await importTextForCurrentSelection(text);
+            } catch (_) {}
+          });
+        }
+        if (dbImportPhotosBtn) {
+          dbImportPhotosBtn.addEventListener('click', async () => {
+            try {
+              const text = await readSelectedImportFileText();
+              await updatePhotosFromText(text);
+            } catch (_) {}
+          });
+        }
+        if (dbImportPricesBtn) {
+          dbImportPricesBtn.addEventListener('click', async () => {
+            try {
+              const text = await readSelectedImportFileText();
+              await updatePricesFromText(text);
+            } catch (_) {}
           });
         }
 
