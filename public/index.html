@@ -19,6 +19,8 @@
     <script defer src="https://www.gstatic.com/firebasejs/12.6.0/firebase-performance-compat.js"></script>
     <!-- Optional local config (gitignored). Defines window.__FIREBASE_CONFIG__ -->
     <script defer src="./config/firebaseConfig.js"></script>
+    <!-- ApexCharts for robust datetime charts -->
+    <script defer src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     <style media="screen">
       body { background: #F7FAFC; color: #1A202C; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
@@ -137,8 +139,21 @@
 
         <section id="page-statistics" class="page">
           <h2 class="section-title">Statistics</h2>
-          <div class="card">
-            <p class="muted">Statistics coming soon.</p>
+          <div class="card" id="statsCostCard">
+            <div class="row" style="justify-content:space-between;align-items:center;">
+              <div class="small muted">Total Collection Cost Over Time</div>
+              <div class="tabs small" id="statsRangeTabs">
+                <button class="tab-btn" data-range="1H">1H</button>
+                <button class="tab-btn" data-range="1D">1D</button>
+                <button class="tab-btn" data-range="7D">7D</button>
+                <button class="tab-btn active" data-range="1M">1M</button>
+                <button class="tab-btn" data-range="6M">6M</button>
+                <button class="tab-btn" data-range="1Y">1Y</button>
+                <button class="tab-btn" data-range="ALL">All</button>
+              </div>
+            </div>
+            <div id="statsCostChart" style="height:320px; width: 100%; overflow: hidden;"></div>
+            <div class="small muted" id="statsCostInfo" style="margin-top:6px;">Loading…</div>
           </div>
         </section>
 
@@ -416,7 +431,7 @@
 
         function showPage(hash) {
           Object.values(pages).forEach(p => p.classList.remove('active'));
-          if (hash === '#statistics') pages.statistics.classList.add('active');
+          if (hash === '#statistics') { pages.statistics.classList.add('active'); renderStatisticsCost(); }
           else if (hash === '#database') pages.database.classList.add('active');
           else if (hash === '#logs') { pages.logs.classList.add('active'); renderLogs('card'); }
           else if (hash === '#signin') pages.signin.classList.add('active');
@@ -464,6 +479,13 @@
         const logsTabCards = document.getElementById('logsTabCards');
         const logsTabSealed = document.getElementById('logsTabSealed');
         let logsView = 'card'; // card | sealed
+        // Statistics UI elements
+        const statsCostChartEl = document.getElementById('statsCostChart');
+        const statsCostInfo = document.getElementById('statsCostInfo');
+        const statsRangeTabs = document.getElementById('statsRangeTabs');
+        let statsRange = '1M';
+        let statsChart = null;
+        let statsInitializedOnce = false;
 
         const dbState = {
           language: 'English',
@@ -474,6 +496,253 @@
         let currentUserCanEdit = false;
         let currentCategorySets = { lang: '', cat: '', map: {} };
         let logsInitializedOnce = false;
+
+        // --- Statistics helpers (cost over time) ---
+        const STATS_RANGE_MS = {
+          '1H': 60 * 60 * 1000,
+          '1D': 24 * 60 * 60 * 1000,
+          '7D': 7 * 24 * 60 * 60 * 1000,
+          '1M': 30 * 24 * 60 * 60 * 1000,
+          '6M': 182 * 24 * 60 * 60 * 1000,
+          '1Y': 365 * 24 * 60 * 60 * 1000,
+          'ALL': Number.POSITIVE_INFINITY
+        };
+        function setActiveStatsRange(r) {
+          statsRange = r;
+          if (statsRangeTabs) {
+            Array.from(statsRangeTabs.querySelectorAll('button.tab-btn') || []).forEach(btn => {
+              btn.classList.toggle('active', btn.getAttribute('data-range') === r);
+            });
+          }
+        }
+        function toMillis(ts) {
+          try {
+            if (!ts) return 0;
+            if (typeof ts.toDate === 'function') return ts.toDate().getTime();
+            if (typeof ts === 'number') return ts > 1e12 ? ts : ts * 1000;
+            const d = new Date(ts);
+            return Number.isNaN(d.getTime()) ? 0 : d.getTime();
+          } catch (_) { return 0; }
+        }
+        // Caches reused between renders
+        let cardCostMap = null;   // key: "Category / Set|Number|printNorm" -> cost
+        let sealedCostMap = null; // key: "ProductName" -> cost
+        let cachedTotalNow = null;
+        async function ensureCostCachesAndTotal() {
+          if (cardCostMap && sealedCostMap && Number.isFinite(cachedTotalNow)) return;
+          const db = await getDb();
+          cardCostMap = new Map();
+          sealedCostMap = new Map();
+          let total = 0;
+          // Cards
+          try {
+            const snap = await db.collectionGroup('Cards').get();
+            snap.forEach(doc => {
+              const data = doc.data() || {};
+              const parts = doc.ref.path.split('/');
+              if (parts.length >= 6 && parts[0] === 'Pokemon Packs') {
+                const cat = parts[2];
+                const setName = parts[3];
+                const number = Number(data['Number'] || 0);
+                const printing = normalizePrintingLabel(data['Printing'] || '');
+                const key = (cat + ' / ' + setName) + '|' + number + '|' + (printing || '');
+                const cost = Number(data['Cost'] || 0) || 0;
+                const owned = Number(data['Amount Owned'] || 0) || 0;
+                cardCostMap.set(key, cost);
+                if (Number.isFinite(cost) && Number.isFinite(owned)) {
+                  total += cost * owned;
+                }
+              }
+            });
+          } catch (_) {}
+          // Sealed
+          try {
+            const snap = await db.collectionGroup('Sealed').get();
+            snap.forEach(doc => {
+              const data = doc.data() || {};
+              const name = doc.id;
+              const cost = Number(data['Cost'] || 0) || 0;
+              const owned = Number(data['Amount Owned'] || 0) || 0;
+              sealedCostMap.set(name, cost);
+              if (Number.isFinite(cost) && Number.isFinite(owned)) {
+                total += cost * owned;
+              }
+            });
+          } catch (_) {}
+          cachedTotalNow = total;
+        }
+        function pickBucketSizeMs(rangeMs) {
+          if (!Number.isFinite(rangeMs) || rangeMs === Number.POSITIVE_INFINITY) return 24 * 60 * 60 * 1000; // daily
+          // Aim for <= 400 points
+          const targetPoints = 400;
+          const rough = Math.ceil(rangeMs / targetPoints);
+          // Round to sensible units
+          const minute = 60 * 1000;
+          const hour = 60 * minute;
+          const day = 24 * hour;
+          const week = 7 * day;
+          if (rough <= minute) return minute;
+          if (rough <= 15 * minute) return 15 * minute;
+          if (rough <= hour) return hour;
+          if (rough <= 6 * hour) return 6 * hour;
+          if (rough <= day) return day;
+          if (rough <= week) return week;
+          return 30 * day;
+        }
+        async function fetchLogDeltasSince(startMs) {
+          const db = await getDb();
+          const start = new Date(startMs);
+          const now = new Date();
+          const queries = [];
+          try {
+            if (Number.isFinite(startMs) && STATS_RANGE_MS[statsRange] !== Number.POSITIVE_INFINITY) {
+              queries.push(db.collection('CardLogs').where('time', '>=', start).where('time', '<=', now).orderBy('time', 'asc').get());
+              queries.push(db.collection('SealedLogs').where('time', '>=', start).where('time', '<=', now).orderBy('time', 'asc').get());
+            } else {
+              queries.push(db.collection('CardLogs').orderBy('time', 'asc').get());
+              queries.push(db.collection('SealedLogs').orderBy('time', 'asc').get());
+            }
+          } catch (_) {
+            // If index missing for range query, fallback to loading all and filtering client-side
+            queries.length = 0;
+            queries.push(db.collection('CardLogs').orderBy('time', 'asc').get());
+            queries.push(db.collection('SealedLogs').orderBy('time', 'asc').get());
+          }
+          const [cardSnap, sealedSnap] = await Promise.all(queries);
+          const deltas = [];
+          // Cards: resolve cost via (set|number|print)
+          if (cardSnap) {
+            cardSnap.forEach(d => {
+              const x = d.data() || {};
+              const t = toMillis(x.time);
+              if (Number.isFinite(startMs) && STATS_RANGE_MS[statsRange] !== Number.POSITIVE_INFINITY && t < startMs) return;
+              const key = String(x.set || '') + '|' + Number(x.number || 0) + '|' + (normalizePrintingLabel(x.print || '') || '');
+              const cost = (cardCostMap && cardCostMap.get(key)) || 0;
+              const amt = Number(x.amount || 0) || 0;
+              if (!Number.isFinite(t)) return;
+              const delta = cost * amt;
+              if (delta !== 0) deltas.push({ t, v: delta });
+            });
+          }
+          // Sealed: resolve cost via product name
+          if (sealedSnap) {
+            sealedSnap.forEach(d => {
+              const x = d.data() || {};
+              const t = toMillis(x.time);
+              if (Number.isFinite(startMs) && STATS_RANGE_MS[statsRange] !== Number.POSITIVE_INFINITY && t < startMs) return;
+              const name = String(x.sealedName || '');
+              const cost = (sealedCostMap && sealedCostMap.get(name)) || 0;
+              const amt = Number(x.amount || 0) || 0;
+              if (!Number.isFinite(t)) return;
+              const delta = cost * amt;
+              if (delta !== 0) deltas.push({ t, v: delta });
+            });
+          }
+          return deltas;
+        }
+        function aggregateAndBucket(deltas, startMs, endMs) {
+          const exact = new Map(); // key: ms -> sum delta
+          for (const d of deltas) {
+            const k = d.t;
+            exact.set(k, (exact.get(k) || 0) + d.v);
+          }
+          const rangeMs = endMs - startMs;
+          const bucketMs = pickBucketSizeMs(rangeMs);
+          const bucketStart = (ms) => Math.floor(ms / bucketMs) * bucketMs;
+          const buckets = new Map(); // key: ms bucket -> sum delta
+          Array.from(exact.entries()).sort((a, b) => a[0] - b[0]).forEach(([t, v]) => {
+            const b = bucketStart(t);
+            buckets.set(b, (buckets.get(b) || 0) + v);
+          });
+          // Build time-ordered arrays and cumulative to absolute using baseline
+          const times = Array.from(buckets.keys()).sort((a, b) => a - b);
+          const deltasOrdered = times.map(t => buckets.get(t) || 0);
+          return { times, deltasOrdered, bucketMs };
+        }
+        function computeAbsoluteSeries(times, deltas, baseline) {
+          const values = [];
+          let acc = Math.max(0, Number(baseline) || 0);
+          for (let i = 0; i < times.length; i++) {
+            acc += deltas[i];
+            // Total collection cost cannot be negative; clamp to zero
+            values.push(Math.max(0, acc));
+          }
+          return values;
+        }
+        function formatCurrency(n) {
+          try { return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(n) || 0); } catch (_) { return '$' + (Number(n).toFixed ? Number(n).toFixed(2) : String(n)); }
+        }
+        async function renderStatisticsCost() {
+          if (!statsCostChartEl) return;
+          if (statsCostInfo) statsCostInfo.textContent = 'Loading…';
+          await ensureCostCachesAndTotal();
+          const nowMs = Date.now();
+          const rangeMs = STATS_RANGE_MS[statsRange];
+          const startMs = rangeMs === Number.POSITIVE_INFINITY ? 0 : (nowMs - rangeMs);
+          const deltas = await fetchLogDeltasSince(startMs);
+          // Total delta within window
+          const totalDelta = deltas.reduce((s, d) => s + d.v, 0);
+          const baseline = Math.max(0, Number.isFinite(cachedTotalNow) ? (cachedTotalNow - totalDelta) : 0);
+          const { times, deltasOrdered } = aggregateAndBucket(deltas, startMs, nowMs);
+          // For ALL, avoid epoch start; use earliest log time if present
+          const effectiveStartMs = (rangeMs === Number.POSITIVE_INFINITY && times.length > 0) ? times[0] : (rangeMs === Number.POSITIVE_INFINITY ? nowMs - 365 * 24 * 60 * 60 * 1000 : startMs);
+          // Ensure we always render at least two points for uPlot
+          const xsMs = times.length > 0 ? times : [effectiveStartMs, nowMs];
+          const ys = times.length > 0 ? computeAbsoluteSeries(times, deltasOrdered, baseline) : [baseline, cachedTotalNow || baseline];
+          // Build ApexCharts data points
+          const points = xsMs.map((t, i) => ({ x: t, y: ys[i] }));
+          const xMin = (rangeMs === Number.POSITIVE_INFINITY) ? effectiveStartMs : startMs;
+          const xMax = nowMs;
+          // Initialize or update chart (ApexCharts)
+          const opts = {
+            chart: { type: 'line', height: 320, width: '100%', parentHeightOffset: 0, animations: { enabled: false }, toolbar: { show: false } },
+            stroke: { width: 2, curve: 'straight' },
+            series: [{ name: 'Total Cost', data: points }],
+            xaxis: { type: 'datetime', min: xMin, max: xMax },
+            yaxis: { min: 0, decimalsInFloat: 2, labels: { formatter: (v) => formatCurrency(v) } },
+            grid: { show: true },
+            tooltip: {
+              x: { formatter: (val) => new Date(val).toLocaleString() },
+              y: { formatter: (val) => formatCurrency(val) },
+              fixed: { enabled: false }
+            },
+            markers: { size: 3 }
+          };
+          try {
+            if (!statsChart) {
+              statsChart = new (window.ApexCharts || function(){}) (statsCostChartEl, opts);
+              if (statsChart && statsChart.render) await statsChart.render();
+              // ApexCharts handles responsive width automatically
+            } else {
+              try {
+                await statsChart.updateOptions({ chart: { height: 320 }, xaxis: { min: xMin, max: xMax } }, false, true);
+                await statsChart.updateSeries([{ name: 'Total Cost', data: points }], true);
+              } catch (_) {}
+            }
+          } catch (_) {
+            // Fallback: simple text if uPlot not available
+            statsCostChartEl.innerHTML = '<div class="small muted">Chart unavailable.</div>';
+          }
+          if (statsCostInfo) {
+            const first = xsMs[0];
+            const last = xsMs[xsMs.length - 1];
+            const startLabel = new Date(first).toLocaleString();
+            const endLabel = new Date(last).toLocaleString();
+            const totalNowFmt = formatCurrency(cachedTotalNow || 0);
+            statsCostInfo.textContent = 'Range: ' + startLabel + ' → ' + endLabel + ' • Current total: ' + totalNowFmt + ' • Points: ' + xsMs.length;
+          }
+          if (!statsInitializedOnce) statsInitializedOnce = true;
+        }
+        if (statsRangeTabs) {
+          statsRangeTabs.addEventListener('click', (e) => {
+            const t = e.target;
+            if (t && t.matches('button.tab-btn')) {
+              const r = t.getAttribute('data-range') || '1M';
+              setActiveStatsRange(r);
+              renderStatisticsCost();
+            }
+          });
+        }
 
         function updateBreadcrumb() {
           const parts = [
