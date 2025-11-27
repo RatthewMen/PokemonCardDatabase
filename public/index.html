@@ -720,7 +720,7 @@
             chart: { type: 'line', height: 320, width: '100%', parentHeightOffset: 0, animations: { enabled: false }, toolbar: { show: false } },
             stroke: { width: 2, curve: 'straight' },
             series: [{ name: 'Total Cost', data: points }],
-            xaxis: { type: 'datetime', min: xMin, max: xMax },
+            xaxis: { type: 'datetime', min: xMin, max: xMax, crosshairs: { show: false }, tooltip: { enabled: false } },
             yaxis: { min: 0, decimalsInFloat: 2, labels: { formatter: (v) => formatCurrency(v) } },
             grid: { show: true },
             tooltip: {
@@ -2076,7 +2076,7 @@
             } catch (_) {
               html += '<select id="qe-s-prod-0"><option value="">Select product…</option></select>';
             }
-            html += '<input type="number" step="1" id="qe-s-amt-0" placeholder="+/-">';
+            html += '<input type="number" step="1" id="qe-s-amt-0" placeholder="+/-" value="1">';
             html += '<input type="text" id="qe-s-loc-0" placeholder="optional">';
             html += '</div>';
           } else {
@@ -2089,7 +2089,7 @@
                 + '<option value="Reverse Holofoil">Reverse Holofoil</option>'
                 + '<option value="Holofoil">Holofoil</option>'
               + '</select>';
-              html += '<input type="number" step="1" id="qe-amt-' + i + '" placeholder="+/-">';
+              html += '<input type="number" step="1" id="qe-amt-' + i + '" placeholder="+/-" value="1">';
               html += '<input type="text" id="qe-loc-' + i + '" placeholder="optional">';
             }
             html += '</div>';
