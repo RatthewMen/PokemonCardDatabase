@@ -616,12 +616,23 @@
               const x = d.data() || {};
               const t = toMillis(x.time);
               if (Number.isFinite(startMs) && STATS_RANGE_MS[statsRange] !== Number.POSITIVE_INFINITY && t < startMs) return;
-              const key = String(x.set || '') + '|' + Number(x.number || 0) + '|' + (normalizePrintingLabel(x.print || '') || '');
-              const cost = (cardCostMap && cardCostMap.get(key)) || 0;
-              const amt = Number(x.amount || 0) || 0;
-              if (!Number.isFinite(t)) return;
-              const delta = cost * amt;
-              if (delta !== 0) deltas.push({ t, v: delta });
+              if (Array.isArray(x.items)) {
+                for (const it of x.items) {
+                  const key = String(it.set || '') + '|' + Number(it.number || 0) + '|' + (normalizePrintingLabel(it.print || '') || '');
+                  const cost = (cardCostMap && cardCostMap.get(key)) || 0;
+                  const amt = Number(it.amount || 0) || 0;
+                  if (!Number.isFinite(t)) continue;
+                  const delta = cost * amt;
+                  if (delta !== 0) deltas.push({ t, v: delta });
+                }
+              } else {
+                const key = String(x.set || '') + '|' + Number(x.number || 0) + '|' + (normalizePrintingLabel(x.print || '') || '');
+                const cost = (cardCostMap && cardCostMap.get(key)) || 0;
+                const amt = Number(x.amount || 0) || 0;
+                if (!Number.isFinite(t)) return;
+                const delta = cost * amt;
+                if (delta !== 0) deltas.push({ t, v: delta });
+              }
             });
           }
           // Sealed: resolve cost via product name
@@ -630,12 +641,23 @@
               const x = d.data() || {};
               const t = toMillis(x.time);
               if (Number.isFinite(startMs) && STATS_RANGE_MS[statsRange] !== Number.POSITIVE_INFINITY && t < startMs) return;
-              const name = String(x.sealedName || '');
-              const cost = (sealedCostMap && sealedCostMap.get(name)) || 0;
-              const amt = Number(x.amount || 0) || 0;
-              if (!Number.isFinite(t)) return;
-              const delta = cost * amt;
-              if (delta !== 0) deltas.push({ t, v: delta });
+              if (Array.isArray(x.items)) {
+                for (const it of x.items) {
+                  const name = String(it.sealedName || '');
+                  const cost = (sealedCostMap && sealedCostMap.get(name)) || 0;
+                  const amt = Number(it.amount || 0) || 0;
+                  if (!Number.isFinite(t)) continue;
+                  const delta = cost * amt;
+                  if (delta !== 0) deltas.push({ t, v: delta });
+                }
+              } else {
+                const name = String(x.sealedName || '');
+                const cost = (sealedCostMap && sealedCostMap.get(name)) || 0;
+                const amt = Number(x.amount || 0) || 0;
+                if (!Number.isFinite(t)) return;
+                const delta = cost * amt;
+                if (delta !== 0) deltas.push({ t, v: delta });
+              }
             });
           }
           return deltas;
@@ -672,6 +694,61 @@
         function formatCurrency(n) {
           try { return new Intl.NumberFormat(undefined, { style: 'currency', currency: 'USD', minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(Number(n) || 0); } catch (_) { return '$' + (Number(n).toFixed ? Number(n).toFixed(2) : String(n)); }
         }
+        // Aggregate per-set metrics: total value (cards + sealed), total amount of cards, total packs opened (best-effort)
+        async function computeSetAggregates(lang, cat, setName) {
+          const db = await getDb();
+          let totalValue = 0;
+          let totalCardAmount = 0;
+          // Packs opened is a manual set-level field; do NOT compute from items
+          let totalPacksOpened = 0;
+          try {
+            const setSnap = await db.collection('Pokemon Packs').doc(lang).collection(cat).doc(setName).get();
+            const setData = setSnap && setSnap.exists ? (setSnap.data() || {}) : {};
+            totalPacksOpened = Number(
+              setData['TotalPacksOpened']
+              || setData['Packs Opened']
+              || setData['PacksOpened']
+              || setData['Opened Packs']
+              || 0
+            ) || 0;
+          } catch (_) {}
+          try {
+            // Cards
+            const cardsRef = db.collection('Pokemon Packs')
+              .doc(lang)
+              .collection(cat)
+              .doc(setName)
+              .collection('Cards');
+            const cardsSnap = await cardsRef.get();
+            cardsSnap.forEach(doc => {
+              const d = doc.data() || {};
+              const owned = Number(d['Amount Owned'] || d['AmountOwned'] || d['Owned'] || 0) || 0;
+              const cost = Number(d['Cost'] || 0) || 0;
+              totalCardAmount += owned;
+              totalValue += Math.max(0, owned * cost);
+            });
+          } catch (_) {}
+          try {
+            // Sealed
+            const sealedRef = db.collection('Pokemon Packs')
+              .doc(lang)
+              .collection(cat)
+              .doc(setName)
+              .collection('Sealed');
+            const sealedSnap = await sealedRef.get();
+            sealedSnap.forEach(doc => {
+              const d = doc.data() || {};
+              const owned = Number(d['Amount Owned'] || d['AmountOwned'] || d['Owned'] || 0) || 0;
+              const cost = Number(d['Cost'] || 0) || 0;
+              totalValue += Math.max(0, owned * cost);
+            });
+          } catch (_) {}
+          return {
+            totalValue,
+            totalCardAmount,
+            totalPacksOpened,
+          };
+        }
         async function renderStatisticsCost() {
           if (!statsCostChartEl) return;
           if (statsCostInfo) statsCostInfo.textContent = 'Loading…';
@@ -698,7 +775,7 @@
             chart: { type: 'line', height: 320, width: '100%', parentHeightOffset: 0, animations: { enabled: false }, toolbar: { show: false } },
             stroke: { width: 2, curve: 'straight' },
             series: [{ name: 'Total Cost', data: points }],
-            xaxis: { type: 'datetime', min: xMin, max: xMax },
+            xaxis: { type: 'datetime', min: xMin, max: xMax, crosshairs: { show: false }, tooltip: { enabled: false } },
             yaxis: { min: 0, decimalsInFloat: 2, labels: { formatter: (v) => formatCurrency(v) } },
             grid: { show: true },
             tooltip: {
@@ -895,7 +972,7 @@
           await refreshImportVisibility();
           // Ensure "Add Set" controls are only visible at category level (clear in set/leaf views)
           if (dbSetTabs) { dbSetTabs.innerHTML = ''; }
-          // Clear any overview cards when viewing leaf data
+          // When viewing Cards/Sealed, hide any set overview/summary content
           if (dbSetDetails) { dbSetDetails.innerHTML = ''; }
           if (!dbState.setName) { dbOutput.innerHTML = ''; return; }
           if (dbState.view === 'Cards') {
@@ -975,6 +1052,12 @@
             const firebaseGlobal = window.firebase;
             if (!firebaseGlobal || !firebaseGlobal.auth) return;
             if (!dbImportCardEl) return;
+            // Hide import/quick-edit UI when viewing set overview
+            if (dbState.view === 'Overview') {
+              dbImportCardEl.classList.add('hidden');
+              if (dbQuickEditBtn) dbQuickEditBtn.classList.add('hidden');
+              return;
+            }
             const user = firebaseGlobal.auth().currentUser;
             if (!user) {
               dbImportCardEl.classList.add('hidden');
@@ -1128,6 +1211,9 @@
                 + '<ul class="kv-list">'
                   + '<li class="kv-item"><span class="kv-label small">Cards</span><span class="mono">' + cardsCount + '</span></li>'
                   + '<li class="kv-item"><span class="kv-label small">Total Cards</span><span class="mono">' + totalCards + '</span></li>'
+                  + '<li class="kv-item"><span class="kv-label small">Total Value</span><span class="mono agg-total-value">—</span></li>'
+                  + '<li class="kv-item"><span class="kv-label small">Total Amount of Cards</span><span class="mono agg-total-card-amount">—</span></li>'
+                  + '<li class="kv-item"><span class="kv-label small">Total Packs Opened</span><span class="mono agg-total-packs-opened">—</span></li>'
                 + '</ul>'
                 + (currentUserCanEdit
                   ? ('<div class="space-top">'
@@ -1138,6 +1224,26 @@
               + '</div>'
               + '<img class="set-image" src="' + (imgUrl || '') + '" alt="' + name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '">'
             + '</div>';
+          // Populate aggregate metrics asynchronously
+          (async () => {
+            try {
+              const agg = await computeSetAggregates(lang, cat, name);
+              const vEl = wrapper.querySelector('.agg-total-value');
+              const cEl = wrapper.querySelector('.agg-total-card-amount');
+              const pEl = wrapper.querySelector('.agg-total-packs-opened');
+              if (vEl) vEl.textContent = formatCurrency(agg.totalValue);
+              if (cEl) cEl.textContent = String(agg.totalCardAmount);
+              if (pEl) pEl.textContent = String(agg.totalPacksOpened);
+              // Best-effort: persist to set document
+              try {
+                const db = await getDb();
+                await db.collection('Pokemon Packs').doc(lang).collection(cat).doc(name).set({
+                  TotalValue: Number(agg.totalValue) || 0,
+                  TotalCardAmount: Number(agg.totalCardAmount) || 0
+                }, { merge: true });
+              } catch (_) {}
+            } catch (_) {}
+          })();
           // Click to select set (ignore clicks on toggles)
           wrapper.addEventListener('click', async (ev) => {
             const target = ev.target;
@@ -1173,6 +1279,8 @@
         async function renderSetDetails(name) {
           // Hide any category-level controls like "Add Set" in set-level view
           if (dbSetTabs) { dbSetTabs.innerHTML = ''; }
+          // Ensure the details section is not in a grid layout so the card spans full width
+          if (dbSetDetails) { dbSetDetails.className = ''; }
           const dataLocal = (currentCategorySets.map && currentCategorySets.map[name]) || {};
           let data = dataLocal;
           if (!('Cards' in dataLocal) && !('Total Cards' in dataLocal) && !('image' in dataLocal)) {
@@ -1182,6 +1290,8 @@
               data = snap && snap.exists ? (snap.data() || {}) : {};
             } catch (_) {}
           }
+          // Compute aggregates for this set
+          const aggregates = await computeSetAggregates(dbState.language, dbState.category, name);
           const cardsCount = Number(getSafe(data, ['Cards', 'cards'], '')) || 0;
           const totalCards = Number(getSafe(data, ['Total Cards', 'TotalCards', 'totalCards'], '')) || 0;
           const imgUrl = String(getSafe(data, ['image', 'Image', 'Picture', 'Picture Link'], '') || '').trim();
@@ -1194,6 +1304,9 @@
           parts.push('<ul class="kv-list">');
           parts.push('<li class="kv-item"><span class="kv-label small">Cards</span><span class="mono">' + cardsCount + '</span></li>');
           parts.push('<li class="kv-item"><span class="kv-label small">Total Cards</span><span class="mono">' + totalCards + '</span></li>');
+          parts.push('<li class="kv-item"><span class="kv-label small">Total Value</span><span class="mono">' + formatCurrency(aggregates.totalValue) + '</span></li>');
+          parts.push('<li class="kv-item"><span class="kv-label small">Total Amount of Cards</span><span class="mono">' + aggregates.totalCardAmount + '</span></li>');
+          parts.push('<li class="kv-item"><span class="kv-label small">Total Packs Opened</span><span class="mono">' + aggregates.totalPacksOpened + '</span></li>');
           parts.push('</ul>');
           if (currentUserCanEdit) {
             parts.push('<div class="space-top">');
@@ -1206,6 +1319,15 @@
           parts.push('</div>'); // set-overview
           parts.push('</div>'); // card
           if (dbSetDetails) dbSetDetails.innerHTML = parts.join('');
+          // Persist computed aggregates on the set document for reference (best-effort) except the manual packs opened
+          try {
+            const db = await getDb();
+            const ref = db.collection('Pokemon Packs').doc(dbState.language).collection(dbState.category).doc(dbState.setName);
+            await ref.set({
+              TotalValue: Number(aggregates.totalValue) || 0,
+              TotalCardAmount: Number(aggregates.totalCardAmount) || 0
+            }, { merge: true });
+          } catch (_) {}
           // Default: Cards view is already loaded by the caller
           const t1 = document.getElementById('toggleCanImportCards');
           const t2 = document.getElementById('toggleCanImportSealed');
@@ -1221,32 +1343,98 @@
           }
           if (t1) t1.addEventListener('change', () => updateFlag('CanImportCards', !!t1.checked));
           if (t2) t2.addEventListener('change', () => updateFlag('CanImportSealed', !!t2.checked));
+          // --- 4th-level summary boxes ---
+          try {
+            const db = await getDb();
+            const colRef = db.collection('Pokemon Packs')
+              .doc(dbState.language)
+              .collection(dbState.category)
+              .doc(dbState.setName)
+              .collection('Cards');
+            const snap = await colRef.get();
+            const items = [];
+            snap.forEach(doc => {
+              const d = doc.data() || {};
+              const name = String((d['Name'] || doc.id || '')).trim();
+              const amount = Number(d['Amount Owned'] || d['AmountOwned'] || d['Owned'] || 0) || 0;
+              const cost = Number(d['Cost'] || 0) || 0;
+              const total = Math.max(0, cost * amount);
+              const pic = String((d['Picture Link'] || d['Picture'] || '')).trim();
+              items.push({ name, amount, cost, total, pic });
+            });
+            // Top 5 by total value (including duplicates via Amount Owned)
+            const topByValue = items
+              .slice()
+              .sort((a, b) => b.total - a.total || b.amount - a.amount || a.name.localeCompare(b.name))
+              .slice(0, 5);
+            // Top 5 by quantity of a single card
+            const topByQty = items
+              .slice()
+              .sort((a, b) => b.amount - a.amount || b.total - a.total || a.name.localeCompare(b.name))
+              .slice(0, 5);
+            const makeRow = (it, showTotal) => {
+              const img = it.pic ? ('<span class="thumb-wrap"><img class="card-thumb" src="' + it.pic + '" alt="' + it.name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '"></span>') : '';
+              const right = showTotal ? ('<div class="mono">' + formatCurrency(it.total) + '</div>') : '';
+              return '<div class="row" style="gap:8px;align-items:center;padding:6px 0;">'
+                + img
+                + '<div style="flex:1;">' + it.name.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'
+                + '<div class="mono" title="Amount Owned">x' + it.amount + '</div>'
+                + right
+                + '</div>';
+            };
+            let boxHtml = '';
+            boxHtml += '<div class="grid-quick" style="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px;">';
+            // Box 1: Top by value
+            boxHtml += '<div class="card">';
+            boxHtml += '<div class="row" style="justify-content:space-between;"><div class="small muted">Top 5 by Total Value</div></div>';
+            boxHtml += '<div class="divider"></div>';
+            if (topByValue.length === 0) {
+              boxHtml += '<div class="small muted" style="padding:8px 0;">No cards found.</div>';
+            } else {
+              topByValue.forEach(it => { boxHtml += makeRow(it, true); });
+            }
+            boxHtml += '</div>';
+            // Box 2: Top by quantity
+            boxHtml += '<div class="card">';
+            boxHtml += '<div class="row" style="justify-content:space-between;"><div class="small muted">Top 5 by Quantity</div></div>';
+            boxHtml += '<div class="divider"></div>';
+            if (topByQty.length === 0) {
+              boxHtml += '<div class="small muted" style="padding:8px 0;">No cards found.</div>';
+            } else {
+              topByQty.forEach(it => { boxHtml += makeRow(it, false); });
+            }
+            boxHtml += '</div>';
+            boxHtml += '</div>';
+            if (dbSetDetails) dbSetDetails.insertAdjacentHTML('beforeend', boxHtml);
+          } catch (_) {
+            // ignore summary errors to avoid blocking overview
+          }
         }
 
         async function selectSetFromTabs(name) {
           dbState.setName = name;
-          dbState.view = 'Cards';
+          dbState.view = 'Overview';
           updateBreadcrumb();
           refreshImportCardContext();
           await refreshImportVisibility();
+          if (dbOutput) { dbOutput.innerHTML = ''; }
           if (dbSetTabs) {
             const children = Array.from(dbSetTabs.children || []);
             children.forEach(ch => ch.classList.toggle('active', (ch.textContent || '') === name));
           }
           await renderSetDetails(name);
-          await loadCurrentView();
         }
 
         async function navigateToSet(lang, cat, setName) {
           dbState.language = lang;
           dbState.category = cat;
           dbState.setName = setName;
-          dbState.view = 'Cards';
+          dbState.view = 'Overview';
           updateBreadcrumb();
           refreshImportCardContext();
           await refreshImportVisibility();
+          if (dbOutput) { dbOutput.innerHTML = ''; }
           await renderSetDetails(setName);
-          await loadCurrentView();
         }
 
         async function discoverStructure() {
@@ -1340,10 +1528,12 @@
                                 dbState.language = lang;
                                 dbState.category = cat;
                                 dbState.setName = setName;
-                                dbState.view = 'Cards';
+                                dbState.view = 'Overview';
                                 updateBreadcrumb();
+                                refreshImportCardContext();
+                                await refreshImportVisibility();
+                                if (dbOutput) { dbOutput.innerHTML = ''; }
                                 await renderSetDetails(setName);
-                                await loadCurrentView();
                               },
                               loadChildren: async (container4) => {
                                 container4.innerHTML = '';
@@ -2054,7 +2244,7 @@
             } catch (_) {
               html += '<select id="qe-s-prod-0"><option value="">Select product…</option></select>';
             }
-            html += '<input type="number" step="1" id="qe-s-amt-0" placeholder="+/-">';
+            html += '<input type="number" step="1" id="qe-s-amt-0" placeholder="+/-" value="1">';
             html += '<input type="text" id="qe-s-loc-0" placeholder="optional">';
             html += '</div>';
           } else {
@@ -2067,7 +2257,7 @@
                 + '<option value="Reverse Holofoil">Reverse Holofoil</option>'
                 + '<option value="Holofoil">Holofoil</option>'
               + '</select>';
-              html += '<input type="number" step="1" id="qe-amt-' + i + '" placeholder="+/-">';
+              html += '<input type="number" step="1" id="qe-amt-' + i + '" placeholder="+/-" value="1">';
               html += '<input type="text" id="qe-loc-' + i + '" placeholder="optional">';
             }
             html += '</div>';
@@ -2214,10 +2404,29 @@
             ops++;
             if (ops >= 450) flush();
           }
-          for (const log of logs) {
-            const collName = log.type === 'card' ? 'CardLogs' : (log.type === 'sealed' ? 'SealedLogs' : 'Logs');
-            const logRef = db.collection(collName).doc();
-            batch.set(logRef, log, { merge: false });
+          // Group logs by submission into a single document per type (up to 10 items entered via Quick Edit)
+          const cardItems = logs.filter(l => l.type === 'card').map(l => ({
+            cardName: l.cardName,
+            number: l.number,
+            print: l.print,
+            amount: l.amount,
+            location: l.location,
+            set: l.set
+          }));
+          const sealedItems = logs.filter(l => l.type === 'sealed').map(l => ({
+            sealedName: l.sealedName,
+            amount: l.amount,
+            location: l.location
+          }));
+          if (cardItems.length > 0) {
+            const logRef = db.collection('CardLogs').doc();
+            batch.set(logRef, { time: nowServerTs, items: cardItems }, { merge: false });
+            ops++;
+            if (ops >= 450) flush();
+          }
+          if (sealedItems.length > 0) {
+            const logRef = db.collection('SealedLogs').doc();
+            batch.set(logRef, { time: nowServerTs, items: sealedItems }, { merge: false });
             ops++;
             if (ops >= 450) flush();
           }
@@ -2405,21 +2614,50 @@
             }
             rows.forEach(r => {
               const d = r.data || {};
-              html += '<tr>';
-              html += '<td class="small mono">' + (formatTs(d.time) || '') + '</td>';
+              const timeCell = '<td class="small mono">' + (formatTs(d.time) || '') + '</td>';
               if (logsView === 'card') {
-                html += '<td>' + (d.cardName || '') + '</td>';
-                html += '<td>' + (Number.isFinite(d.number) ? d.number : (d.number || '')) + '</td>';
-                html += '<td>' + (d.print || '') + '</td>';
-                html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
-                html += '<td>' + (d.location || '') + '</td>';
-                html += '<td>' + (d.set || '') + '</td>';
+                if (Array.isArray(d.items)) {
+                  d.items.forEach(it => {
+                    html += '<tr>';
+                    html += timeCell;
+                    html += '<td>' + (it.cardName || '') + '</td>';
+                    html += '<td>' + (Number.isFinite(it.number) ? it.number : (it.number || '')) + '</td>';
+                    html += '<td>' + (it.print || '') + '</td>';
+                    html += '<td>' + (Number.isFinite(it.amount) ? it.amount : (it.amount || '')) + '</td>';
+                    html += '<td>' + (it.location || '') + '</td>';
+                    html += '<td>' + (it.set || '') + '</td>';
+                    html += '</tr>';
+                  });
+                } else {
+                  html += '<tr>';
+                  html += timeCell;
+                  html += '<td>' + (d.cardName || '') + '</td>';
+                  html += '<td>' + (Number.isFinite(d.number) ? d.number : (d.number || '')) + '</td>';
+                  html += '<td>' + (d.print || '') + '</td>';
+                  html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
+                  html += '<td>' + (d.location || '') + '</td>';
+                  html += '<td>' + (d.set || '') + '</td>';
+                  html += '</tr>';
+                }
               } else {
-                html += '<td>' + (d.sealedName || '') + '</td>';
-                html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
-                html += '<td>' + (d.location || '') + '</td>';
+                if (Array.isArray(d.items)) {
+                  d.items.forEach(it => {
+                    html += '<tr>';
+                    html += timeCell;
+                    html += '<td>' + (it.sealedName || '') + '</td>';
+                    html += '<td>' + (Number.isFinite(it.amount) ? it.amount : (it.amount || '')) + '</td>';
+                    html += '<td>' + (it.location || '') + '</td>';
+                    html += '</tr>';
+                  });
+                } else {
+                  html += '<tr>';
+                  html += timeCell;
+                  html += '<td>' + (d.sealedName || '') + '</td>';
+                  html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
+                  html += '<td>' + (d.location || '') + '</td>';
+                  html += '</tr>';
+                }
               }
-              html += '</tr>';
             });
             html += '</tbody></table></div>';
             if (rows.length === 0) {
