@@ -917,8 +917,6 @@
           await refreshImportVisibility();
           // Ensure "Add Set" controls are only visible at category level (clear in set/leaf views)
           if (dbSetTabs) { dbSetTabs.innerHTML = ''; }
-          // Clear any overview cards when viewing leaf data
-          if (dbSetDetails) { dbSetDetails.innerHTML = ''; }
           if (!dbState.setName) { dbOutput.innerHTML = ''; return; }
           if (dbState.view === 'Cards') {
             await loadCards();
@@ -997,6 +995,12 @@
             const firebaseGlobal = window.firebase;
             if (!firebaseGlobal || !firebaseGlobal.auth) return;
             if (!dbImportCardEl) return;
+            // Hide import/quick-edit UI when viewing set overview
+            if (dbState.view === 'Overview') {
+              dbImportCardEl.classList.add('hidden');
+              if (dbQuickEditBtn) dbQuickEditBtn.classList.add('hidden');
+              return;
+            }
             const user = firebaseGlobal.auth().currentUser;
             if (!user) {
               dbImportCardEl.classList.add('hidden');
@@ -1195,6 +1199,8 @@
         async function renderSetDetails(name) {
           // Hide any category-level controls like "Add Set" in set-level view
           if (dbSetTabs) { dbSetTabs.innerHTML = ''; }
+          // Ensure the details section is not in a grid layout so the card spans full width
+          if (dbSetDetails) { dbSetDetails.className = ''; }
           const dataLocal = (currentCategorySets.map && currentCategorySets.map[name]) || {};
           let data = dataLocal;
           if (!('Cards' in dataLocal) && !('Total Cards' in dataLocal) && !('image' in dataLocal)) {
@@ -1247,28 +1253,28 @@
 
         async function selectSetFromTabs(name) {
           dbState.setName = name;
-          dbState.view = 'Cards';
+          dbState.view = 'Overview';
           updateBreadcrumb();
           refreshImportCardContext();
           await refreshImportVisibility();
+          if (dbOutput) { dbOutput.innerHTML = ''; }
           if (dbSetTabs) {
             const children = Array.from(dbSetTabs.children || []);
             children.forEach(ch => ch.classList.toggle('active', (ch.textContent || '') === name));
           }
           await renderSetDetails(name);
-          await loadCurrentView();
         }
 
         async function navigateToSet(lang, cat, setName) {
           dbState.language = lang;
           dbState.category = cat;
           dbState.setName = setName;
-          dbState.view = 'Cards';
+          dbState.view = 'Overview';
           updateBreadcrumb();
           refreshImportCardContext();
           await refreshImportVisibility();
+          if (dbOutput) { dbOutput.innerHTML = ''; }
           await renderSetDetails(setName);
-          await loadCurrentView();
         }
 
         async function discoverStructure() {
@@ -1362,10 +1368,12 @@
                                 dbState.language = lang;
                                 dbState.category = cat;
                                 dbState.setName = setName;
-                                dbState.view = 'Cards';
+                                dbState.view = 'Overview';
                                 updateBreadcrumb();
+                                refreshImportCardContext();
+                                await refreshImportVisibility();
+                                if (dbOutput) { dbOutput.innerHTML = ''; }
                                 await renderSetDetails(setName);
-                                await loadCurrentView();
                               },
                               loadChildren: async (container4) => {
                                 container4.innerHTML = '';
