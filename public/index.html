@@ -616,12 +616,23 @@
               const x = d.data() || {};
               const t = toMillis(x.time);
               if (Number.isFinite(startMs) && STATS_RANGE_MS[statsRange] !== Number.POSITIVE_INFINITY && t < startMs) return;
-              const key = String(x.set || '') + '|' + Number(x.number || 0) + '|' + (normalizePrintingLabel(x.print || '') || '');
-              const cost = (cardCostMap && cardCostMap.get(key)) || 0;
-              const amt = Number(x.amount || 0) || 0;
-              if (!Number.isFinite(t)) return;
-              const delta = cost * amt;
-              if (delta !== 0) deltas.push({ t, v: delta });
+              if (Array.isArray(x.items)) {
+                for (const it of x.items) {
+                  const key = String(it.set || '') + '|' + Number(it.number || 0) + '|' + (normalizePrintingLabel(it.print || '') || '');
+                  const cost = (cardCostMap && cardCostMap.get(key)) || 0;
+                  const amt = Number(it.amount || 0) || 0;
+                  if (!Number.isFinite(t)) continue;
+                  const delta = cost * amt;
+                  if (delta !== 0) deltas.push({ t, v: delta });
+                }
+              } else {
+                const key = String(x.set || '') + '|' + Number(x.number || 0) + '|' + (normalizePrintingLabel(x.print || '') || '');
+                const cost = (cardCostMap && cardCostMap.get(key)) || 0;
+                const amt = Number(x.amount || 0) || 0;
+                if (!Number.isFinite(t)) return;
+                const delta = cost * amt;
+                if (delta !== 0) deltas.push({ t, v: delta });
+              }
             });
           }
           // Sealed: resolve cost via product name
@@ -630,12 +641,23 @@
               const x = d.data() || {};
               const t = toMillis(x.time);
               if (Number.isFinite(startMs) && STATS_RANGE_MS[statsRange] !== Number.POSITIVE_INFINITY && t < startMs) return;
-              const name = String(x.sealedName || '');
-              const cost = (sealedCostMap && sealedCostMap.get(name)) || 0;
-              const amt = Number(x.amount || 0) || 0;
-              if (!Number.isFinite(t)) return;
-              const delta = cost * amt;
-              if (delta !== 0) deltas.push({ t, v: delta });
+              if (Array.isArray(x.items)) {
+                for (const it of x.items) {
+                  const name = String(it.sealedName || '');
+                  const cost = (sealedCostMap && sealedCostMap.get(name)) || 0;
+                  const amt = Number(it.amount || 0) || 0;
+                  if (!Number.isFinite(t)) continue;
+                  const delta = cost * amt;
+                  if (delta !== 0) deltas.push({ t, v: delta });
+                }
+              } else {
+                const name = String(x.sealedName || '');
+                const cost = (sealedCostMap && sealedCostMap.get(name)) || 0;
+                const amt = Number(x.amount || 0) || 0;
+                if (!Number.isFinite(t)) return;
+                const delta = cost * amt;
+                if (delta !== 0) deltas.push({ t, v: delta });
+              }
             });
           }
           return deltas;
@@ -2214,10 +2236,29 @@
             ops++;
             if (ops >= 450) flush();
           }
-          for (const log of logs) {
-            const collName = log.type === 'card' ? 'CardLogs' : (log.type === 'sealed' ? 'SealedLogs' : 'Logs');
-            const logRef = db.collection(collName).doc();
-            batch.set(logRef, log, { merge: false });
+          // Group logs by submission into a single document per type (up to 10 items entered via Quick Edit)
+          const cardItems = logs.filter(l => l.type === 'card').map(l => ({
+            cardName: l.cardName,
+            number: l.number,
+            print: l.print,
+            amount: l.amount,
+            location: l.location,
+            set: l.set
+          }));
+          const sealedItems = logs.filter(l => l.type === 'sealed').map(l => ({
+            sealedName: l.sealedName,
+            amount: l.amount,
+            location: l.location
+          }));
+          if (cardItems.length > 0) {
+            const logRef = db.collection('CardLogs').doc();
+            batch.set(logRef, { time: nowServerTs, items: cardItems }, { merge: false });
+            ops++;
+            if (ops >= 450) flush();
+          }
+          if (sealedItems.length > 0) {
+            const logRef = db.collection('SealedLogs').doc();
+            batch.set(logRef, { time: nowServerTs, items: sealedItems }, { merge: false });
             ops++;
             if (ops >= 450) flush();
           }
@@ -2405,21 +2446,50 @@
             }
             rows.forEach(r => {
               const d = r.data || {};
-              html += '<tr>';
-              html += '<td class="small mono">' + (formatTs(d.time) || '') + '</td>';
+              const timeCell = '<td class="small mono">' + (formatTs(d.time) || '') + '</td>';
               if (logsView === 'card') {
-                html += '<td>' + (d.cardName || '') + '</td>';
-                html += '<td>' + (Number.isFinite(d.number) ? d.number : (d.number || '')) + '</td>';
-                html += '<td>' + (d.print || '') + '</td>';
-                html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
-                html += '<td>' + (d.location || '') + '</td>';
-                html += '<td>' + (d.set || '') + '</td>';
+                if (Array.isArray(d.items)) {
+                  d.items.forEach(it => {
+                    html += '<tr>';
+                    html += timeCell;
+                    html += '<td>' + (it.cardName || '') + '</td>';
+                    html += '<td>' + (Number.isFinite(it.number) ? it.number : (it.number || '')) + '</td>';
+                    html += '<td>' + (it.print || '') + '</td>';
+                    html += '<td>' + (Number.isFinite(it.amount) ? it.amount : (it.amount || '')) + '</td>';
+                    html += '<td>' + (it.location || '') + '</td>';
+                    html += '<td>' + (it.set || '') + '</td>';
+                    html += '</tr>';
+                  });
+                } else {
+                  html += '<tr>';
+                  html += timeCell;
+                  html += '<td>' + (d.cardName || '') + '</td>';
+                  html += '<td>' + (Number.isFinite(d.number) ? d.number : (d.number || '')) + '</td>';
+                  html += '<td>' + (d.print || '') + '</td>';
+                  html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
+                  html += '<td>' + (d.location || '') + '</td>';
+                  html += '<td>' + (d.set || '') + '</td>';
+                  html += '</tr>';
+                }
               } else {
-                html += '<td>' + (d.sealedName || '') + '</td>';
-                html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
-                html += '<td>' + (d.location || '') + '</td>';
+                if (Array.isArray(d.items)) {
+                  d.items.forEach(it => {
+                    html += '<tr>';
+                    html += timeCell;
+                    html += '<td>' + (it.sealedName || '') + '</td>';
+                    html += '<td>' + (Number.isFinite(it.amount) ? it.amount : (it.amount || '')) + '</td>';
+                    html += '<td>' + (it.location || '') + '</td>';
+                    html += '</tr>';
+                  });
+                } else {
+                  html += '<tr>';
+                  html += timeCell;
+                  html += '<td>' + (d.sealedName || '') + '</td>';
+                  html += '<td>' + (Number.isFinite(d.amount) ? d.amount : (d.amount || '')) + '</td>';
+                  html += '<td>' + (d.location || '') + '</td>';
+                  html += '</tr>';
+                }
               }
-              html += '</tr>';
             });
             html += '</tbody></table></div>';
             if (rows.length === 0) {
