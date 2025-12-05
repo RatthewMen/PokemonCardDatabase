@@ -44,7 +44,12 @@ export default function SealedList({ lang, cat, setName }) {
             const d = r.data || {};
             return (
               <tr key={r.id}>
-                <td>{r.id}</td>
+                <td>
+                  <div className="thumb-wrap">
+                    {(d['Image'] || d['Picture Link']) ? <img className="card-thumb" src={d['Image'] || d['Picture Link']} alt="" /> : null}
+                  </div>
+                  {r.id}
+                </td>
                 <td>{Number.isFinite(d['Amount Owned']) ? d['Amount Owned'] : (d['Amount Owned'] || 0)}</td>
                 <td>{Number.isFinite(d['Cost']) ? d['Cost'] : (d['Cost'] || 0)}</td>
                 <td>{d['Location'] || ''}</td>

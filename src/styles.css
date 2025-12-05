@@ -51,6 +51,13 @@ body { background: #F7FAFC; color: #1A202C; font-family: -apple-system, BlinkMac
 .grid-quick .hdr { font-weight: 600; font-size: 12px; color: #4A5568; }
 .grid-quick input { padding: 8px; border: 1px solid #E2E8F0; border-radius: 8px; }
 .grid-quick select { padding: 8px; border: 1px solid #E2E8F0; border-radius: 8px; background: #FFFFFF; }
+.quick-cards-header { display: grid; grid-template-columns: 120px 200px 100px 1fr; gap: 8px; align-items: center; font-weight: 600; color: #4A5568; }
+.quick-cards-row { display: grid; grid-template-columns: 120px 200px 100px 1fr; gap: 8px; align-items: center; }
+.quick-sealed-header { display: grid; grid-template-columns: minmax(240px, 1fr) 120px 1fr; gap: 8px; align-items: center; font-weight: 600; color: #4A5568; }
+.quick-sealed-row { display: grid; grid-template-columns: minmax(240px, 1fr) 120px 1fr; gap: 8px; align-items: center; }
+.form-grid { display: grid; grid-template-columns: 140px 1fr; gap: 12px 12px; align-items: center; }
+.form-label { font-weight: 600; color: #4A5568; }
+.switch-row { display: flex; gap: 16px; align-items: center; }
 .modal-footer { padding: 12px 16px; border-top: 1px solid #E2E8F0; display: flex; gap: 8px; justify-content: flex-end; }
 .set-details { display: flex; gap: 12px; align-items: flex-start; }
 .set-image { width: 160px; height: 100px; object-fit: contain; border: 1px solid #E2E8F0; border-radius: 8px; background: #F7FAFC; }

@@ -14,6 +14,7 @@ import CardsList from '../components/CardsList.jsx';
 import SealedList from '../components/SealedList.jsx';
 import QuickEditModal from '../components/QuickEditModal.jsx';
 import ImportPanel from '../components/ImportPanel.jsx';
+import SealedImportPanel from '../components/SealedImportPanel.jsx';
 
 function readCookie(name) {
   try {
@@ -113,6 +114,7 @@ export default function Database() {
   const [loadingTop, setLoadingTop] = useState(false);
   const [topByValue, setTopByValue] = useState([]); // [{name,image,amount,total}]
   const [topByQty, setTopByQty] = useState([]);     // [{name,image,amount,total}]
+  const [savingFlag, setSavingFlag] = useState(null); // 'cards' | 'sealed' | null
 
   function toggleOpenKey(key) {
     setOpen(o => {
@@ -133,6 +135,16 @@ export default function Database() {
           return obj[lang][cat][set];
         };
         const struct = {};
+        // Include all languages, even if empty
+        try {
+          const langsSnap = await getDocs(collection(db, 'Pokemon Packs'));
+          langsSnap.forEach(d => {
+            const lang = d.id;
+            if (!/^_/.test(lang)) {
+              struct[lang] = struct[lang] || {};
+            }
+          });
+        } catch {}
         const cardsSnap = await getDocs(collectionGroup(db, 'Cards'));
         cardsSnap.forEach(d => {
           const parts = d.ref.path.split('/');
@@ -202,6 +214,23 @@ export default function Database() {
 
   const langs = useMemo(() => Object.keys(structure).sort((a, b) => a.localeCompare(b)), [structure]);
 
+  async function updateImportFlag(field, nextValue) {
+    if (!(selection.lang && selection.cat && selection.setName)) return;
+    setSavingFlag(field === 'CanImportCards' ? 'cards' : 'sealed');
+    const ref = doc(db, 'Pokemon Packs', selection.lang, selection.cat, selection.setName);
+    // optimistic update
+    setSetMeta(m => ({ ...(m || {}), [field]: !!nextValue }));
+    try {
+      await setDoc(ref, { [field]: !!nextValue }, { merge: true });
+    } catch (e) {
+      // revert on failure
+      setSetMeta(m => ({ ...(m || {}), [field]: !(!!nextValue) }));
+      alert('Failed to update setting: ' + (e && e.message ? e.message : String(e)));
+    } finally {
+      setSavingFlag(null);
+    }
+  }
+
   async function refreshStructure() {
     setLoadingTree(true);
     try {
@@ -212,6 +241,15 @@ export default function Database() {
         return obj[lang][cat][set];
       };
       const struct = {};
+      try {
+        const langsSnap = await getDocs(collection(db, 'Pokemon Packs'));
+        langsSnap.forEach(d => {
+          const lang = d.id;
+          if (!/^_/.test(lang)) {
+            struct[lang] = struct[lang] || {};
+          }
+        });
+      } catch {}
       const cardsSnap = await getDocs(collectionGroup(db, 'Cards'));
       cardsSnap.forEach(d => {
         const parts = d.ref.path.split('/');
@@ -356,23 +394,19 @@ export default function Database() {
                                             <div key={setName} className="tree-node">
                                               <div className="tree-row" onClick={() => toggleOpenKey(kSet)}>
                                                 <div className="tree-caret" />
-                                                <div className="tree-label" onClick={(e) => { e.stopPropagation(); setSelection({ lang, cat, setName }); }}>{setName}</div>
+                                                <div className="tree-label" onClick={(e) => { e.stopPropagation(); setSelection({ lang, cat, setName }); setView('Overview'); }}>{setName}</div>
                                               </div>
                                               <div className="tree-children" style={{ display: open[kSet] ? '' : 'none' }}>
-                                                {flags.hasCards && (
-                                                  <div className="tree-node">
-                                                    <div className="tree-row" onClick={() => { setSelection({ lang, cat, setName }); setView('Cards'); }}>
-                                                      <div className="tree-label">Cards</div>
-                                                    </div>
+                                                <div className="tree-node">
+                                                  <div className="tree-row" onClick={() => { setSelection({ lang, cat, setName }); setView('Cards'); }}>
+                                                    <div className="tree-label">Cards</div>
                                                   </div>
-                                                )}
-                                                {flags.hasSealed && (
-                                                  <div className="tree-node">
-                                                    <div className="tree-row" onClick={() => { setSelection({ lang, cat, setName }); setView('Sealed'); }}>
-                                                      <div className="tree-label">Sealed</div>
-                                                    </div>
+                                                </div>
+                                                <div className="tree-node">
+                                                  <div className="tree-row" onClick={() => { setSelection({ lang, cat, setName }); setView('Sealed'); }}>
+                                                    <div className="tree-label">Sealed</div>
                                                   </div>
-                                                )}
+                                                </div>
                                               </div>
                                             </div>
                                           );
@@ -400,7 +434,7 @@ export default function Database() {
                 <button className="btn ghost small" onClick={() => setShowAddCategory(true)}>Add Category</button>
               ) : null}
               {(selection.lang && selection.cat && !selection.setName) ? (
-                <button className="btn ghost small" onClick={() => setShowAddSet(true)}>Add Set</button>
+                <button className="btn small" onClick={() => setShowAddSet(true)}>Add Set</button>
               ) : null}
             </div>
           </div>
@@ -466,14 +500,6 @@ export default function Database() {
                         <li className="kv-item"><span className="kv-label small">Total Value</span><span className="mono">{formatCurrency(aggs.totalValue)}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Amount of Cards</span><span className="mono">{aggs.totalCardAmount}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Packs Opened</span><span className="mono">{aggs.totalPacksOpened}</span></li>
-                        <li className="kv-item">
-                          <span className="kv-label small">Can Import Cards</span>
-                          <label className="switch"><input type="checkbox" checked={!!meta['CanImportCards']} readOnly /><span className="slider" /></label>
-                        </li>
-                        <li className="kv-item">
-                          <span className="kv-label small">Can Import Sealed</span>
-                          <label className="switch"><input type="checkbox" checked={!!meta['CanImportSealed']} readOnly /><span className="slider" /></label>
-                        </li>
                       </ul>
                     </div>
                   );
@@ -497,6 +523,21 @@ export default function Database() {
                 }} />
               </div>
             ) : null}
+            {(canEdit && view === 'Sealed' && setMeta && setMeta['CanImportSealed']) ? (
+              <div className="space-top">
+                <SealedImportPanel
+                  lang={selection.lang}
+                  cat={selection.cat}
+                  setName={selection.setName}
+                  canEdit={canEdit}
+                  onImported={() => {
+                    if (view === 'Overview') {
+                      computeSetAggregates(db, selection.lang, selection.cat, selection.setName).then(setAggregates);
+                    }
+                  }}
+                />
+              </div>
+            ) : null}
             <div id="dbSetDetails">
               {view === 'Overview' ? (
                 loadingAgg ? (
@@ -516,13 +557,29 @@ export default function Database() {
                         {loadingMeta ? null : (
                           <li className="kv-item">
                             <span className="kv-label small">Can Import Cards</span>
-                            <label className="switch"><input type="checkbox" checked={!!(setMeta && setMeta['CanImportCards'])} readOnly /><span className="slider" /></label>
+                            <label className="switch">
+                              <input
+                                type="checkbox"
+                                checked={!!(setMeta && setMeta['CanImportCards'])}
+                                onChange={e => updateImportFlag('CanImportCards', e.target.checked)}
+                                disabled={savingFlag === 'cards'}
+                              />
+                              <span className="slider" />
+                            </label>
                           </li>
                         )}
                         {loadingMeta ? null : (
                           <li className="kv-item">
                             <span className="kv-label small">Can Import Sealed</span>
-                            <label className="switch"><input type="checkbox" checked={!!(setMeta && setMeta['CanImportSealed'])} readOnly /><span className="slider" /></label>
+                            <label className="switch">
+                              <input
+                                type="checkbox"
+                                checked={!!(setMeta && setMeta['CanImportSealed'])}
+                                onChange={e => updateImportFlag('CanImportSealed', e.target.checked)}
+                                disabled={savingFlag === 'sealed'}
+                              />
+                              <span className="slider" />
+                            </label>
                           </li>
                         )}
                       </ul>
@@ -627,23 +684,28 @@ export default function Database() {
         <div className="modal-backdrop">
           <div className="modal-panel">
             <div className="modal-header">
-              <div className="small">Add Set</div>
+              <div className="small">Add New Set</div>
+              <div className="chip">{selection.lang || 'English'} / {selection.cat || ''}</div>
               <button className="btn ghost small" onClick={() => setShowAddSet(false)}>Close</button>
             </div>
             <div className="modal-body">
-              <div className="grid-quick">
-                <div className="hdr">Name</div>
-                <input value={newSet.name} onChange={e => setNewSet(s => ({ ...s, name: e.target.value }))} placeholder="Set Name" />
-                <div className="hdr">Cards</div>
-                <input value={newSet.cards} onChange={e => setNewSet(s => ({ ...s, cards: e.target.value }))} placeholder="0" />
-                <div className="hdr">Total Cards</div>
-                <input value={newSet.totalCards} onChange={e => setNewSet(s => ({ ...s, totalCards: e.target.value }))} placeholder="0" />
-                <div className="hdr">Image URL</div>
-                <input value={newSet.image} onChange={e => setNewSet(s => ({ ...s, image: e.target.value }))} placeholder="https://..." />
-                <div className="hdr">Import Flags</div>
-                <div className="stack">
-                  <label className="small"><input type="checkbox" checked={newSet.canCards} onChange={e => setNewSet(s => ({ ...s, canCards: e.target.checked }))} /> Cards</label>
-                  <label className="small"><input type="checkbox" checked={newSet.canSealed} onChange={e => setNewSet(s => ({ ...s, canSealed: e.target.checked }))} /> Sealed</label>
+              <div className="form-grid">
+                <div className="form-label">Set Name</div>
+                <input value={newSet.name} onChange={e => setNewSet(s => ({ ...s, name: e.target.value }))} placeholder="e.g., Phantasmal Flames" />
+
+                <div className="form-label">Cards</div>
+                <input type="number" value={newSet.cards} onChange={e => setNewSet(s => ({ ...s, cards: e.target.value }))} placeholder="0" />
+
+                <div className="form-label">Total Cards</div>
+                <input type="number" value={newSet.totalCards} onChange={e => setNewSet(s => ({ ...s, totalCards: e.target.value }))} placeholder="0" />
+
+                <div className="form-label">Image Link</div>
+                <input value={newSet.image} onChange={e => setNewSet(s => ({ ...s, image: e.target.value }))} placeholder="https://…" />
+
+                <div className="form-label">Flags</div>
+                <div className="switch-row">
+                  <label className="small"><input type="checkbox" checked={newSet.canCards} onChange={e => setNewSet(s => ({ ...s, canCards: e.target.checked }))} /> Can Import Cards</label>
+                  <label className="small"><input type="checkbox" checked={newSet.canSealed} onChange={e => setNewSet(s => ({ ...s, canSealed: e.target.checked }))} /> Can Import Sealed</label>
                 </div>
               </div>
             </div>
