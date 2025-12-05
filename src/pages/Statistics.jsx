@@ -54,6 +54,49 @@ function pickBucketSizeMs(rangeMs) {
   return 30 * day;
 }
 
+function startOfDay(ms) {
+  const d = new Date(ms);
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+function densifyDailyPoints(points, startMs, endMs) {
+  if (!Array.isArray(points) || points.length === 0) return points;
+  const sorted = [...points].sort((a, b) => a.x - b.x);
+  const day = 24 * 60 * 60 * 1000;
+  const startDay = startOfDay(startMs);
+  const endDay = startOfDay(endMs);
+
+  const result = [];
+  let idx = 0;
+  let lastY = (sorted[0] && Number.isFinite(sorted[0].y)) ? sorted[0].y : 0;
+
+  for (let t = startDay; t <= endDay; t += day) {
+    while (idx < sorted.length && sorted[idx].x <= t) {
+      lastY = sorted[idx].y;
+      result.push(sorted[idx]);
+      idx++;
+    }
+    if (result.length === 0 || result[result.length - 1].x !== t) {
+      result.push({ x: t, y: lastY });
+    }
+  }
+  while (idx < sorted.length) {
+    result.push(sorted[idx++]);
+  }
+
+  // Deduplicate by x (keep first occurrence)
+  const seen = new Set();
+  const dedup = [];
+  for (const p of result) {
+    if (!seen.has(p.x)) {
+      seen.add(p.x);
+      dedup.push(p);
+    }
+  }
+  return dedup.sort((a, b) => a.x - b.x);
+}
+
 export default function Statistics() {
   const db = useMemo(() => getFirestore(firebaseApp), []);
   const [range, setRange] = useState('1M');
@@ -183,8 +226,21 @@ export default function Statistics() {
         });
         const xs = times.length > 0 ? times : [(rangeMs === Number.POSITIVE_INFINITY ? (deltas.length ? Math.min(...deltas.map(d => d.t)) : nowMs - 365*24*60*60*1000) : startMs), nowMs];
         const ys = times.length > 0 ? values : [baseline, totalNow || baseline];
-        setPoints(xs.map((t, i) => ({ x: t, y: ys[i] })));
-        setXBounds([rangeMs === Number.POSITIVE_INFINITY ? xs[0] : startMs, nowMs]);
+
+        // Include explicit start and end bounds to stabilize the line
+        const startBound = rangeMs === Number.POSITIVE_INFINITY ? xs[0] : startMs;
+        const core = xs.map((t, i) => ({ x: t, y: ys[i] }));
+        const withBounds = [{ x: startBound, y: baseline }, ...core, { x: nowMs, y: totalNow || baseline }]
+          .sort((a, b) => a.x - b.x);
+
+        // Densify with daily points when viewing >= 1 day to reduce visual jitter
+        const day = 24 * 60 * 60 * 1000;
+        const finalPoints = (rangeMs >= day || rangeMs === Number.POSITIVE_INFINITY)
+          ? densifyDailyPoints(withBounds, startBound, nowMs)
+          : withBounds;
+
+        setPoints(finalPoints);
+        setXBounds([startBound, nowMs]);
       } finally {
         setLoading(false);
       }
@@ -211,15 +267,24 @@ export default function Statistics() {
             options={{
               chart: { animations: { enabled: false }, toolbar: { show: false }, parentHeightOffset: 0 },
               stroke: { width: 2, curve: 'straight' },
-              xaxis: { type: 'datetime', min: xBounds[0], max: xBounds[1], crosshairs: { show: false }, tooltip: { enabled: false } },
-              yaxis: { min: 0, decimalsInFloat: 2, labels: { formatter: (v) => formatCurrency(v) } },
-              grid: { show: true },
+              dataLabels: { enabled: false },
+              xaxis: {
+                type: 'datetime',
+                min: xBounds[0],
+                max: xBounds[1],
+                tickAmount: 8,
+                crosshairs: { show: false },
+                tooltip: { enabled: false }
+              },
+              yaxis: { min: 0, labels: { formatter: (v) => formatCurrency(v) } },
+              grid: { show: true, strokeDashArray: 3 },
               tooltip: {
                 x: { formatter: (val) => new Date(val).toLocaleString() },
                 y: { formatter: (val) => formatCurrency(val) },
+                shared: false,
                 fixed: { enabled: false }
               },
-              markers: { size: 3 }
+              markers: { size: 2 }
             }}
           />
         )}

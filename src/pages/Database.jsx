@@ -684,7 +684,6 @@ export default function Database() {
         <div className="modal-backdrop">
           <div className="modal-panel">
             <div className="modal-header">
-              <div className="small">Add New Set</div>
               <div className="chip">{selection.lang || 'English'} / {selection.cat || ''}</div>
               <button className="btn ghost small" onClick={() => setShowAddSet(false)}>Close</button>
             </div>
@@ -704,8 +703,20 @@ export default function Database() {
 
                 <div className="form-label">Flags</div>
                 <div className="switch-row">
-                  <label className="small"><input type="checkbox" checked={newSet.canCards} onChange={e => setNewSet(s => ({ ...s, canCards: e.target.checked }))} /> Can Import Cards</label>
-                  <label className="small"><input type="checkbox" checked={newSet.canSealed} onChange={e => setNewSet(s => ({ ...s, canSealed: e.target.checked }))} /> Can Import Sealed</label>
+                  <div className="toggle-row">
+                    <label className="switch">
+                      <input type="checkbox" checked={newSet.canCards} onChange={e => setNewSet(s => ({ ...s, canCards: e.target.checked }))} />
+                      <span className="slider"></span>
+                    </label>
+                    <span className="small">Can Import Cards</span>
+                  </div>
+                  <div className="toggle-row">
+                    <label className="switch">
+                      <input type="checkbox" checked={newSet.canSealed} onChange={e => setNewSet(s => ({ ...s, canSealed: e.target.checked }))} />
+                      <span className="slider"></span>
+                    </label>
+                    <span className="small">Can Import Sealed</span>
+                  </div>
                 </div>
               </div>
             </div>

@@ -169,14 +169,13 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
     <div className="modal-backdrop">
       <div className="modal-panel">
         <div className="modal-header">
-          <div className="small muted">Quick Edit</div>
           <div className="chip">{cat} / {setName} / {view}</div>
           <button className="btn ghost small" onClick={onClose} style={{ padding: '6px 8px' }}>Close</button>
         </div>
         <div className="modal-body">
           <div className="space-top">
             {view === 'Cards' ? (
-              <>
+              <div className="quick-list">
                 <div className="quick-cards-header">
                   <div>Number</div>
                   <div>Printing</div>
@@ -184,7 +183,7 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
                   <div>Location</div>
                 </div>
                 {rows.map(r => (
-                  <div key={r.id} className="quick-cards-row" style={{ marginBottom: 6 }}>
+                  <div key={r.id} className="quick-cards-row">
                     <input placeholder="#" onChange={e => updateRow(r.id, { number: e.target.value })} />
                     <select defaultValue="Normal" onChange={e => updateRow(r.id, { print: e.target.value })}>
                       <option>Normal</option>
@@ -195,16 +194,16 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
                     <input placeholder="optional" onChange={e => updateRow(r.id, { location: e.target.value })} />
                   </div>
                 ))}
-              </>
+              </div>
             ) : (
-              <>
+              <div className="quick-list">
                 <div className="quick-sealed-header">
                   <div>Product</div>
                   <div>Amount</div>
                   <div>Location</div>
                 </div>
                 {rows.map(r => (
-                  <div key={r.id} className="quick-sealed-row" style={{ marginBottom: 6 }}>
+                  <div key={r.id} className="quick-sealed-row">
                     <select defaultValue="" onChange={e => updateRow(r.id, { sealedName: e.target.value })}>
                       <option value="" disabled>Select product</option>
                       {sealedOptions.map(n => <option key={n} value={n}>{n}</option>)}
@@ -213,7 +212,7 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
                     <input placeholder="optional" onChange={e => updateRow(r.id, { location: e.target.value })} />
                   </div>
                 ))}
-              </>
+              </div>
             )}
           </div>
         </div>
