@@ -2093,7 +2093,15 @@
                 });
                 if (!targetDoc) targetDoc = q.docs[0] || null;
                 if (targetDoc) {
-                  await targetDoc.ref.set({ 'Picture Link': String(imageUrl) }, { merge: true });
+                  const toSet = { 'Picture Link': String(imageUrl) };
+                  try {
+                    const existing = targetDoc.data() || {};
+                    const itemNameRaw = (item && (item.name || item.Name)) || '';
+                    if (!existing['Name'] && itemNameRaw) {
+                      toSet['Name'] = __cleanNameForId(itemNameRaw);
+                    }
+                  } catch (_) {}
+                  await targetDoc.ref.set(toSet, { merge: true });
                   updated++;
                 }
               } catch (_) {}
@@ -2168,7 +2176,15 @@
                 });
                 if (!targetDoc) targetDoc = q.docs[0] || null;
                 if (targetDoc) {
-                  await targetDoc.ref.set({ 'Cost': Number(costVal) }, { merge: true });
+                  const toSet = { 'Cost': Number(costVal) };
+                  try {
+                    const existing = targetDoc.data() || {};
+                    const itemNameRaw = (item && (item.name || item.Name)) || '';
+                    if (!existing['Name'] && itemNameRaw) {
+                      toSet['Name'] = __cleanNameForId(itemNameRaw);
+                    }
+                  } catch (_) {}
+                  await targetDoc.ref.set(toSet, { merge: true });
                   updated++;
                 }
               } catch (_) {}
@@ -2204,6 +2220,64 @@
 
         bindNavClicks();
         initRouter();
+
+        // Cache of card names by number for the current set, used by Quick Edit logging/name backfill
+        let __cardNameCache = { key: '', map: null };
+        async function __ensureCardNameCacheForCurrentSet() {
+          const key = (dbState.category || '') + ' / ' + (dbState.setName || '') + ' / ' + (dbState.language || '');
+          if (__cardNameCache.key === key && __cardNameCache.map) return __cardNameCache.map;
+          __cardNameCache = { key, map: new Map() };
+          const path = '.' + buildDataPathForCurrentSet();
+          try {
+            const res = await fetch(path, { cache: 'no-cache' });
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const text = await res.text();
+            const raw = String(text || '').trim();
+            let items = [];
+            if (raw.startsWith('[') || raw.startsWith('{')) {
+              try {
+                const parsed = JSON.parse(raw);
+                if (Array.isArray(parsed)) items = parsed;
+              } catch (_) {}
+            }
+            if (items.length === 0) {
+              const lines = raw.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
+              for (const line of lines) {
+                const parts = line.split(',');
+                const name = (parts[0] || '').trim();
+                const numberStr = (parts[1] || '').trim();
+                const m = numberStr.match(/^\s*(\d+)/);
+                const num = m ? parseInt(m[1], 10) : NaN;
+                if (name && Number.isFinite(num)) {
+                  __cardNameCache.map.set(num, __cleanNameForId(name));
+                }
+              }
+            } else {
+              for (const it of items) {
+                const name = String((it && (it.name || it.Name)) || '').trim();
+                const numberRaw = (it && (it.number || it.Number));
+                let num = 0;
+                if (typeof numberRaw === 'number') num = numberRaw;
+                else if (typeof numberRaw === 'string') {
+                  const m = numberRaw.match(/^\s*(\d+)/);
+                  num = m ? parseInt(m[1], 10) : NaN;
+                }
+                if (name && Number.isFinite(num)) {
+                  __cardNameCache.map.set(num, __cleanNameForId(name));
+                }
+              }
+            }
+          } catch (_) {
+            // ignore; leave map possibly empty
+          }
+          return __cardNameCache.map;
+        }
+        async function __lookupCardNameByNumber(num) {
+          try {
+            const map = await __ensureCardNameCacheForCurrentSet();
+            return map.get(num) || '';
+          } catch (_) { return ''; }
+        }
 
         // --- Quick Edit Modal logic ---
         const quickEditModal = document.getElementById('quickEditModal');
@@ -2371,16 +2445,39 @@
                   targetDoc = q.docs[0] || null;
                 }
                 if (targetDoc) {
-                  const data = {};
+                const data = {};
                   const cur = Number((targetDoc.data() || {})['Amount Owned'] || 0);
                   const next = Math.max(0, cur + amt);
                   data['Amount Owned'] = next;
                   if (loc) data['Location'] = loc;
+                // Resolve a display name for logs, and backfill Name if missing
+                let resolvedName = '';
+                try {
+                  const existing = targetDoc.data() || {};
+                  if (existing && existing['Name']) {
+                    resolvedName = String(existing['Name']);
+                  }
+                } catch (_) {}
+                if (!resolvedName) {
+                  try {
+                    const inferred = await __lookupCardNameByNumber(num);
+                    if (inferred) resolvedName = inferred;
+                  } catch (_) {}
+                }
+                if (!resolvedName) {
+                  resolvedName = 'Card #' + String(num);
+                }
+                try {
+                  const existing = targetDoc.data() || {};
+                  if (!existing['Name'] && resolvedName) {
+                    data['Name'] = resolvedName;
+                  }
+                } catch (_) {}
                   updates.push({ ref: targetDoc.ref, data });
                   logs.push({
                     type: 'card',
                     time: nowServerTs,
-                    cardName: String(((targetDoc.data() || {})['Name']) || targetDoc.id || ''),
+                  cardName: resolvedName,
                     number: num,
                     print: prt || 'Normal',
                     amount: amt,
