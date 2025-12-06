@@ -8,7 +8,8 @@ import {
   query,
   orderBy,
   collection,
-  where
+  where,
+  limit
 } from 'firebase/firestore';
 
 const STATS_RANGE_MS = {
@@ -60,6 +61,51 @@ function startOfDay(ms) {
   return d.getTime();
 }
 
+function startOfHour(ms) {
+  const d = new Date(ms);
+  d.setMinutes(0, 0, 0);
+  return d.getTime();
+}
+
+function startOfWeekMonday(ms) {
+  const d = new Date(ms);
+  const day = d.getDay(); // 0=Sun, 1=Mon, ..., 6=Sat
+  const diffFromMonday = (day + 6) % 7; // 0 if Monday
+  d.setDate(d.getDate() - diffFromMonday);
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+function startOfMonth(ms) {
+  const d = new Date(ms);
+  d.setDate(1);
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+function startOfYear(ms) {
+  const d = new Date(ms);
+  d.setMonth(0, 1); // Jan 1
+  d.setHours(0, 0, 0, 0);
+  return d.getTime();
+}
+
+function getAlignedRangeStartMs(range, nowMs) {
+  switch (range) {
+    case '1H': return startOfHour(nowMs);
+    case '1D': return startOfDay(nowMs);
+    case '7D': return startOfWeekMonday(nowMs);
+    case '1M': return startOfMonth(nowMs);
+    case '1Y': return startOfYear(nowMs);
+    case 'ALL': return 0;
+    default: {
+      const ms = STATS_RANGE_MS[range];
+      if (!Number.isFinite(ms) || ms === Number.POSITIVE_INFINITY) return 0;
+      return nowMs - ms;
+    }
+  }
+}
+
 function densifyDailyPoints(points, startMs, endMs) {
   if (!Array.isArray(points) || points.length === 0) return points;
   const sorted = [...points].sort((a, b) => a.x - b.x);
@@ -101,7 +147,8 @@ export default function Statistics() {
   const db = useMemo(() => getFirestore(firebaseApp), []);
   const [range, setRange] = useState('1M');
   const [points, setPoints] = useState([]);
-  const [xBounds, setXBounds] = useState([Date.now() - STATS_RANGE_MS['1M'], Date.now()]);
+  const [xBounds, setXBounds] = useState([getAlignedRangeStartMs('1M', Date.now()), Date.now()]);
+  const [yBounds, setYBounds] = useState([0, undefined]);
   const [totalNow, setTotalNow] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -140,16 +187,34 @@ export default function Statistics() {
         });
         setTotalNow(total);
 
-        // Fetch logs
-        const nowMs = Date.now();
+        // Determine end bound as the latest data point (fallback to now if none)
+        const [latestCardSnap, latestSealedSnap] = await Promise.all([
+          getDocs(query(collection(db, 'CardLogs'), orderBy('time', 'desc'), limit(1))),
+          getDocs(query(collection(db, 'SealedLogs'), orderBy('time', 'desc'), limit(1)))
+        ]);
+        let latestCardMs = 0;
+        if (latestCardSnap && !latestCardSnap.empty) {
+          latestCardSnap.forEach(docSnap => {
+            const dt = toMillis((docSnap.data() || {}).time);
+            if (Number.isFinite(dt)) latestCardMs = Math.max(latestCardMs, dt);
+          });
+        }
+        let latestSealedMs = 0;
+        if (latestSealedSnap && !latestSealedSnap.empty) {
+          latestSealedSnap.forEach(docSnap => {
+            const dt = toMillis((docSnap.data() || {}).time);
+            if (Number.isFinite(dt)) latestSealedMs = Math.max(latestSealedMs, dt);
+          });
+        }
+        const endMs = Math.max(latestCardMs, latestSealedMs, Date.now());
         const rangeMs = STATS_RANGE_MS[range];
-        const startMs = rangeMs === Number.POSITIVE_INFINITY ? 0 : (nowMs - rangeMs);
-        const start = new Date(startMs);
-        const now = new Date();
+        const alignedStartMs = rangeMs === Number.POSITIVE_INFINITY ? 0 : getAlignedRangeStartMs(range, endMs);
+        const start = new Date(alignedStartMs);
+        const endDate = new Date(endMs);
         let cardQ, sealedQ;
-        if (Number.isFinite(startMs) && rangeMs !== Number.POSITIVE_INFINITY) {
-          cardQ = query(collection(db, 'CardLogs'), where('time', '>=', start), where('time', '<=', now), orderBy('time', 'asc'));
-          sealedQ = query(collection(db, 'SealedLogs'), where('time', '>=', start), where('time', '<=', now), orderBy('time', 'asc'));
+        if (Number.isFinite(alignedStartMs) && rangeMs !== Number.POSITIVE_INFINITY) {
+          cardQ = query(collection(db, 'CardLogs'), where('time', '>=', start), where('time', '<=', endDate), orderBy('time', 'asc'));
+          sealedQ = query(collection(db, 'SealedLogs'), where('time', '>=', start), where('time', '<=', endDate), orderBy('time', 'asc'));
         } else {
           cardQ = query(collection(db, 'CardLogs'), orderBy('time', 'asc'));
           sealedQ = query(collection(db, 'SealedLogs'), orderBy('time', 'asc'));
@@ -202,13 +267,17 @@ export default function Statistics() {
         }
 
         // Aggregate
-        const rangeStart = rangeMs === Number.POSITIVE_INFINITY ? 0 : startMs;
+        const rangeStart = rangeMs === Number.POSITIVE_INFINITY ? 0 : alignedStartMs;
         const timesMap = new Map();
         for (const d of deltas) {
-          if (Number.isFinite(rangeStart) && rangeMs !== Number.POSITIVE_INFINITY && d.t < startMs) continue;
+          if (Number.isFinite(rangeStart) && rangeMs !== Number.POSITIVE_INFINITY && d.t < alignedStartMs) continue;
           timesMap.set(d.t, (timesMap.get(d.t) || 0) + d.v);
         }
-        const bucketMs = pickBucketSizeMs(nowMs - (rangeMs === Number.POSITIVE_INFINITY ? (deltas.length ? Math.min(...deltas.map(d => d.t)) : nowMs - 365*24*60*60*1000) : startMs));
+        const bucketMs = pickBucketSizeMs(
+          (rangeMs === Number.POSITIVE_INFINITY)
+            ? ((deltas.length ? (endMs - Math.min(...deltas.map(d => d.t))) : (365 * 24 * 60 * 60 * 1000)))
+            : (endMs - alignedStartMs)
+        );
         const bucketStart = (ms) => Math.floor(ms / bucketMs) * bucketMs;
         const buckets = new Map();
         Array.from(timesMap.entries()).sort((a, b) => a[0] - b[0]).forEach(([t, v]) => {
@@ -224,23 +293,43 @@ export default function Statistics() {
           acc += buckets.get(t) || 0;
           return Math.max(0, acc);
         });
-        const xs = times.length > 0 ? times : [(rangeMs === Number.POSITIVE_INFINITY ? (deltas.length ? Math.min(...deltas.map(d => d.t)) : nowMs - 365*24*60*60*1000) : startMs), nowMs];
+        const xs = times.length > 0
+          ? times
+          : [
+              (rangeMs === Number.POSITIVE_INFINITY
+                ? (deltas.length ? Math.min(...deltas.map(d => d.t)) : (endMs - 365 * 24 * 60 * 60 * 1000))
+                : alignedStartMs),
+              endMs
+            ];
         const ys = times.length > 0 ? values : [baseline, totalNow || baseline];
 
         // Include explicit start and end bounds to stabilize the line
-        const startBound = rangeMs === Number.POSITIVE_INFINITY ? xs[0] : startMs;
+        const startBound = rangeMs === Number.POSITIVE_INFINITY ? xs[0] : alignedStartMs;
         const core = xs.map((t, i) => ({ x: t, y: ys[i] }));
-        const withBounds = [{ x: startBound, y: baseline }, ...core, { x: nowMs, y: totalNow || baseline }]
+        const withBounds = [{ x: startBound, y: baseline }, ...core, { x: endMs, y: totalNow || baseline }]
           .sort((a, b) => a.x - b.x);
 
         // Densify with daily points when viewing >= 1 day to reduce visual jitter
         const day = 24 * 60 * 60 * 1000;
         const finalPoints = (rangeMs >= day || rangeMs === Number.POSITIVE_INFINITY)
-          ? densifyDailyPoints(withBounds, startBound, nowMs)
+          ? densifyDailyPoints(withBounds, startBound, endMs)
           : withBounds;
 
         setPoints(finalPoints);
-        setXBounds([startBound, nowMs]);
+        setXBounds([startBound, endMs]);
+        // Compute dynamic y-axis bounds with padding
+        const inView = finalPoints.filter(p => p.x >= startBound && p.x <= endMs);
+        const yValsInView = inView.length ? inView.map(p => Number(p.y) || 0) : [0, Number(totalNow) || 0];
+        let yMin = Math.min(...yValsInView);
+        let yMax = Math.max(...yValsInView);
+        if (!Number.isFinite(yMin)) yMin = 0;
+        if (!Number.isFinite(yMax)) yMax = Number(totalNow) || 0;
+        // Ensure non-zero span
+        const span = Math.max(1e-6, yMax - yMin);
+        const pad = Math.max(span * 0.05, 1); // 5% or at least 1
+        const minWithPad = Math.max(0, yMin - pad);
+        const maxWithPad = yMax + pad;
+        setYBounds([minWithPad, maxWithPad]);
       } finally {
         setLoading(false);
       }
@@ -276,7 +365,11 @@ export default function Statistics() {
                 crosshairs: { show: false },
                 tooltip: { enabled: false }
               },
-              yaxis: { min: 0, labels: { formatter: (v) => formatCurrency(v) } },
+              yaxis: {
+                min: yBounds[0],
+                max: yBounds[1],
+                labels: { formatter: (v) => formatCurrency(v) }
+              },
               grid: { show: true, strokeDashArray: 3 },
               tooltip: {
                 x: { formatter: (val) => new Date(val).toLocaleString() },
