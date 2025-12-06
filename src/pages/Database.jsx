@@ -336,8 +336,7 @@ export default function Database() {
   return (
     <div className="db-layout">
       <div className="card" style={{ padding: 0 }}>
-        <div className="row" style={{ padding: '10px 12px', justifyContent: 'space-between' }}>
-          <div className="small muted">Structure</div>
+        <div className="row" style={{ padding: '10px 12px', justifyContent: 'flex-end' }}>
           <div className="stack">
             <button className="btn ghost small" onClick={refreshStructure}>Refresh</button>
           </div>

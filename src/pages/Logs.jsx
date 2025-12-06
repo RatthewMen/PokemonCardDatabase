@@ -48,6 +48,7 @@ export default function Logs() {
           <button className={'tab-btn' + (view === 'card' ? ' active' : '')} onClick={() => setView('card')}>Cards</button>
           <button className={'tab-btn' + (view === 'sealed' ? ' active' : '')} onClick={() => setView('sealed')}>Sealed</button>
         </div>
+        <button className="tab-btn" onClick={load} disabled={loading} title="Refresh logs">{loading ? 'Refreshing…' : 'Refresh'}</button>
       </div>
       <div className="divider"></div>
       {loading ? (

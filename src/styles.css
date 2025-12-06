@@ -76,7 +76,8 @@ body { background: #F7FAFC; color: #1A202C; font-family: -apple-system, BlinkMac
 .tab-btn.active { background: #2B6CB0; color: #FFFFFF; border-color: #2B6CB0; }
 .logs-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
 .logs-tabs .tab-btn { width: 100%; padding: 14px 12px; border-radius: 8px; font-size: 16px; text-align: center; }
-.logs-header { display: flex; justify-content: flex-end; }
+.logs-header { display: flex; justify-content: space-between; align-items: center; }
+.logs-header > .tab-btn { padding: 14px 12px; border-radius: 8px; font-size: 16px; text-align: center; }
 .switch { position: relative; display: inline-block; width: 44px; height: 24px; vertical-align: middle; }
 .switch input { opacity: 0; width: 0; height: 0; }
 .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background: #CBD5E0; transition: .2s; border-radius: 999px; }
