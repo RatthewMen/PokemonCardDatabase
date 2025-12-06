@@ -6,14 +6,15 @@ import {
   writeBatch,
   serverTimestamp,
   collection,
-  getDocs
+  getDocs,
+  increment
 } from 'firebase/firestore';
 
 export default function QuickEditModal({ open, onClose, lang, cat, setName, defaultView = 'Cards', onApplied }) {
   const db = useMemo(() => getFirestore(firebaseApp), []);
   const [view, setView] = useState(defaultView); // 'Cards' | 'Sealed'
   const [rows, setRows] = useState([{ id: 1, amount: '1' }]);
-  const [cardIndex, setCardIndex] = useState({ byNumPrint: new Map(), byNum: new Map() });
+  const [cardIndex, setCardIndex] = useState({ byNumPrint: new Map(), byNum: new Map(), docName: new Map() });
   const [sealedOptions, setSealedOptions] = useState([]);
 
   useEffect(() => {
@@ -38,18 +39,21 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
         const snap = await getDocs(collection(db, 'Pokemon Packs', lang, cat, setName, 'Cards'));
         const byNumPrint = new Map();
         const byNum = new Map();
+        const docName = new Map();
         snap.forEach(d => {
           const x = d.data() || {};
           const num = Number.parseInt(String(x['Number'] ?? 0), 10) || 0;
           const print = normalizePrint(String(x['Printing'] || 'Normal'));
+          const nm = String(x['Name'] || d.id || '');
           if (num > 0) {
             byNumPrint.set(`${num}|${print}`, d.id);
             const arr = byNum.get(num) || [];
             arr.push(d.id);
             byNum.set(num, arr);
           }
+          if (d.id) docName.set(d.id, nm);
         });
-        setCardIndex({ byNumPrint, byNum });
+        setCardIndex({ byNumPrint, byNum, docName });
       } catch {}
       // Load sealed product names
       try {
@@ -111,14 +115,15 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
         }
         if (!docId) { notFound.push(`#${r.number} (${r.print || 'Normal'})`); continue; }
         const ref = doc(db, 'Pokemon Packs', lang, cat, setName, 'Cards', docId);
-        const payload = {
-          'Amount Owned': r.amount
-        };
+        const payload = { 'Amount Owned': increment(r.amount) };
         if (r.location) payload['Location'] = r.location;
+        // Backfill Name if missing using known name in index
+        const knownName = cardIndex.docName.get(docId);
+        if (knownName) payload['Name'] = knownName;
         batch.set(ref, payload, { merge: true });
       } else {
         const ref = doc(db, 'Pokemon Packs', lang, cat, setName, 'Sealed', r.sealedName);
-        const payload = { 'Amount Owned': r.amount };
+        const payload = { 'Amount Owned': increment(r.amount) };
         if (r.location) payload['Location'] = r.location;
         batch.set(ref, payload, { merge: true });
       }
@@ -138,6 +143,11 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
         await writeBatch(db).set(logRef, {
           time: now,
           items: cleanRows.filter(r => r.type === 'card').map(it => ({
+            cardName: (function () {
+              const key = `${it.number}|${normalizePrint(it.print)}`;
+              const id = cardIndex.byNumPrint.get(key) || (cardIndex.byNum.get(it.number) || [])[0];
+              return (id && cardIndex.docName.get(id)) || `Card #${it.number}`;
+            })(),
             number: it.number,
             print: it.print,
             amount: it.amount,
