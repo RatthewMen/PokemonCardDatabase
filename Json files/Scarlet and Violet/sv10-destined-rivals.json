@@ -1,0 +1,3692 @@
+[
+  {
+    "name": "Ethan's Pinsir",
+    "rarity": "Uncommon",
+    "number": "001/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632829_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632829/pokemon-sv10-destined-rivals-ethan-s-pinsir"
+  },
+  {
+    "name": "Ethan's Pinsir",
+    "rarity": "Uncommon",
+    "number": "001/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632829_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632829/pokemon-sv10-destined-rivals-ethan-s-pinsir"
+  },
+  {
+    "name": "Yanma",
+    "rarity": "Common",
+    "number": "002/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632830_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632830/pokemon-sv10-destined-rivals-yanma---002-182"
+  },
+  {
+    "name": "Yanma",
+    "rarity": "Common",
+    "number": "002/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632830_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632830/pokemon-sv10-destined-rivals-yanma---002-182"
+  },
+  {
+    "name": "Yanmega ex",
+    "rarity": "Double Rare",
+    "number": "003/182",
+    "printing": "Holofoil",
+    "price": 0.63,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632831_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632831/pokemon-sv10-destined-rivals-yanmega-ex---003-182"
+  },
+  {
+    "name": "Pineco",
+    "rarity": "Common",
+    "number": "004/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632832_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632832/pokemon-sv10-destined-rivals-pineco"
+  },
+  {
+    "name": "Pineco",
+    "rarity": "Common",
+    "number": "004/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632832_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632832/pokemon-sv10-destined-rivals-pineco"
+  },
+  {
+    "name": "Shroomish",
+    "rarity": "Common",
+    "number": "005/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632833_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632833/pokemon-sv10-destined-rivals-shroomish"
+  },
+  {
+    "name": "Shroomish",
+    "rarity": "Common",
+    "number": "005/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632833_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632833/pokemon-sv10-destined-rivals-shroomish"
+  },
+  {
+    "name": "Breloom",
+    "rarity": "Common",
+    "number": "006/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632834_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632834/pokemon-sv10-destined-rivals-breloom"
+  },
+  {
+    "name": "Breloom",
+    "rarity": "Common",
+    "number": "006/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632834_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632834/pokemon-sv10-destined-rivals-breloom"
+  },
+  {
+    "name": "Cynthia's Roselia",
+    "rarity": "Common",
+    "number": "007/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630803_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630803/pokemon-sv10-destined-rivals-cynthia-s-roselia"
+  },
+  {
+    "name": "Cynthia's Roselia",
+    "rarity": "Common",
+    "number": "007/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.47,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630803_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630803/pokemon-sv10-destined-rivals-cynthia-s-roselia"
+  },
+  {
+    "name": "Cynthia's Roserade",
+    "rarity": "Rare",
+    "number": "008/182",
+    "printing": "Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630804_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630804/pokemon-sv10-destined-rivals-cynthia-s-roserade"
+  },
+  {
+    "name": "Cynthia's Roserade",
+    "rarity": "Rare",
+    "number": "008/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.34,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630804_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630804/pokemon-sv10-destined-rivals-cynthia-s-roserade"
+  },
+  {
+    "name": "Mow Rotom",
+    "rarity": "Common",
+    "number": "009/182",
+    "printing": "Normal",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632835_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632835/pokemon-sv10-destined-rivals-mow-rotom"
+  },
+  {
+    "name": "Mow Rotom",
+    "rarity": "Common",
+    "number": "009/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.18,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632835_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632835/pokemon-sv10-destined-rivals-mow-rotom"
+  },
+  {
+    "name": "Shaymin",
+    "rarity": "Uncommon",
+    "number": "010/182",
+    "printing": "Normal",
+    "price": 0.17,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632836_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632836/pokemon-sv10-destined-rivals-shaymin---010-182"
+  },
+  {
+    "name": "Shaymin",
+    "rarity": "Uncommon",
+    "number": "010/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.83,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632836_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632836/pokemon-sv10-destined-rivals-shaymin---010-182"
+  },
+  {
+    "name": "Dwebble",
+    "rarity": "Common",
+    "number": "011/182",
+    "printing": "Normal",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632837_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632837/pokemon-sv10-destined-rivals-dwebble"
+  },
+  {
+    "name": "Dwebble",
+    "rarity": "Common",
+    "number": "011/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.19,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632837_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632837/pokemon-sv10-destined-rivals-dwebble"
+  },
+  {
+    "name": "Crustle",
+    "rarity": "Rare",
+    "number": "012/182",
+    "printing": "Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632838_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632838/pokemon-sv10-destined-rivals-crustle---012-182"
+  },
+  {
+    "name": "Crustle",
+    "rarity": "Rare",
+    "number": "012/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632838_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632838/pokemon-sv10-destined-rivals-crustle---012-182"
+  },
+  {
+    "name": "Fomantis",
+    "rarity": "Common",
+    "number": "013/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632839_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632839/pokemon-sv10-destined-rivals-fomantis"
+  },
+  {
+    "name": "Fomantis",
+    "rarity": "Common",
+    "number": "013/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632839_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632839/pokemon-sv10-destined-rivals-fomantis"
+  },
+  {
+    "name": "Lurantis",
+    "rarity": "Uncommon",
+    "number": "014/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632840_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632840/pokemon-sv10-destined-rivals-lurantis"
+  },
+  {
+    "name": "Lurantis",
+    "rarity": "Uncommon",
+    "number": "014/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632840_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632840/pokemon-sv10-destined-rivals-lurantis"
+  },
+  {
+    "name": "Team Rocket's Blipbug",
+    "rarity": "Common",
+    "number": "015/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632841_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632841/pokemon-sv10-destined-rivals-team-rocket-s-blipbug"
+  },
+  {
+    "name": "Team Rocket's Blipbug",
+    "rarity": "Common",
+    "number": "015/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632841_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632841/pokemon-sv10-destined-rivals-team-rocket-s-blipbug"
+  },
+  {
+    "name": "Applin",
+    "rarity": "Common",
+    "number": "016/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632842_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632842/pokemon-sv10-destined-rivals-applin"
+  },
+  {
+    "name": "Applin",
+    "rarity": "Common",
+    "number": "016/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.15,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632842_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632842/pokemon-sv10-destined-rivals-applin"
+  },
+  {
+    "name": "Dipplin",
+    "rarity": "Common",
+    "number": "017/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632843_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632843/pokemon-sv10-destined-rivals-dipplin"
+  },
+  {
+    "name": "Dipplin",
+    "rarity": "Common",
+    "number": "017/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632843_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632843/pokemon-sv10-destined-rivals-dipplin"
+  },
+  {
+    "name": "Hydrapple",
+    "rarity": "Rare",
+    "number": "018/182",
+    "printing": "Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632844_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632844/pokemon-sv10-destined-rivals-hydrapple---018-182"
+  },
+  {
+    "name": "Hydrapple",
+    "rarity": "Rare",
+    "number": "018/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632844_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632844/pokemon-sv10-destined-rivals-hydrapple---018-182"
+  },
+  {
+    "name": "Team Rocket's Tarountula",
+    "rarity": "Common",
+    "number": "019/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632845_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632845/pokemon-sv10-destined-rivals-team-rocket-s-tarountula"
+  },
+  {
+    "name": "Team Rocket's Tarountula",
+    "rarity": "Common",
+    "number": "019/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.13,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632845_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632845/pokemon-sv10-destined-rivals-team-rocket-s-tarountula"
+  },
+  {
+    "name": "Team Rocket's Spidops",
+    "rarity": "Rare",
+    "number": "020/182",
+    "printing": "Holofoil",
+    "price": 0.13,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632846_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632846/pokemon-sv10-destined-rivals-team-rocket-s-spidops---020-182"
+  },
+  {
+    "name": "Team Rocket's Spidops",
+    "rarity": "Rare",
+    "number": "020/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632846_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632846/pokemon-sv10-destined-rivals-team-rocket-s-spidops---020-182"
+  },
+  {
+    "name": "Smoliv",
+    "rarity": "Common",
+    "number": "021/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630805_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630805/pokemon-sv10-destined-rivals-smoliv"
+  },
+  {
+    "name": "Smoliv",
+    "rarity": "Common",
+    "number": "021/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630805_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630805/pokemon-sv10-destined-rivals-smoliv"
+  },
+  {
+    "name": "Dolliv",
+    "rarity": "Common",
+    "number": "022/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630806_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630806/pokemon-sv10-destined-rivals-dolliv"
+  },
+  {
+    "name": "Dolliv",
+    "rarity": "Common",
+    "number": "022/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630806_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630806/pokemon-sv10-destined-rivals-dolliv"
+  },
+  {
+    "name": "Arboliva ex",
+    "rarity": "Double Rare",
+    "number": "023/182",
+    "printing": "Holofoil",
+    "price": 0.55,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630807_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630807/pokemon-sv10-destined-rivals-arboliva-ex"
+  },
+  {
+    "name": "Rellor",
+    "rarity": "Common",
+    "number": "024/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632847_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632847/pokemon-sv10-destined-rivals-rellor"
+  },
+  {
+    "name": "Rellor",
+    "rarity": "Common",
+    "number": "024/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632847_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632847/pokemon-sv10-destined-rivals-rellor"
+  },
+  {
+    "name": "Rabsca ex",
+    "rarity": "Double Rare",
+    "number": "025/182",
+    "printing": "Holofoil",
+    "price": 0.52,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632848_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632848/pokemon-sv10-destined-rivals-rabsca-ex"
+  },
+  {
+    "name": "Teal Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "026/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632849_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632849/pokemon-sv10-destined-rivals-teal-mask-ogerpon"
+  },
+  {
+    "name": "Teal Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "026/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.31,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632849_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632849/pokemon-sv10-destined-rivals-teal-mask-ogerpon"
+  },
+  {
+    "name": "Growlithe",
+    "rarity": "Common",
+    "number": "027/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632850_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632850/pokemon-sv10-destined-rivals-growlithe"
+  },
+  {
+    "name": "Growlithe",
+    "rarity": "Common",
+    "number": "027/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632850_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632850/pokemon-sv10-destined-rivals-growlithe"
+  },
+  {
+    "name": "Arcanine",
+    "rarity": "Uncommon",
+    "number": "028/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632851_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632851/pokemon-sv10-destined-rivals-arcanine"
+  },
+  {
+    "name": "Arcanine",
+    "rarity": "Uncommon",
+    "number": "028/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.32,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632851_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632851/pokemon-sv10-destined-rivals-arcanine"
+  },
+  {
+    "name": "Ponyta",
+    "rarity": "Common",
+    "number": "029/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632852_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632852/pokemon-sv10-destined-rivals-ponyta"
+  },
+  {
+    "name": "Ponyta",
+    "rarity": "Common",
+    "number": "029/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632852_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632852/pokemon-sv10-destined-rivals-ponyta"
+  },
+  {
+    "name": "Rapidash",
+    "rarity": "Uncommon",
+    "number": "030/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632853_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632853/pokemon-sv10-destined-rivals-rapidash---030-182"
+  },
+  {
+    "name": "Rapidash",
+    "rarity": "Uncommon",
+    "number": "030/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.32,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632853_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632853/pokemon-sv10-destined-rivals-rapidash---030-182"
+  },
+  {
+    "name": "Team Rocket's Moltres ex",
+    "rarity": "Double Rare",
+    "number": "031/182",
+    "printing": "Holofoil",
+    "price": 0.6,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630808_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630808/pokemon-sv10-destined-rivals-team-rocket-s-moltres-ex"
+  },
+  {
+    "name": "Ethan's Cyndaquil",
+    "rarity": "Common",
+    "number": "032/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632854_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632854/pokemon-sv10-destined-rivals-ethan-s-cyndaquil"
+  },
+  {
+    "name": "Ethan's Cyndaquil",
+    "rarity": "Common",
+    "number": "032/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.17,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632854_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632854/pokemon-sv10-destined-rivals-ethan-s-cyndaquil"
+  },
+  {
+    "name": "Ethan's Quilava",
+    "rarity": "Common",
+    "number": "033/182",
+    "printing": "Normal",
+    "price": 0.13,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632855_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632855/pokemon-sv10-destined-rivals-ethan-s-quilava"
+  },
+  {
+    "name": "Ethan's Quilava",
+    "rarity": "Common",
+    "number": "033/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.3,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632855_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632855/pokemon-sv10-destined-rivals-ethan-s-quilava"
+  },
+  {
+    "name": "Ethan's Typhlosion",
+    "rarity": "Rare",
+    "number": "034/182",
+    "printing": "Holofoil",
+    "price": 0.35,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630809_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630809/pokemon-sv10-destined-rivals-ethan-s-typhlosion"
+  },
+  {
+    "name": "Ethan's Typhlosion",
+    "rarity": "Rare",
+    "number": "034/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.63,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630809_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630809/pokemon-sv10-destined-rivals-ethan-s-typhlosion"
+  },
+  {
+    "name": "Ethan's Slugma",
+    "rarity": "Common",
+    "number": "035/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630810_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630810/pokemon-sv10-destined-rivals-ethan-s-slugma"
+  },
+  {
+    "name": "Ethan's Slugma",
+    "rarity": "Common",
+    "number": "035/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630810_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630810/pokemon-sv10-destined-rivals-ethan-s-slugma"
+  },
+  {
+    "name": "Ethan's Magcargo",
+    "rarity": "Rare",
+    "number": "036/182",
+    "printing": "Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630811_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630811/pokemon-sv10-destined-rivals-ethan-s-magcargo"
+  },
+  {
+    "name": "Ethan's Magcargo",
+    "rarity": "Rare",
+    "number": "036/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.24,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630811_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630811/pokemon-sv10-destined-rivals-ethan-s-magcargo"
+  },
+  {
+    "name": "Team Rocket's Houndour",
+    "rarity": "Common",
+    "number": "037/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632856_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632856/pokemon-sv10-destined-rivals-team-rocket-s-houndour"
+  },
+  {
+    "name": "Team Rocket's Houndour",
+    "rarity": "Common",
+    "number": "037/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632856_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632856/pokemon-sv10-destined-rivals-team-rocket-s-houndour"
+  },
+  {
+    "name": "Team Rocket's Houndoom",
+    "rarity": "Uncommon",
+    "number": "038/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632857_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632857/pokemon-sv10-destined-rivals-team-rocket-s-houndoom---038-182"
+  },
+  {
+    "name": "Team Rocket's Houndoom",
+    "rarity": "Uncommon",
+    "number": "038/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632857_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632857/pokemon-sv10-destined-rivals-team-rocket-s-houndoom---038-182"
+  },
+  {
+    "name": "Ethan's Ho",
+    "rarity": "Double Rare",
+    "number": "039/182",
+    "printing": "Holofoil",
+    "price": 0.58,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632858_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632858/pokemon-sv10-destined-rivals-ethan-s-ho-oh-ex---039-182"
+  },
+  {
+    "name": "Torchic",
+    "rarity": "Common",
+    "number": "040/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632859_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632859/pokemon-sv10-destined-rivals-torchic"
+  },
+  {
+    "name": "Torchic",
+    "rarity": "Common",
+    "number": "040/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.15,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632859_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632859/pokemon-sv10-destined-rivals-torchic"
+  },
+  {
+    "name": "Combusken",
+    "rarity": "Common",
+    "number": "041/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632860_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632860/pokemon-sv10-destined-rivals-combusken"
+  },
+  {
+    "name": "Combusken",
+    "rarity": "Common",
+    "number": "041/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632860_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632860/pokemon-sv10-destined-rivals-combusken"
+  },
+  {
+    "name": "Blaziken",
+    "rarity": "Rare",
+    "number": "042/182",
+    "printing": "Holofoil",
+    "price": 0.15,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632861_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632861/pokemon-sv10-destined-rivals-blaziken---042-182"
+  },
+  {
+    "name": "Blaziken",
+    "rarity": "Rare",
+    "number": "042/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632861_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632861/pokemon-sv10-destined-rivals-blaziken---042-182"
+  },
+  {
+    "name": "Heat Rotom",
+    "rarity": "Common",
+    "number": "043/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632862_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632862/pokemon-sv10-destined-rivals-heat-rotom"
+  },
+  {
+    "name": "Heat Rotom",
+    "rarity": "Common",
+    "number": "043/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.3,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632862_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632862/pokemon-sv10-destined-rivals-heat-rotom"
+  },
+  {
+    "name": "Hearthflame Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "044/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632863_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632863/pokemon-sv10-destined-rivals-hearthflame-mask-ogerpon"
+  },
+  {
+    "name": "Hearthflame Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "044/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632863_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632863/pokemon-sv10-destined-rivals-hearthflame-mask-ogerpon"
+  },
+  {
+    "name": "Misty's Psyduck",
+    "rarity": "Uncommon",
+    "number": "045/182",
+    "printing": "Normal",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630812_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630812/pokemon-sv10-destined-rivals-misty-s-psyduck"
+  },
+  {
+    "name": "Misty's Psyduck",
+    "rarity": "Uncommon",
+    "number": "045/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.56,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630812_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630812/pokemon-sv10-destined-rivals-misty-s-psyduck"
+  },
+  {
+    "name": "Misty's Staryu",
+    "rarity": "Common",
+    "number": "046/180",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630813_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630813/pokemon-sv10-destined-rivals-misty-s-staryu"
+  },
+  {
+    "name": "Misty's Staryu",
+    "rarity": "Common",
+    "number": "046/180",
+    "printing": "Reverse Holofoil",
+    "price": 0.26,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630813_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630813/pokemon-sv10-destined-rivals-misty-s-staryu"
+  },
+  {
+    "name": "Misty's Starmie",
+    "rarity": "Uncommon",
+    "number": "047/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630814_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630814/pokemon-sv10-destined-rivals-misty-s-starmie"
+  },
+  {
+    "name": "Misty's Starmie",
+    "rarity": "Uncommon",
+    "number": "047/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.33,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630814_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630814/pokemon-sv10-destined-rivals-misty-s-starmie"
+  },
+  {
+    "name": "Misty's Magikarp",
+    "rarity": "Common",
+    "number": "048/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630815_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630815/pokemon-sv10-destined-rivals-misty-s-magikarp"
+  },
+  {
+    "name": "Misty's Magikarp",
+    "rarity": "Common",
+    "number": "048/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.45,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630815_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630815/pokemon-sv10-destined-rivals-misty-s-magikarp"
+  },
+  {
+    "name": "Misty's Gyarados",
+    "rarity": "Rare",
+    "number": "049/182",
+    "printing": "Holofoil",
+    "price": 0.33,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630816_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630816/pokemon-sv10-destined-rivals-misty-s-gyarados"
+  },
+  {
+    "name": "Misty's Gyarados",
+    "rarity": "Rare",
+    "number": "049/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.33,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630816_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630816/pokemon-sv10-destined-rivals-misty-s-gyarados"
+  },
+  {
+    "name": "Misty's Lapras",
+    "rarity": "Common",
+    "number": "050/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630817_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630817/pokemon-sv10-destined-rivals-misty-s-lapras"
+  },
+  {
+    "name": "Misty's Lapras",
+    "rarity": "Common",
+    "number": "050/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.27,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630817_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630817/pokemon-sv10-destined-rivals-misty-s-lapras"
+  },
+  {
+    "name": "Team Rocket's Articuno",
+    "rarity": "Rare",
+    "number": "051/182",
+    "printing": "Holofoil",
+    "price": 0.15,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632864_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632864/pokemon-sv10-destined-rivals-team-rocket-s-articuno"
+  },
+  {
+    "name": "Team Rocket's Articuno",
+    "rarity": "Rare",
+    "number": "051/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.33,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632864_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632864/pokemon-sv10-destined-rivals-team-rocket-s-articuno"
+  },
+  {
+    "name": "Cynthia's Feebas",
+    "rarity": "Common",
+    "number": "052/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632865_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632865/pokemon-sv10-destined-rivals-cynthia-s-feebas"
+  },
+  {
+    "name": "Cynthia's Feebas",
+    "rarity": "Common",
+    "number": "052/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.19,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632865_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632865/pokemon-sv10-destined-rivals-cynthia-s-feebas"
+  },
+  {
+    "name": "Cynthia's Milotic",
+    "rarity": "Uncommon",
+    "number": "053/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632866_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632866/pokemon-sv10-destined-rivals-cynthia-s-milotic"
+  },
+  {
+    "name": "Cynthia's Milotic",
+    "rarity": "Uncommon",
+    "number": "053/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.27,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632866_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632866/pokemon-sv10-destined-rivals-cynthia-s-milotic"
+  },
+  {
+    "name": "Clamperl",
+    "rarity": "Common",
+    "number": "054/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632867_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632867/pokemon-sv10-destined-rivals-clamperl---054-182"
+  },
+  {
+    "name": "Clamperl",
+    "rarity": "Common",
+    "number": "054/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632867_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632867/pokemon-sv10-destined-rivals-clamperl---054-182"
+  },
+  {
+    "name": "Huntail",
+    "rarity": "Uncommon",
+    "number": "055/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632868_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632868/pokemon-sv10-destined-rivals-huntail"
+  },
+  {
+    "name": "Huntail",
+    "rarity": "Uncommon",
+    "number": "055/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632868_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632868/pokemon-sv10-destined-rivals-huntail"
+  },
+  {
+    "name": "Gorebyss",
+    "rarity": "Rare",
+    "number": "056/182",
+    "printing": "Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632869_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632869/pokemon-sv10-destined-rivals-gorebyss"
+  },
+  {
+    "name": "Gorebyss",
+    "rarity": "Rare",
+    "number": "056/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.2,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632869_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632869/pokemon-sv10-destined-rivals-gorebyss"
+  },
+  {
+    "name": "Buizel",
+    "rarity": "Common",
+    "number": "057/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632870_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632870/pokemon-sv10-destined-rivals-buizel"
+  },
+  {
+    "name": "Buizel",
+    "rarity": "Common",
+    "number": "057/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632870_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632870/pokemon-sv10-destined-rivals-buizel"
+  },
+  {
+    "name": "Floatzel",
+    "rarity": "Uncommon",
+    "number": "058/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632871_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632871/pokemon-sv10-destined-rivals-floatzel"
+  },
+  {
+    "name": "Floatzel",
+    "rarity": "Uncommon",
+    "number": "058/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632871_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632871/pokemon-sv10-destined-rivals-floatzel"
+  },
+  {
+    "name": "Snover",
+    "rarity": "Common",
+    "number": "059/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632872_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632872/pokemon-sv10-destined-rivals-snover"
+  },
+  {
+    "name": "Snover",
+    "rarity": "Common",
+    "number": "059/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632872_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632872/pokemon-sv10-destined-rivals-snover"
+  },
+  {
+    "name": "Abomasnow",
+    "rarity": "Uncommon",
+    "number": "060/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632873_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632873/pokemon-sv10-destined-rivals-abomasnow"
+  },
+  {
+    "name": "Abomasnow",
+    "rarity": "Uncommon",
+    "number": "060/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.22,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632873_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632873/pokemon-sv10-destined-rivals-abomasnow"
+  },
+  {
+    "name": "Wash Rotom",
+    "rarity": "Common",
+    "number": "061/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632874_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632874/pokemon-sv10-destined-rivals-wash-rotom"
+  },
+  {
+    "name": "Wash Rotom",
+    "rarity": "Common",
+    "number": "061/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632874_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632874/pokemon-sv10-destined-rivals-wash-rotom"
+  },
+  {
+    "name": "Arrokuda",
+    "rarity": "Common",
+    "number": "062/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632875_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632875/pokemon-sv10-destined-rivals-arrokuda"
+  },
+  {
+    "name": "Arrokuda",
+    "rarity": "Common",
+    "number": "062/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632875_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632875/pokemon-sv10-destined-rivals-arrokuda"
+  },
+  {
+    "name": "Barraskewda",
+    "rarity": "Uncommon",
+    "number": "063/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632876_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632876/pokemon-sv10-destined-rivals-barraskewda"
+  },
+  {
+    "name": "Barraskewda",
+    "rarity": "Uncommon",
+    "number": "063/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632876_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632876/pokemon-sv10-destined-rivals-barraskewda"
+  },
+  {
+    "name": "Cetoddle",
+    "rarity": "Common",
+    "number": "064/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632877_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632877/pokemon-sv10-destined-rivals-cetoddle"
+  },
+  {
+    "name": "Cetoddle",
+    "rarity": "Common",
+    "number": "064/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632877_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632877/pokemon-sv10-destined-rivals-cetoddle"
+  },
+  {
+    "name": "Cetitan ex",
+    "rarity": "Double Rare",
+    "number": "065/182",
+    "printing": "Holofoil",
+    "price": 0.48,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632878_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632878/pokemon-sv10-destined-rivals-cetitan-ex---065-182"
+  },
+  {
+    "name": "Dondozo ex",
+    "rarity": "Double Rare",
+    "number": "066/182",
+    "printing": "Holofoil",
+    "price": 0.48,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632879_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632879/pokemon-sv10-destined-rivals-dondozo-ex---066-182"
+  },
+  {
+    "name": "Wellspring Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "067/182",
+    "printing": "Normal",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632880_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632880/pokemon-sv10-destined-rivals-wellspring-mask-ogerpon"
+  },
+  {
+    "name": "Wellspring Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "067/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632880_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632880/pokemon-sv10-destined-rivals-wellspring-mask-ogerpon"
+  },
+  {
+    "name": "Electabuzz",
+    "rarity": "Common",
+    "number": "068/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632881_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632881/pokemon-sv10-destined-rivals-electabuzz"
+  },
+  {
+    "name": "Electabuzz",
+    "rarity": "Common",
+    "number": "068/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632881_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632881/pokemon-sv10-destined-rivals-electabuzz"
+  },
+  {
+    "name": "Electivire ex",
+    "rarity": "Double Rare",
+    "number": "069/182",
+    "printing": "Holofoil",
+    "price": 0.59,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632882_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632882/pokemon-sv10-destined-rivals-electivire-ex---069-182"
+  },
+  {
+    "name": "Team Rocket's Zapdos",
+    "rarity": "Rare",
+    "number": "070/182",
+    "printing": "Holofoil",
+    "price": 0.14,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630818_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630818/pokemon-sv10-destined-rivals-team-rocket-s-zapdos"
+  },
+  {
+    "name": "Team Rocket's Zapdos",
+    "rarity": "Rare",
+    "number": "070/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630818_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630818/pokemon-sv10-destined-rivals-team-rocket-s-zapdos"
+  },
+  {
+    "name": "Ethan's Pichu",
+    "rarity": "Common",
+    "number": "071/182",
+    "printing": "Normal",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630819_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630819/pokemon-sv10-destined-rivals-ethan-s-pichu"
+  },
+  {
+    "name": "Ethan's Pichu",
+    "rarity": "Common",
+    "number": "071/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630819_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630819/pokemon-sv10-destined-rivals-ethan-s-pichu"
+  },
+  {
+    "name": "Team Rocket's Mareep",
+    "rarity": "Common",
+    "number": "072/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630820_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630820/pokemon-sv10-destined-rivals-team-rocket-s-mareep"
+  },
+  {
+    "name": "Team Rocket's Mareep",
+    "rarity": "Common",
+    "number": "072/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.16,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630820_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630820/pokemon-sv10-destined-rivals-team-rocket-s-mareep"
+  },
+  {
+    "name": "Team Rocket's Flaaffy",
+    "rarity": "Common",
+    "number": "073/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632883_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632883/pokemon-sv10-destined-rivals-team-rocket-s-flaaffy"
+  },
+  {
+    "name": "Team Rocket's Flaaffy",
+    "rarity": "Common",
+    "number": "073/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632883_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632883/pokemon-sv10-destined-rivals-team-rocket-s-flaaffy"
+  },
+  {
+    "name": "Team Rocket's Ampharos",
+    "rarity": "Uncommon",
+    "number": "074/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632884_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632884/pokemon-sv10-destined-rivals-team-rocket-s-ampharos"
+  },
+  {
+    "name": "Team Rocket's Ampharos",
+    "rarity": "Uncommon",
+    "number": "074/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.34,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632884_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632884/pokemon-sv10-destined-rivals-team-rocket-s-ampharos"
+  },
+  {
+    "name": "Electrike",
+    "rarity": "Common",
+    "number": "075/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632885_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632885/pokemon-sv10-destined-rivals-electrike---075-182"
+  },
+  {
+    "name": "Electrike",
+    "rarity": "Common",
+    "number": "075/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.15,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632885_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632885/pokemon-sv10-destined-rivals-electrike---075-182"
+  },
+  {
+    "name": "Manectric",
+    "rarity": "Uncommon",
+    "number": "076/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632886_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632886/pokemon-sv10-destined-rivals-manectric"
+  },
+  {
+    "name": "Manectric",
+    "rarity": "Uncommon",
+    "number": "076/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.16,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632886_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632886/pokemon-sv10-destined-rivals-manectric"
+  },
+  {
+    "name": "Rotom",
+    "rarity": "Common",
+    "number": "077/182",
+    "printing": "Normal",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632887_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632887/pokemon-sv10-destined-rivals-rotom---077-182"
+  },
+  {
+    "name": "Rotom",
+    "rarity": "Common",
+    "number": "077/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.17,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632887_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632887/pokemon-sv10-destined-rivals-rotom---077-182"
+  },
+  {
+    "name": "Zeraora",
+    "rarity": "Rare",
+    "number": "078/182",
+    "printing": "Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632888_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632888/pokemon-sv10-destined-rivals-zeraora"
+  },
+  {
+    "name": "Zeraora",
+    "rarity": "Rare",
+    "number": "078/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.33,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632888_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632888/pokemon-sv10-destined-rivals-zeraora"
+  },
+  {
+    "name": "Team Rocket's Drowzee",
+    "rarity": "Common",
+    "number": "079/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632889_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632889/pokemon-sv10-destined-rivals-team-rocket-s-drowzee"
+  },
+  {
+    "name": "Team Rocket's Drowzee",
+    "rarity": "Common",
+    "number": "079/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632889_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632889/pokemon-sv10-destined-rivals-team-rocket-s-drowzee"
+  },
+  {
+    "name": "Team Rocket's Hypno",
+    "rarity": "Uncommon",
+    "number": "080/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632890_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632890/pokemon-sv10-destined-rivals-team-rocket-s-hypno"
+  },
+  {
+    "name": "Team Rocket's Hypno",
+    "rarity": "Uncommon",
+    "number": "080/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.24,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632890_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632890/pokemon-sv10-destined-rivals-team-rocket-s-hypno"
+  },
+  {
+    "name": "Team Rocket's Mewtwo ex",
+    "rarity": "Double Rare",
+    "number": "081/182",
+    "printing": "Holofoil",
+    "price": 0.82,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632891_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632891/pokemon-sv10-destined-rivals-team-rocket-s-mewtwo-ex---081-182"
+  },
+  {
+    "name": "Team Rocket's Wobbuffet",
+    "rarity": "Rare",
+    "number": "082/182",
+    "printing": "Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632892_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632892/pokemon-sv10-destined-rivals-team-rocket-s-wobbuffet"
+  },
+  {
+    "name": "Team Rocket's Wobbuffet",
+    "rarity": "Rare",
+    "number": "082/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.27,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632892_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632892/pokemon-sv10-destined-rivals-team-rocket-s-wobbuffet"
+  },
+  {
+    "name": "Steven's Baltoy",
+    "rarity": "Common",
+    "number": "083/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632893_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632893/pokemon-sv10-destined-rivals-steven-s-baltoy"
+  },
+  {
+    "name": "Steven's Baltoy",
+    "rarity": "Common",
+    "number": "083/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632893_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632893/pokemon-sv10-destined-rivals-steven-s-baltoy"
+  },
+  {
+    "name": "Steven's Claydol",
+    "rarity": "Uncommon",
+    "number": "084/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632894_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632894/pokemon-sv10-destined-rivals-steven-s-claydol"
+  },
+  {
+    "name": "Steven's Claydol",
+    "rarity": "Uncommon",
+    "number": "084/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.2,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632894_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632894/pokemon-sv10-destined-rivals-steven-s-claydol"
+  },
+  {
+    "name": "Team Rocket's Chingling",
+    "rarity": "Common",
+    "number": "085/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632895_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632895/pokemon-sv10-destined-rivals-team-rocket-s-chingling"
+  },
+  {
+    "name": "Team Rocket's Chingling",
+    "rarity": "Common",
+    "number": "085/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.16,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632895_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632895/pokemon-sv10-destined-rivals-team-rocket-s-chingling"
+  },
+  {
+    "name": "Steven's Carbink",
+    "rarity": "Common",
+    "number": "086/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632896_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632896/pokemon-sv10-destined-rivals-steven-s-carbink"
+  },
+  {
+    "name": "Steven's Carbink",
+    "rarity": "Common",
+    "number": "086/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632896_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632896/pokemon-sv10-destined-rivals-steven-s-carbink"
+  },
+  {
+    "name": "Team Rocket's Mimikyu",
+    "rarity": "Uncommon",
+    "number": "087/182",
+    "printing": "Normal",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630821_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630821/pokemon-sv10-destined-rivals-team-rocket-s-mimikyu"
+  },
+  {
+    "name": "Team Rocket's Mimikyu",
+    "rarity": "Uncommon",
+    "number": "087/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.3,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630821_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630821/pokemon-sv10-destined-rivals-team-rocket-s-mimikyu"
+  },
+  {
+    "name": "Team Rocket's Dottler",
+    "rarity": "Common",
+    "number": "088/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632897_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632897/pokemon-sv10-destined-rivals-team-rocket-s-dottler"
+  },
+  {
+    "name": "Team Rocket's Dottler",
+    "rarity": "Common",
+    "number": "088/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632897_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632897/pokemon-sv10-destined-rivals-team-rocket-s-dottler"
+  },
+  {
+    "name": "Team Rocket's Orbeetle",
+    "rarity": "Uncommon",
+    "number": "089/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632898_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632898/pokemon-sv10-destined-rivals-team-rocket-s-orbeetle---089-182"
+  },
+  {
+    "name": "Team Rocket's Orbeetle",
+    "rarity": "Uncommon",
+    "number": "089/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.22,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632898_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632898/pokemon-sv10-destined-rivals-team-rocket-s-orbeetle---089-182"
+  },
+  {
+    "name": "Mankey",
+    "rarity": "Common",
+    "number": "090/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632899_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632899/pokemon-sv10-destined-rivals-mankey"
+  },
+  {
+    "name": "Mankey",
+    "rarity": "Common",
+    "number": "090/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632899_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632899/pokemon-sv10-destined-rivals-mankey"
+  },
+  {
+    "name": "Primeape",
+    "rarity": "Common",
+    "number": "091/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632900_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632900/pokemon-sv10-destined-rivals-primeape"
+  },
+  {
+    "name": "Primeape",
+    "rarity": "Common",
+    "number": "091/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632900_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632900/pokemon-sv10-destined-rivals-primeape"
+  },
+  {
+    "name": "Annihilape",
+    "rarity": "Rare",
+    "number": "092/182",
+    "printing": "Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632901_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632901/pokemon-sv10-destined-rivals-annihilape"
+  },
+  {
+    "name": "Annihilape",
+    "rarity": "Rare",
+    "number": "092/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.19,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632901_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632901/pokemon-sv10-destined-rivals-annihilape"
+  },
+  {
+    "name": "Ethan's Sudowoodo",
+    "rarity": "Common",
+    "number": "093/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632902_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632902/pokemon-sv10-destined-rivals-ethan-s-sudowoodo"
+  },
+  {
+    "name": "Ethan's Sudowoodo",
+    "rarity": "Common",
+    "number": "093/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.13,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632902_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632902/pokemon-sv10-destined-rivals-ethan-s-sudowoodo"
+  },
+  {
+    "name": "Team Rocket's Larvitar",
+    "rarity": "Common",
+    "number": "094/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632903_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632903/pokemon-sv10-destined-rivals-team-rocket-s-larvitar"
+  },
+  {
+    "name": "Team Rocket's Larvitar",
+    "rarity": "Common",
+    "number": "094/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632903_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632903/pokemon-sv10-destined-rivals-team-rocket-s-larvitar"
+  },
+  {
+    "name": "Team Rocket's Pupitar",
+    "rarity": "Common",
+    "number": "095/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632904_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632904/pokemon-sv10-destined-rivals-team-rocket-s-pupitar"
+  },
+  {
+    "name": "Team Rocket's Pupitar",
+    "rarity": "Common",
+    "number": "095/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632904_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632904/pokemon-sv10-destined-rivals-team-rocket-s-pupitar"
+  },
+  {
+    "name": "Team Rocket's Tyranitar",
+    "rarity": "Rare",
+    "number": "096/182",
+    "printing": "Holofoil",
+    "price": 0.16,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630822_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630822/pokemon-sv10-destined-rivals-team-rocket-s-tyranitar"
+  },
+  {
+    "name": "Team Rocket's Tyranitar",
+    "rarity": "Rare",
+    "number": "096/182",
+    "printing": "Normal",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630822_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630822/pokemon-sv10-destined-rivals-team-rocket-s-tyranitar"
+  },
+  {
+    "name": "Team Rocket's Tyranitar",
+    "rarity": "Rare",
+    "number": "096/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.34,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630822_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630822/pokemon-sv10-destined-rivals-team-rocket-s-tyranitar"
+  },
+  {
+    "name": "Nosepass",
+    "rarity": "Common",
+    "number": "097/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632905_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632905/pokemon-sv10-destined-rivals-nosepass"
+  },
+  {
+    "name": "Nosepass",
+    "rarity": "Common",
+    "number": "097/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632905_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632905/pokemon-sv10-destined-rivals-nosepass"
+  },
+  {
+    "name": "Probopass",
+    "rarity": "Uncommon",
+    "number": "098/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632906_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632906/pokemon-sv10-destined-rivals-probopass"
+  },
+  {
+    "name": "Probopass",
+    "rarity": "Uncommon",
+    "number": "098/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632906_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632906/pokemon-sv10-destined-rivals-probopass"
+  },
+  {
+    "name": "Meditite",
+    "rarity": "Common",
+    "number": "099/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632907_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632907/pokemon-sv10-destined-rivals-meditite"
+  },
+  {
+    "name": "Meditite",
+    "rarity": "Common",
+    "number": "099/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632907_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632907/pokemon-sv10-destined-rivals-meditite"
+  },
+  {
+    "name": "Medicham",
+    "rarity": "Uncommon",
+    "number": "100/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632908_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632908/pokemon-sv10-destined-rivals-medicham"
+  },
+  {
+    "name": "Medicham",
+    "rarity": "Uncommon",
+    "number": "100/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632908_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632908/pokemon-sv10-destined-rivals-medicham"
+  },
+  {
+    "name": "Regirock ex",
+    "rarity": "Double Rare",
+    "number": "101/182",
+    "printing": "Holofoil",
+    "price": 0.62,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632909_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632909/pokemon-sv10-destined-rivals-regirock-ex---101-182"
+  },
+  {
+    "name": "Cynthia's Gible",
+    "rarity": "Common",
+    "number": "102/182",
+    "printing": "Normal",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632910_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632910/pokemon-sv10-destined-rivals-cynthia-s-gible"
+  },
+  {
+    "name": "Cynthia's Gible",
+    "rarity": "Common",
+    "number": "102/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.39,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632910_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632910/pokemon-sv10-destined-rivals-cynthia-s-gible"
+  },
+  {
+    "name": "Cynthia's Gabite",
+    "rarity": "Common",
+    "number": "103/182",
+    "printing": "Normal",
+    "price": 0.17,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632911_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632911/pokemon-sv10-destined-rivals-cynthia-s-gabite"
+  },
+  {
+    "name": "Cynthia's Gabite",
+    "rarity": "Common",
+    "number": "103/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.75,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632911_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632911/pokemon-sv10-destined-rivals-cynthia-s-gabite"
+  },
+  {
+    "name": "Cynthia's Garchomp ex",
+    "rarity": "Double Rare",
+    "number": "104/182",
+    "printing": "Holofoil",
+    "price": 0.82,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632912_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632912/pokemon-sv10-destined-rivals-cynthia-s-garchomp-ex---104-182"
+  },
+  {
+    "name": "Hippopotas",
+    "rarity": "Common",
+    "number": "105/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632913_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632913/pokemon-sv10-destined-rivals-hippopotas"
+  },
+  {
+    "name": "Hippopotas",
+    "rarity": "Common",
+    "number": "105/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632913_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632913/pokemon-sv10-destined-rivals-hippopotas"
+  },
+  {
+    "name": "Hippowdon",
+    "rarity": "Uncommon",
+    "number": "106/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632914_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632914/pokemon-sv10-destined-rivals-hippowdon"
+  },
+  {
+    "name": "Hippowdon",
+    "rarity": "Uncommon",
+    "number": "106/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632914_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632914/pokemon-sv10-destined-rivals-hippowdon"
+  },
+  {
+    "name": "Mudbray",
+    "rarity": "Common",
+    "number": "107/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632915_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632915/pokemon-sv10-destined-rivals-mudbray"
+  },
+  {
+    "name": "Mudbray",
+    "rarity": "Common",
+    "number": "107/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632915_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632915/pokemon-sv10-destined-rivals-mudbray"
+  },
+  {
+    "name": "Mudsdale",
+    "rarity": "Uncommon",
+    "number": "108/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632916_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632916/pokemon-sv10-destined-rivals-mudsdale"
+  },
+  {
+    "name": "Mudsdale",
+    "rarity": "Uncommon",
+    "number": "108/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.19,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632916_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632916/pokemon-sv10-destined-rivals-mudsdale"
+  },
+  {
+    "name": "Arven's Toedscool",
+    "rarity": "Common",
+    "number": "109/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632917_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632917/pokemon-sv10-destined-rivals-arven-s-toedscool"
+  },
+  {
+    "name": "Arven's Toedscool",
+    "rarity": "Common",
+    "number": "109/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632917_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632917/pokemon-sv10-destined-rivals-arven-s-toedscool"
+  },
+  {
+    "name": "Arven's Toedscruel",
+    "rarity": "Uncommon",
+    "number": "110/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632918_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632918/pokemon-sv10-destined-rivals-arven-s-toedscruel"
+  },
+  {
+    "name": "Arven's Toedscruel",
+    "rarity": "Uncommon",
+    "number": "110/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.19,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632918_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632918/pokemon-sv10-destined-rivals-arven-s-toedscruel"
+  },
+  {
+    "name": "Cornerstone Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "111/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632919_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632919/pokemon-sv10-destined-rivals-cornerstone-mask-ogerpon"
+  },
+  {
+    "name": "Cornerstone Mask Ogerpon",
+    "rarity": "Uncommon",
+    "number": "111/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632919_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632919/pokemon-sv10-destined-rivals-cornerstone-mask-ogerpon"
+  },
+  {
+    "name": "Team Rocket's Ekans",
+    "rarity": "Common",
+    "number": "112/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632920_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632920/pokemon-sv10-destined-rivals-team-rocket-s-ekans"
+  },
+  {
+    "name": "Team Rocket's Ekans",
+    "rarity": "Common",
+    "number": "112/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632920_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632920/pokemon-sv10-destined-rivals-team-rocket-s-ekans"
+  },
+  {
+    "name": "Team Rocket's Arbok",
+    "rarity": "Uncommon",
+    "number": "113/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632921_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632921/pokemon-sv10-destined-rivals-team-rocket-s-arbok"
+  },
+  {
+    "name": "Team Rocket's Arbok",
+    "rarity": "Uncommon",
+    "number": "113/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632921_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632921/pokemon-sv10-destined-rivals-team-rocket-s-arbok"
+  },
+  {
+    "name": "Team Rocket's Nidoran F",
+    "rarity": "Common",
+    "number": "114/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632922_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632922/pokemon-sv10-destined-rivals-team-rocket-s-nidoran-f"
+  },
+  {
+    "name": "Team Rocket's Nidoran F",
+    "rarity": "Common",
+    "number": "114/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632922_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632922/pokemon-sv10-destined-rivals-team-rocket-s-nidoran-f"
+  },
+  {
+    "name": "Team Rocket's Nidorina",
+    "rarity": "Common",
+    "number": "115/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632923_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632923/pokemon-sv10-destined-rivals-team-rocket-s-nidorina"
+  },
+  {
+    "name": "Team Rocket's Nidorina",
+    "rarity": "Common",
+    "number": "115/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.27,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632923_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632923/pokemon-sv10-destined-rivals-team-rocket-s-nidorina"
+  },
+  {
+    "name": "Team Rocket's Nidoqueen",
+    "rarity": "Uncommon",
+    "number": "116/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632924_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632924/pokemon-sv10-destined-rivals-team-rocket-s-nidoqueen"
+  },
+  {
+    "name": "Team Rocket's Nidoqueen",
+    "rarity": "Uncommon",
+    "number": "116/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.32,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632924_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632924/pokemon-sv10-destined-rivals-team-rocket-s-nidoqueen"
+  },
+  {
+    "name": "Team Rocket's Nidoran M",
+    "rarity": "Common",
+    "number": "117/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632925_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632925/pokemon-sv10-destined-rivals-team-rocket-s-nidoran-m"
+  },
+  {
+    "name": "Team Rocket's Nidoran M",
+    "rarity": "Common",
+    "number": "117/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.26,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632925_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632925/pokemon-sv10-destined-rivals-team-rocket-s-nidoran-m"
+  },
+  {
+    "name": "Team Rocket's Nidorino",
+    "rarity": "Common",
+    "number": "118/182",
+    "printing": "Normal",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632926_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632926/pokemon-sv10-destined-rivals-team-rocket-s-nidorino"
+  },
+  {
+    "name": "Team Rocket's Nidorino",
+    "rarity": "Common",
+    "number": "118/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.21,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632926_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632926/pokemon-sv10-destined-rivals-team-rocket-s-nidorino"
+  },
+  {
+    "name": "Team Rocket's Nidoking ex",
+    "rarity": "Double Rare",
+    "number": "119/182",
+    "printing": "Holofoil",
+    "price": 0.6,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632927_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632927/pokemon-sv10-destined-rivals-team-rocket-s-nidoking-ex---119-182"
+  },
+  {
+    "name": "Team Rocket's Zubat",
+    "rarity": "Common",
+    "number": "120/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632928_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632928/pokemon-sv10-destined-rivals-team-rocket-s-zubat"
+  },
+  {
+    "name": "Team Rocket's Zubat",
+    "rarity": "Common",
+    "number": "120/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632928_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632928/pokemon-sv10-destined-rivals-team-rocket-s-zubat"
+  },
+  {
+    "name": "Team Rocket's Golbat",
+    "rarity": "Uncommon",
+    "number": "121/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632929_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632929/pokemon-sv10-destined-rivals-team-rocket-s-golbat"
+  },
+  {
+    "name": "Team Rocket's Golbat",
+    "rarity": "Uncommon",
+    "number": "121/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.48,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632929_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632929/pokemon-sv10-destined-rivals-team-rocket-s-golbat"
+  },
+  {
+    "name": "Team Rocket's Crobat ex",
+    "rarity": "Double Rare",
+    "number": "122/182",
+    "printing": "Holofoil",
+    "price": 0.64,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632930_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632930/pokemon-sv10-destined-rivals-team-rocket-s-crobat-ex---122-182"
+  },
+  {
+    "name": "Team Rocket's Grimer",
+    "rarity": "Common",
+    "number": "123/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632931_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632931/pokemon-sv10-destined-rivals-team-rocket-s-grimer"
+  },
+  {
+    "name": "Team Rocket's Grimer",
+    "rarity": "Common",
+    "number": "123/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632931_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632931/pokemon-sv10-destined-rivals-team-rocket-s-grimer"
+  },
+  {
+    "name": "Team Rocket's Muk",
+    "rarity": "Uncommon",
+    "number": "124/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632932_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632932/pokemon-sv10-destined-rivals-team-rocket-s-muk"
+  },
+  {
+    "name": "Team Rocket's Muk",
+    "rarity": "Uncommon",
+    "number": "124/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.2,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632932_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632932/pokemon-sv10-destined-rivals-team-rocket-s-muk"
+  },
+  {
+    "name": "Team Rocket's Koffing",
+    "rarity": "Common",
+    "number": "125/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632933_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632933/pokemon-sv10-destined-rivals-team-rocket-s-koffing"
+  },
+  {
+    "name": "Team Rocket's Koffing",
+    "rarity": "Common",
+    "number": "125/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632933_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632933/pokemon-sv10-destined-rivals-team-rocket-s-koffing"
+  },
+  {
+    "name": "Team Rocket's Weezing",
+    "rarity": "Uncommon",
+    "number": "126/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632934_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632934/pokemon-sv10-destined-rivals-team-rocket-s-weezing---126-182"
+  },
+  {
+    "name": "Team Rocket's Weezing",
+    "rarity": "Uncommon",
+    "number": "126/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.3,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632934_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632934/pokemon-sv10-destined-rivals-team-rocket-s-weezing---126-182"
+  },
+  {
+    "name": "Team Rocket's Murkrow",
+    "rarity": "Uncommon",
+    "number": "127/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632935_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632935/pokemon-sv10-destined-rivals-team-rocket-s-murkrow---127-182"
+  },
+  {
+    "name": "Team Rocket's Murkrow",
+    "rarity": "Uncommon",
+    "number": "127/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.22,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632935_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632935/pokemon-sv10-destined-rivals-team-rocket-s-murkrow---127-182"
+  },
+  {
+    "name": "Team Rocket's Sneasel",
+    "rarity": "Rare",
+    "number": "128/182",
+    "printing": "Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632936_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632936/pokemon-sv10-destined-rivals-team-rocket-s-sneasel"
+  },
+  {
+    "name": "Team Rocket's Sneasel",
+    "rarity": "Rare",
+    "number": "128/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632936_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632936/pokemon-sv10-destined-rivals-team-rocket-s-sneasel"
+  },
+  {
+    "name": "Cynthia's Spiritomb",
+    "rarity": "Uncommon",
+    "number": "129/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632937_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632937/pokemon-sv10-destined-rivals-cynthia-s-spiritomb"
+  },
+  {
+    "name": "Cynthia's Spiritomb",
+    "rarity": "Uncommon",
+    "number": "129/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.4,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632937_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632937/pokemon-sv10-destined-rivals-cynthia-s-spiritomb"
+  },
+  {
+    "name": "Marnie's Purrloin",
+    "rarity": "Common",
+    "number": "130/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632938_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632938/pokemon-sv10-destined-rivals-marnie-s-purrloin"
+  },
+  {
+    "name": "Marnie's Purrloin",
+    "rarity": "Common",
+    "number": "130/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.25,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632938_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632938/pokemon-sv10-destined-rivals-marnie-s-purrloin"
+  },
+  {
+    "name": "Marnie's Liepard",
+    "rarity": "Uncommon",
+    "number": "131/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632939_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632939/pokemon-sv10-destined-rivals-marnie-s-liepard"
+  },
+  {
+    "name": "Marnie's Liepard",
+    "rarity": "Uncommon",
+    "number": "131/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.22,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632939_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632939/pokemon-sv10-destined-rivals-marnie-s-liepard"
+  },
+  {
+    "name": "Marnie's Scraggy",
+    "rarity": "Common",
+    "number": "132/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632940_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632940/pokemon-sv10-destined-rivals-marnie-s-scraggy"
+  },
+  {
+    "name": "Marnie's Scraggy",
+    "rarity": "Common",
+    "number": "132/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632940_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632940/pokemon-sv10-destined-rivals-marnie-s-scraggy"
+  },
+  {
+    "name": "Marnie's Scrafty",
+    "rarity": "Uncommon",
+    "number": "133/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632941_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632941/pokemon-sv10-destined-rivals-marnie-s-scrafty"
+  },
+  {
+    "name": "Marnie's Scrafty",
+    "rarity": "Uncommon",
+    "number": "133/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.24,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632941_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632941/pokemon-sv10-destined-rivals-marnie-s-scrafty"
+  },
+  {
+    "name": "Marnie's Impidimp",
+    "rarity": "Common",
+    "number": "134/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632942_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632942/pokemon-sv10-destined-rivals-marnie-s-impidimp"
+  },
+  {
+    "name": "Marnie's Impidimp",
+    "rarity": "Common",
+    "number": "134/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.32,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632942_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632942/pokemon-sv10-destined-rivals-marnie-s-impidimp"
+  },
+  {
+    "name": "Marnie's Morgrem",
+    "rarity": "Uncommon",
+    "number": "135/182",
+    "printing": "Normal",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632943_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632943/pokemon-sv10-destined-rivals-marnie-s-morgrem"
+  },
+  {
+    "name": "Marnie's Morgrem",
+    "rarity": "Uncommon",
+    "number": "135/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.66,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632943_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632943/pokemon-sv10-destined-rivals-marnie-s-morgrem"
+  },
+  {
+    "name": "Marnie's Grimmsnarl ex",
+    "rarity": "Double Rare",
+    "number": "136/182",
+    "printing": "Holofoil",
+    "price": 0.63,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630823_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630823/pokemon-sv10-destined-rivals-marnie-s-grimmsnarl-ex"
+  },
+  {
+    "name": "Marnie's Morpeko",
+    "rarity": "Common",
+    "number": "137/182",
+    "printing": "Normal",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632944_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632944/pokemon-sv10-destined-rivals-marnie-s-morpeko"
+  },
+  {
+    "name": "Marnie's Morpeko",
+    "rarity": "Common",
+    "number": "137/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632944_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632944/pokemon-sv10-destined-rivals-marnie-s-morpeko"
+  },
+  {
+    "name": "Arven's Maschiff",
+    "rarity": "Common",
+    "number": "138/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632945_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632945/pokemon-sv10-destined-rivals-arven-s-maschiff"
+  },
+  {
+    "name": "Arven's Maschiff",
+    "rarity": "Common",
+    "number": "138/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632945_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632945/pokemon-sv10-destined-rivals-arven-s-maschiff"
+  },
+  {
+    "name": "Arven's Mabosstiff ex",
+    "rarity": "Double Rare",
+    "number": "139/182",
+    "printing": "Holofoil",
+    "price": 0.55,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632946_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632946/pokemon-sv10-destined-rivals-arven-s-mabosstiff-ex---139-182"
+  },
+  {
+    "name": "Forretress",
+    "rarity": "Uncommon",
+    "number": "140/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632947_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632947/pokemon-sv10-destined-rivals-forretress"
+  },
+  {
+    "name": "Forretress",
+    "rarity": "Uncommon",
+    "number": "140/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.25,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632947_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632947/pokemon-sv10-destined-rivals-forretress"
+  },
+  {
+    "name": "Skarmory",
+    "rarity": "Common",
+    "number": "141/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632948_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632948/pokemon-sv10-destined-rivals-skarmory"
+  },
+  {
+    "name": "Skarmory",
+    "rarity": "Common",
+    "number": "141/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632948_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632948/pokemon-sv10-destined-rivals-skarmory"
+  },
+  {
+    "name": "Steven's Skarmory",
+    "rarity": "Common",
+    "number": "142/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632949_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632949/pokemon-sv10-destined-rivals-steven-s-skarmory"
+  },
+  {
+    "name": "Steven's Skarmory",
+    "rarity": "Common",
+    "number": "142/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.15,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632949_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632949/pokemon-sv10-destined-rivals-steven-s-skarmory"
+  },
+  {
+    "name": "Steven's Beldum",
+    "rarity": "Common",
+    "number": "143/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632950_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632950/pokemon-sv10-destined-rivals-steven-s-beldum"
+  },
+  {
+    "name": "Steven's Beldum",
+    "rarity": "Common",
+    "number": "143/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632950_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632950/pokemon-sv10-destined-rivals-steven-s-beldum"
+  },
+  {
+    "name": "Steven's Metang",
+    "rarity": "Uncommon",
+    "number": "144/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632951_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632951/pokemon-sv10-destined-rivals-steven-s-metang"
+  },
+  {
+    "name": "Steven's Metang",
+    "rarity": "Uncommon",
+    "number": "144/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.23,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632951_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632951/pokemon-sv10-destined-rivals-steven-s-metang"
+  },
+  {
+    "name": "Steven's Metagross ex",
+    "rarity": "Double Rare",
+    "number": "145/182",
+    "printing": "Holofoil",
+    "price": 0.6,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630824_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630824/pokemon-sv10-destined-rivals-steven-s-metagross-ex"
+  },
+  {
+    "name": "Zamazenta",
+    "rarity": "Rare",
+    "number": "146/182",
+    "printing": "Holofoil",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632952_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632952/pokemon-sv10-destined-rivals-zamazenta---146-182"
+  },
+  {
+    "name": "Zamazenta",
+    "rarity": "Rare",
+    "number": "146/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.27,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632952_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632952/pokemon-sv10-destined-rivals-zamazenta---146-182"
+  },
+  {
+    "name": "Team Rocket's Rattata",
+    "rarity": "Common",
+    "number": "147/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632953_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632953/pokemon-sv10-destined-rivals-team-rocket-s-rattata"
+  },
+  {
+    "name": "Team Rocket's Rattata",
+    "rarity": "Common",
+    "number": "147/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632953_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632953/pokemon-sv10-destined-rivals-team-rocket-s-rattata"
+  },
+  {
+    "name": "Team Rocket's Raticate",
+    "rarity": "Common",
+    "number": "148/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632954_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632954/pokemon-sv10-destined-rivals-team-rocket-s-raticate---148-182"
+  },
+  {
+    "name": "Team Rocket's Raticate",
+    "rarity": "Common",
+    "number": "148/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.14,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632954_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632954/pokemon-sv10-destined-rivals-team-rocket-s-raticate---148-182"
+  },
+  {
+    "name": "Team Rocket's Meowth",
+    "rarity": "Common",
+    "number": "149/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630825_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630825/pokemon-sv10-destined-rivals-team-rocket-s-meowth"
+  },
+  {
+    "name": "Team Rocket's Meowth",
+    "rarity": "Common",
+    "number": "149/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630825_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630825/pokemon-sv10-destined-rivals-team-rocket-s-meowth"
+  },
+  {
+    "name": "Team Rocket's Persian ex",
+    "rarity": "Double Rare",
+    "number": "150/182",
+    "printing": "Holofoil",
+    "price": 0.7,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632955_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632955/pokemon-sv10-destined-rivals-team-rocket-s-persian-ex---150-182"
+  },
+  {
+    "name": "Kangaskhan",
+    "rarity": "Common",
+    "number": "151/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632956_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632956/pokemon-sv10-destined-rivals-kangaskhan---151-182"
+  },
+  {
+    "name": "Kangaskhan",
+    "rarity": "Common",
+    "number": "151/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632956_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632956/pokemon-sv10-destined-rivals-kangaskhan---151-182"
+  },
+  {
+    "name": "Tauros",
+    "rarity": "Common",
+    "number": "152/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632957_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632957/pokemon-sv10-destined-rivals-tauros"
+  },
+  {
+    "name": "Tauros",
+    "rarity": "Common",
+    "number": "152/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632957_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632957/pokemon-sv10-destined-rivals-tauros"
+  },
+  {
+    "name": "Team Rocket's Porygon",
+    "rarity": "Common",
+    "number": "153/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630826_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630826/pokemon-sv10-destined-rivals-team-rocket-s-porygon"
+  },
+  {
+    "name": "Team Rocket's Porygon",
+    "rarity": "Common",
+    "number": "153/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.14,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630826_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630826/pokemon-sv10-destined-rivals-team-rocket-s-porygon"
+  },
+  {
+    "name": "Team Rocket's Porygon2",
+    "rarity": "Common",
+    "number": "154/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630827_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630827/pokemon-sv10-destined-rivals-team-rocket-s-porygon2"
+  },
+  {
+    "name": "Team Rocket's Porygon2",
+    "rarity": "Common",
+    "number": "154/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.15,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630827_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630827/pokemon-sv10-destined-rivals-team-rocket-s-porygon2"
+  },
+  {
+    "name": "Team Rocket's Porygon",
+    "rarity": "Uncommon",
+    "number": "155/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630828_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630828/pokemon-sv10-destined-rivals-team-rocket-s-porygon-z"
+  },
+  {
+    "name": "Team Rocket's Porygon",
+    "rarity": "Uncommon",
+    "number": "155/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.25,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630828_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630828/pokemon-sv10-destined-rivals-team-rocket-s-porygon-z"
+  },
+  {
+    "name": "Taillow",
+    "rarity": "Common",
+    "number": "156/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632958_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632958/pokemon-sv10-destined-rivals-taillow"
+  },
+  {
+    "name": "Taillow",
+    "rarity": "Common",
+    "number": "156/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632958_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632958/pokemon-sv10-destined-rivals-taillow"
+  },
+  {
+    "name": "Swellow",
+    "rarity": "Common",
+    "number": "157/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632959_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632959/pokemon-sv10-destined-rivals-swellow"
+  },
+  {
+    "name": "Swellow",
+    "rarity": "Common",
+    "number": "157/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.14,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632959_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632959/pokemon-sv10-destined-rivals-swellow"
+  },
+  {
+    "name": "Arven's Skwovet",
+    "rarity": "Common",
+    "number": "158/182",
+    "printing": "Normal",
+    "price": 0.03,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632960_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632960/pokemon-sv10-destined-rivals-arven-s-skwovet"
+  },
+  {
+    "name": "Arven's Skwovet",
+    "rarity": "Common",
+    "number": "158/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632960_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632960/pokemon-sv10-destined-rivals-arven-s-skwovet"
+  },
+  {
+    "name": "Arven's Greedent",
+    "rarity": "Rare",
+    "number": "159/182",
+    "printing": "Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632961_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632961/pokemon-sv10-destined-rivals-arven-s-greedent---159-182"
+  },
+  {
+    "name": "Arven's Greedent",
+    "rarity": "Rare",
+    "number": "159/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632961_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632961/pokemon-sv10-destined-rivals-arven-s-greedent---159-182"
+  },
+  {
+    "name": "Squawkabilly",
+    "rarity": "Common",
+    "number": "160/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632962_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632962/pokemon-sv10-destined-rivals-squawkabilly"
+  },
+  {
+    "name": "Squawkabilly",
+    "rarity": "Common",
+    "number": "160/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632962_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632962/pokemon-sv10-destined-rivals-squawkabilly"
+  },
+  {
+    "name": "Arven's Sandwich",
+    "rarity": "Uncommon",
+    "number": "161/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632963_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632963/pokemon-sv10-destined-rivals-arven-s-sandwich"
+  },
+  {
+    "name": "Arven's Sandwich",
+    "rarity": "Uncommon",
+    "number": "161/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632963_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632963/pokemon-sv10-destined-rivals-arven-s-sandwich"
+  },
+  {
+    "name": "Cynthia's Power Weight",
+    "rarity": "Uncommon",
+    "number": "162/182",
+    "printing": "Normal",
+    "price": 0.09,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632964_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632964/pokemon-sv10-destined-rivals-cynthia-s-power-weight"
+  },
+  {
+    "name": "Cynthia's Power Weight",
+    "rarity": "Uncommon",
+    "number": "162/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.2,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632964_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632964/pokemon-sv10-destined-rivals-cynthia-s-power-weight"
+  },
+  {
+    "name": "Emcee's Hype",
+    "rarity": "Common",
+    "number": "163/182",
+    "printing": "Normal",
+    "price": 0.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632965_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632965/pokemon-sv10-destined-rivals-emcee-s-hype---163-182"
+  },
+  {
+    "name": "Emcee's Hype",
+    "rarity": "Common",
+    "number": "163/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632965_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632965/pokemon-sv10-destined-rivals-emcee-s-hype---163-182"
+  },
+  {
+    "name": "Energy Recycler",
+    "rarity": "Uncommon",
+    "number": "164/182",
+    "printing": "Normal",
+    "price": 0.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632966_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632966/pokemon-sv10-destined-rivals-energy-recycler"
+  },
+  {
+    "name": "Energy Recycler",
+    "rarity": "Uncommon",
+    "number": "164/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.17,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632966_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632966/pokemon-sv10-destined-rivals-energy-recycler"
+  },
+  {
+    "name": "Ethan's Adventure",
+    "rarity": "Uncommon",
+    "number": "165/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632967_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632967/pokemon-sv10-destined-rivals-ethan-s-adventure---165-182"
+  },
+  {
+    "name": "Ethan's Adventure",
+    "rarity": "Uncommon",
+    "number": "165/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.22,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632967_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632967/pokemon-sv10-destined-rivals-ethan-s-adventure---165-182"
+  },
+  {
+    "name": "Granite Cave",
+    "rarity": "Uncommon",
+    "number": "166/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632968_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632968/pokemon-sv10-destined-rivals-granite-cave"
+  },
+  {
+    "name": "Granite Cave",
+    "rarity": "Uncommon",
+    "number": "166/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632968_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632968/pokemon-sv10-destined-rivals-granite-cave"
+  },
+  {
+    "name": "Judge",
+    "rarity": "Uncommon",
+    "number": "167/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632969_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632969/pokemon-sv10-destined-rivals-judge---167-182"
+  },
+  {
+    "name": "Judge",
+    "rarity": "Uncommon",
+    "number": "167/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.13,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632969_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632969/pokemon-sv10-destined-rivals-judge---167-182"
+  },
+  {
+    "name": "Sacred Ash",
+    "rarity": "Uncommon",
+    "number": "168/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632970_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632970/pokemon-sv10-destined-rivals-sacred-ash"
+  },
+  {
+    "name": "Sacred Ash",
+    "rarity": "Uncommon",
+    "number": "168/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.14,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632970_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632970/pokemon-sv10-destined-rivals-sacred-ash"
+  },
+  {
+    "name": "Spikemuth Gym",
+    "rarity": "Uncommon",
+    "number": "169/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630829_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630829/pokemon-sv10-destined-rivals-spikemuth-gym"
+  },
+  {
+    "name": "Spikemuth Gym",
+    "rarity": "Uncommon",
+    "number": "169/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.3,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630829_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630829/pokemon-sv10-destined-rivals-spikemuth-gym"
+  },
+  {
+    "name": "Team Rocket's Archer",
+    "rarity": "Uncommon",
+    "number": "170/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632971_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632971/pokemon-sv10-destined-rivals-team-rocket-s-archer---170-182"
+  },
+  {
+    "name": "Team Rocket's Archer",
+    "rarity": "Uncommon",
+    "number": "170/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.27,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632971_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632971/pokemon-sv10-destined-rivals-team-rocket-s-archer---170-182"
+  },
+  {
+    "name": "Team Rocket's Ariana",
+    "rarity": "Uncommon",
+    "number": "171/182",
+    "printing": "Normal",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632972_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632972/pokemon-sv10-destined-rivals-team-rocket-s-ariana---171-182"
+  },
+  {
+    "name": "Team Rocket's Ariana",
+    "rarity": "Uncommon",
+    "number": "171/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.32,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632972_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632972/pokemon-sv10-destined-rivals-team-rocket-s-ariana---171-182"
+  },
+  {
+    "name": "Team Rocket's Bother",
+    "rarity": "Uncommon",
+    "number": "172/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632973_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632973/pokemon-sv10-destined-rivals-team-rocket-s-bother-bot"
+  },
+  {
+    "name": "Team Rocket's Bother",
+    "rarity": "Uncommon",
+    "number": "172/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.17,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632973_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632973/pokemon-sv10-destined-rivals-team-rocket-s-bother-bot"
+  },
+  {
+    "name": "Team Rocket's Factory",
+    "rarity": "Uncommon",
+    "number": "173/182",
+    "printing": "Normal",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632974_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632974/pokemon-sv10-destined-rivals-team-rocket-s-factory"
+  },
+  {
+    "name": "Team Rocket's Factory",
+    "rarity": "Uncommon",
+    "number": "173/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.36,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632974_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632974/pokemon-sv10-destined-rivals-team-rocket-s-factory"
+  },
+  {
+    "name": "Team Rocket's Giovanni",
+    "rarity": "Uncommon",
+    "number": "174/182",
+    "printing": "Normal",
+    "price": 0.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630830_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630830/pokemon-sv10-destined-rivals-team-rocket-s-giovanni"
+  },
+  {
+    "name": "Team Rocket's Giovanni",
+    "rarity": "Uncommon",
+    "number": "174/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.25,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/630830_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/630830/pokemon-sv10-destined-rivals-team-rocket-s-giovanni"
+  },
+  {
+    "name": "Team Rocket's Great Ball",
+    "rarity": "Uncommon",
+    "number": "175/182",
+    "printing": "Normal",
+    "price": 0.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632975_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632975/pokemon-sv10-destined-rivals-team-rocket-s-great-ball"
+  },
+  {
+    "name": "Team Rocket's Great Ball",
+    "rarity": "Uncommon",
+    "number": "175/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.35,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632975_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632975/pokemon-sv10-destined-rivals-team-rocket-s-great-ball"
+  },
+  {
+    "name": "Team Rocket's Petrel",
+    "rarity": "Uncommon",
+    "number": "176/182",
+    "printing": "Normal",
+    "price": 0.11,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632976_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632976/pokemon-sv10-destined-rivals-team-rocket-s-petrel---176-182"
+  },
+  {
+    "name": "Team Rocket's Petrel",
+    "rarity": "Uncommon",
+    "number": "176/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.33,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632976_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632976/pokemon-sv10-destined-rivals-team-rocket-s-petrel---176-182"
+  },
+  {
+    "name": "Team Rocket's Proton",
+    "rarity": "Uncommon",
+    "number": "177/182",
+    "printing": "Normal",
+    "price": 0.08,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632977_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632977/pokemon-sv10-destined-rivals-team-rocket-s-proton---177-182"
+  },
+  {
+    "name": "Team Rocket's Proton",
+    "rarity": "Uncommon",
+    "number": "177/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.31,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632977_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632977/pokemon-sv10-destined-rivals-team-rocket-s-proton---177-182"
+  },
+  {
+    "name": "Team Rocket's Transceiver",
+    "rarity": "Uncommon",
+    "number": "178/182",
+    "printing": "Normal",
+    "price": 0.13,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632978_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632978/pokemon-sv10-destined-rivals-team-rocket-s-transceiver"
+  },
+  {
+    "name": "Team Rocket's Transceiver",
+    "rarity": "Uncommon",
+    "number": "178/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.37,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632978_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632978/pokemon-sv10-destined-rivals-team-rocket-s-transceiver"
+  },
+  {
+    "name": "Team Rocket's Venture Bomb",
+    "rarity": "Uncommon",
+    "number": "179/182",
+    "printing": "Normal",
+    "price": 0.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632979_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632979/pokemon-sv10-destined-rivals-team-rocket-s-venture-bomb"
+  },
+  {
+    "name": "Team Rocket's Venture Bomb",
+    "rarity": "Uncommon",
+    "number": "179/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.26,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632979_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632979/pokemon-sv10-destined-rivals-team-rocket-s-venture-bomb"
+  },
+  {
+    "name": "Team Rocket's Watchtower",
+    "rarity": "Uncommon",
+    "number": "180/182",
+    "printing": "Normal",
+    "price": 0.16,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632980_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632980/pokemon-sv10-destined-rivals-team-rocket-s-watchtower"
+  },
+  {
+    "name": "Team Rocket's Watchtower",
+    "rarity": "Uncommon",
+    "number": "180/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.39,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632980_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632980/pokemon-sv10-destined-rivals-team-rocket-s-watchtower"
+  },
+  {
+    "name": "TM Machine",
+    "rarity": "Uncommon",
+    "number": "181/182",
+    "printing": "Normal",
+    "price": 0.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632981_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632981/pokemon-sv10-destined-rivals-tm-machine"
+  },
+  {
+    "name": "TM Machine",
+    "rarity": "Uncommon",
+    "number": "181/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.21,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632981_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632981/pokemon-sv10-destined-rivals-tm-machine"
+  },
+  {
+    "name": "Team Rocket's Energy",
+    "rarity": "Uncommon",
+    "number": "182/182",
+    "printing": "Normal",
+    "price": 0.2,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632982_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632982/pokemon-sv10-destined-rivals-team-rocket-s-energy"
+  },
+  {
+    "name": "Team Rocket's Energy",
+    "rarity": "Uncommon",
+    "number": "182/182",
+    "printing": "Reverse Holofoil",
+    "price": 0.39,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632982_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632982/pokemon-sv10-destined-rivals-team-rocket-s-energy"
+  },
+  {
+    "name": "Yanma",
+    "rarity": "Illustration Rare",
+    "number": "183/182",
+    "printing": "Holofoil",
+    "price": 3.37,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632983_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632983/pokemon-sv10-destined-rivals-yanma---183-182"
+  },
+  {
+    "name": "Cynthia's Roserade",
+    "rarity": "Illustration Rare",
+    "number": "184/182",
+    "printing": "Holofoil",
+    "price": 11.98,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632984_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632984/pokemon-sv10-destined-rivals-cynthia-s-roserade---184-182"
+  },
+  {
+    "name": "Shaymin",
+    "rarity": "Illustration Rare",
+    "number": "185/182",
+    "printing": "Holofoil",
+    "price": 7.96,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632985_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632985/pokemon-sv10-destined-rivals-shaymin---185-182"
+  },
+  {
+    "name": "Crustle",
+    "rarity": "Illustration Rare",
+    "number": "186/182",
+    "printing": "Holofoil",
+    "price": 2.49,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632986_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632986/pokemon-sv10-destined-rivals-crustle---186-182"
+  },
+  {
+    "name": "Team Rocket's Spidops",
+    "rarity": "Illustration Rare",
+    "number": "187/182",
+    "printing": "Holofoil",
+    "price": 3.83,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632987_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632987/pokemon-sv10-destined-rivals-team-rocket-s-spidops---187-182"
+  },
+  {
+    "name": "Hydrapple",
+    "rarity": "Illustration Rare",
+    "number": "188/182",
+    "printing": "Holofoil",
+    "price": 2.74,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632988_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632988/pokemon-sv10-destined-rivals-hydrapple---188-182"
+  },
+  {
+    "name": "Rapidash",
+    "rarity": "Illustration Rare",
+    "number": "189/182",
+    "printing": "Holofoil",
+    "price": 6.04,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632989_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632989/pokemon-sv10-destined-rivals-rapidash---189-182"
+  },
+  {
+    "name": "Ethan's Typhlosion",
+    "rarity": "Illustration Rare",
+    "number": "190/182",
+    "printing": "Holofoil",
+    "price": 23.76,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632990_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632990/pokemon-sv10-destined-rivals-ethan-s-typhlosion---190-182"
+  },
+  {
+    "name": "Team Rocket's Houndoom",
+    "rarity": "Illustration Rare",
+    "number": "191/182",
+    "printing": "Holofoil",
+    "price": 12.8,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632991_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632991/pokemon-sv10-destined-rivals-team-rocket-s-houndoom---191-182"
+  },
+  {
+    "name": "Blaziken",
+    "rarity": "Illustration Rare",
+    "number": "192/182",
+    "printing": "Holofoil",
+    "price": 10.27,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632992_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632992/pokemon-sv10-destined-rivals-blaziken---192-182"
+  },
+  {
+    "name": "Misty's Psyduck",
+    "rarity": "Illustration Rare",
+    "number": "193/182",
+    "printing": "Holofoil",
+    "price": 46.29,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632993_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632993/pokemon-sv10-destined-rivals-misty-s-psyduck---193-182"
+  },
+  {
+    "name": "Misty's Lapras",
+    "rarity": "Illustration Rare",
+    "number": "194/182",
+    "printing": "Holofoil",
+    "price": 23.47,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632994_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632994/pokemon-sv10-destined-rivals-misty-s-lapras---194-182"
+  },
+  {
+    "name": "Clamperl",
+    "rarity": "Illustration Rare",
+    "number": "195/182",
+    "printing": "Holofoil",
+    "price": 2.67,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632995_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632995/pokemon-sv10-destined-rivals-clamperl---195-182"
+  },
+  {
+    "name": "Electrike",
+    "rarity": "Illustration Rare",
+    "number": "196/182",
+    "printing": "Holofoil",
+    "price": 2.9,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632996_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632996/pokemon-sv10-destined-rivals-electrike---196-182"
+  },
+  {
+    "name": "Rotom",
+    "rarity": "Illustration Rare",
+    "number": "197/182",
+    "printing": "Holofoil",
+    "price": 3.44,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632997_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632997/pokemon-sv10-destined-rivals-rotom---197-182"
+  },
+  {
+    "name": "Team Rocket's Orbeetle",
+    "rarity": "Illustration Rare",
+    "number": "198/182",
+    "printing": "Holofoil",
+    "price": 2.98,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632998_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632998/pokemon-sv10-destined-rivals-team-rocket-s-orbeetle---198-182"
+  },
+  {
+    "name": "Team Rocket's Weezing",
+    "rarity": "Illustration Rare",
+    "number": "199/182",
+    "printing": "Holofoil",
+    "price": 6.44,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/632999_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/632999/pokemon-sv10-destined-rivals-team-rocket-s-weezing---199-182"
+  },
+  {
+    "name": "Team Rocket's Murkrow",
+    "rarity": "Illustration Rare",
+    "number": "200/182",
+    "printing": "Holofoil",
+    "price": 5.26,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633000_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633000/pokemon-sv10-destined-rivals-team-rocket-s-murkrow---200-182"
+  },
+  {
+    "name": "Zamazenta",
+    "rarity": "Illustration Rare",
+    "number": "201/182",
+    "printing": "Holofoil",
+    "price": 3.72,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633001_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633001/pokemon-sv10-destined-rivals-zamazenta---201-182"
+  },
+  {
+    "name": "Team Rocket's Raticate",
+    "rarity": "Illustration Rare",
+    "number": "202/182",
+    "printing": "Holofoil",
+    "price": 5.32,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633002_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633002/pokemon-sv10-destined-rivals-team-rocket-s-raticate---202-182"
+  },
+  {
+    "name": "Team Rocket's Meowth",
+    "rarity": "Illustration Rare",
+    "number": "203/182",
+    "printing": "Holofoil",
+    "price": 20.4,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633003_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633003/pokemon-sv10-destined-rivals-team-rocket-s-meowth---203-182"
+  },
+  {
+    "name": "Kangaskhan",
+    "rarity": "Illustration Rare",
+    "number": "204/182",
+    "printing": "Holofoil",
+    "price": 8.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633004_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633004/pokemon-sv10-destined-rivals-kangaskhan---204-182"
+  },
+  {
+    "name": "Arven's Greedent",
+    "rarity": "Illustration Rare",
+    "number": "205/182",
+    "printing": "Holofoil",
+    "price": 3.34,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633005_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633005/pokemon-sv10-destined-rivals-arven-s-greedent---205-182"
+  },
+  {
+    "name": "Yanmega ex",
+    "rarity": "Ultra Rare",
+    "number": "206/182",
+    "printing": "Holofoil",
+    "price": 1.46,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633006_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633006/pokemon-sv10-destined-rivals-yanmega-ex---206-182"
+  },
+  {
+    "name": "Arboliva ex",
+    "rarity": "Ultra Rare",
+    "number": "207/182",
+    "printing": "Holofoil",
+    "price": 1.59,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633007_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633007/pokemon-sv10-destined-rivals-arboliva-ex---207-182"
+  },
+  {
+    "name": "Team Rocket's Moltres ex",
+    "rarity": "Ultra Rare",
+    "number": "208/182",
+    "printing": "Holofoil",
+    "price": 4.36,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633008_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633008/pokemon-sv10-destined-rivals-team-rocket-s-moltres-ex---208-182"
+  },
+  {
+    "name": "Ethan's Ho",
+    "rarity": "Ultra Rare",
+    "number": "209/182",
+    "printing": "Holofoil",
+    "price": 4.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633009_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633009/pokemon-sv10-destined-rivals-ethan-s-ho-oh-ex---209-182"
+  },
+  {
+    "name": "Cetitan ex",
+    "rarity": "Ultra Rare",
+    "number": "210/182",
+    "printing": "Holofoil",
+    "price": 1.4,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633010_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633010/pokemon-sv10-destined-rivals-cetitan-ex---210-182"
+  },
+  {
+    "name": "Dondozo ex",
+    "rarity": "Ultra Rare",
+    "number": "211/182",
+    "printing": "Holofoil",
+    "price": 0.94,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633011_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633011/pokemon-sv10-destined-rivals-dondozo-ex---211-182"
+  },
+  {
+    "name": "Electivire ex",
+    "rarity": "Ultra Rare",
+    "number": "212/182",
+    "printing": "Holofoil",
+    "price": 1.37,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633012_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633012/pokemon-sv10-destined-rivals-electivire-ex---212-182"
+  },
+  {
+    "name": "Team Rocket's Mewtwo ex",
+    "rarity": "Ultra Rare",
+    "number": "213/182",
+    "printing": "Holofoil",
+    "price": 16.64,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633013_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633013/pokemon-sv10-destined-rivals-team-rocket-s-mewtwo-ex---213-182"
+  },
+  {
+    "name": "Regirock ex",
+    "rarity": "Ultra Rare",
+    "number": "214/182",
+    "printing": "Holofoil",
+    "price": 1.59,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633014_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633014/pokemon-sv10-destined-rivals-regirock-ex---214-182"
+  },
+  {
+    "name": "Cynthia's Garchomp ex",
+    "rarity": "Ultra Rare",
+    "number": "215/182",
+    "printing": "Holofoil",
+    "price": 4.06,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633015_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633015/pokemon-sv10-destined-rivals-cynthia-s-garchomp-ex---215-182"
+  },
+  {
+    "name": "Team Rocket's Nidoking ex",
+    "rarity": "Ultra Rare",
+    "number": "216/182",
+    "printing": "Holofoil",
+    "price": 3.55,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633016_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633016/pokemon-sv10-destined-rivals-team-rocket-s-nidoking-ex---216-182"
+  },
+  {
+    "name": "Team Rocket's Crobat ex",
+    "rarity": "Ultra Rare",
+    "number": "217/182",
+    "printing": "Holofoil",
+    "price": 2.16,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633017_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633017/pokemon-sv10-destined-rivals-team-rocket-s-crobat-ex---217-182"
+  },
+  {
+    "name": "Arven's Mabosstiff ex",
+    "rarity": "Ultra Rare",
+    "number": "218/182",
+    "printing": "Holofoil",
+    "price": 1.45,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633018_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633018/pokemon-sv10-destined-rivals-arven-s-mabosstiff-ex---218-182"
+  },
+  {
+    "name": "Team Rocket's Persian ex",
+    "rarity": "Ultra Rare",
+    "number": "219/182",
+    "printing": "Holofoil",
+    "price": 3.77,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633019_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633019/pokemon-sv10-destined-rivals-team-rocket-s-persian-ex---219-182"
+  },
+  {
+    "name": "Emcee's Hype",
+    "rarity": "Ultra Rare",
+    "number": "220/182",
+    "printing": "Holofoil",
+    "price": 1.83,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633020_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633020/pokemon-sv10-destined-rivals-emcee-s-hype---220-182"
+  },
+  {
+    "name": "Ethan's Adventure",
+    "rarity": "Ultra Rare",
+    "number": "221/182",
+    "printing": "Holofoil",
+    "price": 4.12,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633021_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633021/pokemon-sv10-destined-rivals-ethan-s-adventure---221-182"
+  },
+  {
+    "name": "Judge",
+    "rarity": "Ultra Rare",
+    "number": "222/182",
+    "printing": "Holofoil",
+    "price": 1.61,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633022_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633022/pokemon-sv10-destined-rivals-judge---222-182"
+  },
+  {
+    "name": "Team Rocket's Archer",
+    "rarity": "Ultra Rare",
+    "number": "223/182",
+    "printing": "Holofoil",
+    "price": 2.39,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633023_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633023/pokemon-sv10-destined-rivals-team-rocket-s-archer---223-182"
+  },
+  {
+    "name": "Team Rocket's Ariana",
+    "rarity": "Ultra Rare",
+    "number": "224/182",
+    "printing": "Holofoil",
+    "price": 3.07,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633024_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633024/pokemon-sv10-destined-rivals-team-rocket-s-ariana---224-182"
+  },
+  {
+    "name": "Team Rocket's Giovanni",
+    "rarity": "Ultra Rare",
+    "number": "225/182",
+    "printing": "Holofoil",
+    "price": 3.58,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633025_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633025/pokemon-sv10-destined-rivals-team-rocket-s-giovanni---225-182"
+  },
+  {
+    "name": "Team Rocket's Petrel",
+    "rarity": "Ultra Rare",
+    "number": "226/182",
+    "printing": "Holofoil",
+    "price": 2.99,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633026_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633026/pokemon-sv10-destined-rivals-team-rocket-s-petrel---226-182"
+  },
+  {
+    "name": "Team Rocket's Proton",
+    "rarity": "Ultra Rare",
+    "number": "227/182",
+    "printing": "Holofoil",
+    "price": 2.05,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633027_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633027/pokemon-sv10-destined-rivals-team-rocket-s-proton---227-182"
+  },
+  {
+    "name": "Yanmega ex",
+    "rarity": "Special Illustration Rare",
+    "number": "228/182",
+    "printing": "Holofoil",
+    "price": 24.71,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633028_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633028/pokemon-sv10-destined-rivals-yanmega-ex---228-182"
+  },
+  {
+    "name": "Team Rocket's Moltres ex",
+    "rarity": "Special Illustration Rare",
+    "number": "229/182",
+    "printing": "Holofoil",
+    "price": 109.52,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633029_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633029/pokemon-sv10-destined-rivals-team-rocket-s-moltres-ex---229-182"
+  },
+  {
+    "name": "Ethan's Ho",
+    "rarity": "Special Illustration Rare",
+    "number": "230/182",
+    "printing": "Holofoil",
+    "price": 185.1,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633030_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633030/pokemon-sv10-destined-rivals-ethan-s-ho-oh-ex---230-182"
+  },
+  {
+    "name": "Team Rocket's Mewtwo ex",
+    "rarity": "Special Illustration Rare",
+    "number": "231/182",
+    "printing": "Holofoil",
+    "price": 467.43,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633031_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633031/pokemon-sv10-destined-rivals-team-rocket-s-mewtwo-ex---231-182"
+  },
+  {
+    "name": "Cynthia's Garchomp ex",
+    "rarity": "Special Illustration Rare",
+    "number": "232/182",
+    "printing": "Holofoil",
+    "price": 232.96,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633032_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633032/pokemon-sv10-destined-rivals-cynthia-s-garchomp-ex---232-182"
+  },
+  {
+    "name": "Team Rocket's Nidoking ex",
+    "rarity": "Special Illustration Rare",
+    "number": "233/182",
+    "printing": "Holofoil",
+    "price": 97.43,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633033_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633033/pokemon-sv10-destined-rivals-team-rocket-s-nidoking-ex---233-182"
+  },
+  {
+    "name": "Team Rocket's Crobat ex",
+    "rarity": "Special Illustration Rare",
+    "number": "234/182",
+    "printing": "Holofoil",
+    "price": 82.96,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633034_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633034/pokemon-sv10-destined-rivals-team-rocket-s-crobat-ex---234-182"
+  },
+  {
+    "name": "Arven's Mabosstiff ex",
+    "rarity": "Special Illustration Rare",
+    "number": "235/182",
+    "printing": "Holofoil",
+    "price": 30.28,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633035_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633035/pokemon-sv10-destined-rivals-arven-s-mabosstiff-ex---235-182"
+  },
+  {
+    "name": "Ethan's Adventure",
+    "rarity": "Special Illustration Rare",
+    "number": "236/182",
+    "printing": "Holofoil",
+    "price": 50.4,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633036_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633036/pokemon-sv10-destined-rivals-ethan-s-adventure---236-182"
+  },
+  {
+    "name": "Team Rocket's Ariana",
+    "rarity": "Special Illustration Rare",
+    "number": "237/182",
+    "printing": "Holofoil",
+    "price": 29.42,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633037_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633037/pokemon-sv10-destined-rivals-team-rocket-s-ariana---237-182"
+  },
+  {
+    "name": "Team Rocket's Giovanni",
+    "rarity": "Special Illustration Rare",
+    "number": "238/182",
+    "printing": "Holofoil",
+    "price": 34.91,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633038_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633038/pokemon-sv10-destined-rivals-team-rocket-s-giovanni---238-182"
+  },
+  {
+    "name": "Ethan's Ho",
+    "rarity": "Hyper Rare",
+    "number": "239/182",
+    "printing": "Holofoil",
+    "price": 32.21,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633039_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633039/pokemon-sv10-destined-rivals-ethan-s-ho-oh-ex---239-182"
+  },
+  {
+    "name": "Team Rocket's Mewtwo ex",
+    "rarity": "Hyper Rare",
+    "number": "240/182",
+    "printing": "Holofoil",
+    "price": 58.16,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633040_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633040/pokemon-sv10-destined-rivals-team-rocket-s-mewtwo-ex---240-182"
+  },
+  {
+    "name": "Cynthia's Garchomp ex",
+    "rarity": "Hyper Rare",
+    "number": "241/182",
+    "printing": "Holofoil",
+    "price": 30.37,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633041_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633041/pokemon-sv10-destined-rivals-cynthia-s-garchomp-ex---241-182"
+  },
+  {
+    "name": "Team Rocket's Crobat ex",
+    "rarity": "Hyper Rare",
+    "number": "242/182",
+    "printing": "Holofoil",
+    "price": 23.17,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633042_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633042/pokemon-sv10-destined-rivals-team-rocket-s-crobat-ex---242-182"
+  },
+  {
+    "name": "Jamming Tower",
+    "rarity": "Hyper Rare",
+    "number": "243/182",
+    "printing": "Holofoil",
+    "price": 17.36,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633043_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633043/pokemon-sv10-destined-rivals-jamming-tower"
+  },
+  {
+    "name": "Levincia",
+    "rarity": "Hyper Rare",
+    "number": "244/182",
+    "printing": "Holofoil",
+    "price": 11.65,
+    "imageUrl": "https://tcgplayer-cdn.tcgplayer.com/product/633044_in_200x200.jpg",
+    "productUrl": "https://www.tcgplayer.com/product/633044/pokemon-sv10-destined-rivals-levincia"
+  }
+]
