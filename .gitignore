@@ -70,6 +70,13 @@ node_modules/
 
 # Local Firebase web config (do not commit secrets)
 public/config/firebaseConfig.js
+# Vite public Firebase web config
+public-vite/config/firebaseConfig.js
+# Built runtime Firebase config (in dist output)
+dist/config/firebaseConfig.js
 
 # just data files
 *.txt
+
+# firebase config stuff
+*.js
