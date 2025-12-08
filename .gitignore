@@ -68,6 +68,9 @@ node_modules/
 # dataconnect generated files
 .dataconnect
 
+# Build output
+dist/
+
 # Local Firebase web config (do not commit secrets)
 public/config/firebaseConfig.js
 # Vite public Firebase web config
@@ -78,5 +81,4 @@ dist/config/firebaseConfig.js
 # just data files
 *.txt
 
-# firebase config stuff
-*.js
+
