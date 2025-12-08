@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import { firebaseApp } from '../firebase.js';
-import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
+import { getFirestore, doc, setDoc, getDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
 function parseLines(text) {
   const lines = String(text || '').split(/\r?\n/).map(l => l.trim()).filter(Boolean);
@@ -81,6 +81,76 @@ export default function ImportPanel({ lang, cat, setName, canEdit, onImported })
   const inputRef = useRef(null);
   const [busy, setBusy] = useState(false);
 
+  async function applyPhotosByNumberFromJson() {
+    if (!canEdit) return;
+    if (!lang || !cat || !setName) { alert('Select a set first.'); return; }
+    const file = inputRef.current && inputRef.current.files && inputRef.current.files[0];
+    if (!file) { alert('Choose a JSON file first.'); return; }
+    if (!/\.json$/i.test(file.name)) { alert('Please select a .json file.'); return; }
+    setBusy(true);
+    try {
+      const text = await file.text();
+      let data = [];
+      try {
+        const parsed = JSON.parse(text);
+        if (Array.isArray(parsed)) data = parsed;
+      } catch (e) {
+        alert('Invalid JSON.');
+        return;
+      }
+      if (data.length === 0) { alert('No items in JSON.'); return; }
+      // Build number -> imageUrl map (first non-empty wins)
+      const map = new Map(); // key: raw number string (trimmed); value: imageUrl
+      const nums = []; // Keep structured entries for numeric fallback
+      for (const x of data) {
+        const raw = String(x.number ?? '').trim();
+        const image = x.image || x.Image || x.photo || x.Photo || x.img || x.picture || x.Picture || x['Picture Link'] || x.pictureLink || x.imageUrl || x.imageURL || x.url || '';
+        if (!raw || !image) continue;
+        if (!map.has(raw)) map.set(raw, image);
+        const num = Number.parseInt(raw, 10);
+        nums.push({ raw, num: Number.isFinite(num) ? num : null, image: map.get(raw) });
+      }
+      // Deduplicate numeric keys as well: prefer existing image mapping
+      const numericMap = new Map(); // number -> image
+      for (const ent of nums) {
+        if (ent.num != null && !numericMap.has(ent.num)) numericMap.set(ent.num, ent.image);
+      }
+      let updated = 0;
+      // For each mapping, update all cards with this Number (try numeric and string equality)
+      for (const [raw, image] of map.entries()) {
+        const num = Number.parseInt(raw, 10);
+        // numeric query
+        if (Number.isFinite(num)) {
+          try {
+            const qNum = query(collection(db, 'Pokemon Packs', lang, cat, setName, 'Cards'), where('Number', '==', num));
+            const snapNum = await getDocs(qNum);
+            for (const d of snapNum.docs) {
+              await setDoc(d.ref, { 'Picture Link': image }, { merge: true });
+              updated++;
+            }
+          } catch {}
+        }
+        // string query (in case some docs kept Number as string)
+        try {
+          const qStr = query(collection(db, 'Pokemon Packs', lang, cat, setName, 'Cards'), where('Number', '==', raw));
+          const snapStr = await getDocs(qStr);
+          for (const d of snapStr.docs) {
+            await setDoc(d.ref, { 'Picture Link': image }, { merge: true });
+            updated++;
+          }
+        } catch {}
+        // throttle a tiny bit for courtesy
+        await new Promise(r => setTimeout(r, 3));
+      }
+      if (onImported) onImported();
+      alert(`Updated photos for ${updated} documents by matching Number.`);
+    } catch (e) {
+      alert('Update failed: ' + (e && e.message ? e.message : String(e)));
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function importFromFile(mode) {
     if (!canEdit) return;
     if (!lang || !cat || !setName) { alert('Select a set first.'); return; }
@@ -157,8 +227,8 @@ export default function ImportPanel({ lang, cat, setName, canEdit, onImported })
       </div>
       <div className="stack space-top">
         <button className="btn" disabled={busy} onClick={() => importFromFile('all')}>Import All</button>
-        <button className="btn ghost" disabled={busy} onClick={() => importFromFile('photos')}>Update Photos Only</button>
         <button className="btn ghost" disabled={busy} onClick={() => importFromFile('prices')}>Update Prices Only</button>
+        <button className="btn ghost" disabled={busy} onClick={applyPhotosByNumberFromJson} title="Use JSON with { name, number, imageUrl } to update all printings that share the same number">Update Photos (PkmnCards)</button>
       </div>
     </div>
   );

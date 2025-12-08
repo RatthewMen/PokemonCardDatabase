@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAnalytics } from 'firebase/analytics';
 
 // Prefer environment variables when available (Vite: VITE_*)
 // Fall back to the legacy global if a static config script is present
@@ -15,6 +16,9 @@ const firebaseConfig = {
 };
 
 export const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseAnalytics = typeof window !== 'undefined' && firebaseConfig?.measurementId ? getAnalytics(firebaseApp) : undefined;
+
+
 
 
 
