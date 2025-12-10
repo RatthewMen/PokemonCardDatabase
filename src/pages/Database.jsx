@@ -196,11 +196,14 @@ export default function Database() {
         snap.forEach(d => {
           const x = d.data() || {};
           const name = x['Name'] || d.id;
+          const printingRaw = x['Printing'] || x['Print'] || '';
+          const printingTrim = String(printingRaw || '').trim();
+          const printing = (/^normal$/i.test(printingTrim) ? '' : printingTrim);
           const amount = Number(x['Amount Owned'] || x['AmountOwned'] || x['Owned'] || 0) || 0;
           const cost = Number(x['Cost'] || 0) || 0;
           const total = Math.max(0, amount * cost);
           const image = x['Picture Link'] || x['Image'] || '';
-          items.push({ name, amount, cost, total, image });
+          items.push({ name, printing, amount, cost, total, image });
         });
         const byValue = items.slice().sort((a, b) => b.total - a.total).slice(0, 5);
         const byQty = items.slice().sort((a, b) => b.amount - a.amount || a.name.localeCompare(b.name)).slice(0, 5);
@@ -549,7 +552,7 @@ export default function Database() {
                         <li className="kv-item"><span className="kv-label small">Category</span><span className="mono">{selection.cat}</span></li>
                         <li className="kv-item"><span className="kv-label small">Set</span><span className="mono">{selection.setName}</span></li>
                         <li className="kv-item"><span className="kv-label small">Cards</span><span className="mono">{(setMeta && (Number.isFinite(setMeta['Cards']) ? setMeta['Cards'] : setMeta['Cards'])) || topByQty.reduce((s, i) => s, 0) || (/* fallback unknown */ 0)}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Total Cards</span><span className="mono">{Number.isFinite(aggregates.totalCardAmount) ? aggregates.totalCardAmount : 0}</span></li>
+                        <li className="kv-item"><span className="kv-label small">Total Cards</span><span className="mono">{(setMeta && (Number.isFinite(setMeta['Total Cards']) ? setMeta['Total Cards'] : 0)) || 0}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Value</span><span className="mono">{formatCurrency(aggregates.totalValue)}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Amount of Cards</span><span className="mono">{aggregates.totalCardAmount}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Packs Opened</span><span className="mono">{aggregates.totalPacksOpened}</span></li>
@@ -592,9 +595,9 @@ export default function Database() {
                         {loadingTop ? <div className="small muted">Loading…</div> : (
                           <div style={{ display: 'grid', gap: 12 }}>
                             {topByValue.map(it => (
-                              <div key={it.name} className="row" style={{ alignItems: 'center' }}>
+                              <div key={it.name + '|' + (it.printing || '')} className="row" style={{ alignItems: 'center' }}>
                                 <div className="thumb-wrap">{it.image ? <img className="card-thumb" src={it.image} alt="" /> : null}</div>
-                                <div style={{ flex: 1 }}>{it.name}</div>
+                                <div style={{ flex: 1 }}>{it.name}{it.printing ? ` (${it.printing})` : ''}</div>
                                 <div className="mono">x{it.amount} {formatCurrency(it.total)}</div>
                               </div>
                             ))}
@@ -607,9 +610,9 @@ export default function Database() {
                         {loadingTop ? <div className="small muted">Loading…</div> : (
                           <div style={{ display: 'grid', gap: 12 }}>
                             {topByQty.map(it => (
-                              <div key={it.name} className="row" style={{ alignItems: 'center' }}>
+                              <div key={it.name + '|' + (it.printing || '')} className="row" style={{ alignItems: 'center' }}>
                                 <div className="thumb-wrap">{it.image ? <img className="card-thumb" src={it.image} alt="" /> : null}</div>
-                                <div style={{ flex: 1 }}>{it.name}</div>
+                                <div style={{ flex: 1 }}>{it.name}{it.printing ? ` (${it.printing})` : ''}</div>
                                 <div className="mono">x{it.amount}</div>
                               </div>
                             ))}
