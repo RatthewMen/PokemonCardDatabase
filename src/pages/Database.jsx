@@ -51,6 +51,8 @@ function formatCurrency(n) {
 
 async function computeSetAggregates(db, lang, cat, setName) {
   let totalValue = 0;
+  let totalCardsValue = 0;
+  let totalSealedValue = 0;
   let totalCardAmount = 0;
   let totalPacksOpened = 0;
   try {
@@ -70,7 +72,7 @@ async function computeSetAggregates(db, lang, cat, setName) {
         if (l === lang && c === cat && s === setName) {
           const owned = Number(data['Amount Owned'] || data['AmountOwned'] || data['Owned'] || 0) || 0;
           const cost = Number(data['Cost'] || 0) || 0;
-          totalValue += Math.max(0, owned * cost);
+          totalCardsValue += Math.max(0, owned * cost);
           totalCardAmount += Math.max(0, owned);
         }
       }
@@ -86,12 +88,13 @@ async function computeSetAggregates(db, lang, cat, setName) {
         if (l === lang && c === cat && s === setName) {
           const owned = Number(data['Amount Owned'] || data['AmountOwned'] || data['Owned'] || 0) || 0;
           const cost = Number(data['Cost'] || 0) || 0;
-          totalValue += Math.max(0, owned * cost);
+          totalSealedValue += Math.max(0, owned * cost);
         }
       }
     });
   } catch {}
-  return { totalValue, totalCardAmount, totalPacksOpened };
+  totalValue = totalCardsValue + totalSealedValue;
+  return { totalValue, totalCardsValue, totalSealedValue, totalCardAmount, totalPacksOpened };
 }
 
 export default function Database() {
@@ -497,8 +500,8 @@ export default function Database() {
                       </div>
                       <div className="divider"></div>
                       <ul className="kv-list">
-                        <li className="kv-item"><span className="kv-label small">Cards</span><span className="mono">{aggs.totalCardAmount}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Total Cards</span><span className="mono">{Number.isFinite(meta['Total Cards']) ? meta['Total Cards'] : 0}</span></li>
+                        <li className="kv-item"><span className="kv-label small">Cards in Set</span><span className="mono">{Number.isFinite(meta['Cards in Set']) ? meta['Cards in Set'] : (Number.isFinite(meta['Cards']) ? meta['Cards'] : 0)}</span></li>
+                        <li className="kv-item"><span className="kv-label small">Total Cards in Set</span><span className="mono">{Number.isFinite(meta['Total Cards in Set']) ? meta['Total Cards in Set'] : (Number.isFinite(meta['Total Cards']) ? meta['Total Cards'] : 0)}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Value</span><span className="mono">{formatCurrency(aggs.totalValue)}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Amount of Cards</span><span className="mono">{aggs.totalCardAmount}</span></li>
                         <li className="kv-item"><span className="kv-label small">Total Packs Opened</span><span className="mono">{aggs.totalPacksOpened}</span></li>
@@ -547,45 +550,84 @@ export default function Database() {
                 ) : aggregates ? (
                   <div className="card">
                     <div className="set-overview">
-                      <ul className="kv-list">
-                        <li className="kv-item"><span className="kv-label small">Language</span><span className="mono">{selection.lang}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Category</span><span className="mono">{selection.cat}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Set</span><span className="mono">{selection.setName}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Cards</span><span className="mono">{(setMeta && (Number.isFinite(setMeta['Cards']) ? setMeta['Cards'] : setMeta['Cards'])) || topByQty.reduce((s, i) => s, 0) || (/* fallback unknown */ 0)}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Total Cards</span><span className="mono">{(setMeta && (Number.isFinite(setMeta['Total Cards']) ? setMeta['Total Cards'] : 0)) || 0}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Total Value</span><span className="mono">{formatCurrency(aggregates.totalValue)}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Total Amount of Cards</span><span className="mono">{aggregates.totalCardAmount}</span></li>
-                        <li className="kv-item"><span className="kv-label small">Total Packs Opened</span><span className="mono">{aggregates.totalPacksOpened}</span></li>
-                        {loadingMeta ? null : (
-                          <li className="kv-item">
-                            <span className="kv-label small">Can Import Cards</span>
-                            <label className="switch">
-                              <input
-                                type="checkbox"
-                                checked={!!(setMeta && setMeta['CanImportCards'])}
-                                onChange={e => updateImportFlag('CanImportCards', e.target.checked)}
-                                disabled={savingFlag === 'cards'}
-                              />
-                              <span className="slider" />
-                            </label>
-                          </li>
-                        )}
-                        {loadingMeta ? null : (
-                          <li className="kv-item">
-                            <span className="kv-label small">Can Import Sealed</span>
-                            <label className="switch">
-                              <input
-                                type="checkbox"
-                                checked={!!(setMeta && setMeta['CanImportSealed'])}
-                                onChange={e => updateImportFlag('CanImportSealed', e.target.checked)}
-                                disabled={savingFlag === 'sealed'}
-                              />
-                              <span className="slider" />
-                            </label>
-                          </li>
-                        )}
-                      </ul>
-                      {setMeta && setMeta.image ? <img className="set-image" src={setMeta.image} alt="" /> : null}
+                      <div className="section-title" style={{ marginBottom: 8, fontWeight: 800, fontSize: 24, textAlign: 'center' }}>{selection.cat}: {selection.setName}</div>
+                      {setMeta && setMeta.image ? <img className="set-image set-image-lg" src={setMeta.image} alt="" /> : null}
+                      <div className="stats-grid stats-grid-4">
+                          <div className="stat-card">
+                            <div className="stat-meta">
+                              <div className="stat-title">Cards in Set</div>
+                              <div className="stat-value mono">{(setMeta && (Number.isFinite(setMeta['Cards in Set']) ? setMeta['Cards in Set'] : (Number.isFinite(setMeta['Cards']) ? setMeta['Cards'] : 0))) || 0}</div>
+                            </div>
+                          </div>
+                          <div className="stat-card">
+                            <div className="stat-meta">
+                              <div className="stat-title">Total Cards in Set</div>
+                              <div className="stat-value mono">{(setMeta && (Number.isFinite(setMeta['Total Cards in Set']) ? setMeta['Total Cards in Set'] : (Number.isFinite(setMeta['Total Cards']) ? setMeta['Total Cards'] : 0))) || 0}</div>
+                            </div>
+                          </div>
+                          <div className="stat-card">
+                            <div className="stat-meta">
+                              <div className="stat-title">Total Amount of Cards</div>
+                              <div className="stat-value mono">{aggregates.totalCardAmount}</div>
+                            </div>
+                          </div>
+                          <div className="stat-card">
+                            <div className="stat-meta">
+                              <div className="stat-title">Total Packs Opened</div>
+                              <div className="stat-value mono">{aggregates.totalPacksOpened}</div>
+                            </div>
+                          </div>
+                      </div>
+                      <div className="stats-grid stats-grid-2">
+                          <div className="stat-card">
+                            <div className="stat-meta">
+                              <div className="stat-title">Card Value</div>
+                              <div className="stat-value mono">{formatCurrency(aggregates.totalCardsValue)}</div>
+                            </div>
+                          </div>
+                          <div className="stat-card">
+                            <div className="stat-meta">
+                              <div className="stat-title">Sealed Value</div>
+                              <div className="stat-value mono">{formatCurrency(aggregates.totalSealedValue)}</div>
+                            </div>
+                          </div>
+                      </div>
+                      {loadingMeta ? null : (
+                        <div className="stats-grid toggles-grid">
+                          <div className="stat-card">
+                            <div className="stat-meta" style={{ flex: 1 }}>
+                              <div className="stat-title">Can Import Cards</div>
+                              <div className="stat-value" style={{ fontWeight: 500 }}>
+                                <label className="switch">
+                                  <input
+                                    type="checkbox"
+                                    checked={!!(setMeta && setMeta['CanImportCards'])}
+                                    onChange={e => updateImportFlag('CanImportCards', e.target.checked)}
+                                    disabled={savingFlag === 'cards'}
+                                  />
+                                  <span className="slider" />
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="stat-card">
+                            <div className="stat-meta" style={{ flex: 1 }}>
+                              <div className="stat-title">Can Import Sealed</div>
+                              <div className="stat-value" style={{ fontWeight: 500 }}>
+                                <label className="switch">
+                                  <input
+                                    type="checkbox"
+                                    checked={!!(setMeta && setMeta['CanImportSealed'])}
+                                    onChange={e => updateImportFlag('CanImportSealed', e.target.checked)}
+                                    disabled={savingFlag === 'sealed'}
+                                  />
+                                  <span className="slider" />
+                                </label>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
                     </div>
 
                     <div className="grid" style={{ gridTemplateColumns: '1fr 1fr', marginTop: 12 }}>
@@ -694,10 +736,10 @@ export default function Database() {
                 <div className="form-label">Set Name</div>
                 <input value={newSet.name} onChange={e => setNewSet(s => ({ ...s, name: e.target.value }))} placeholder="e.g., Phantasmal Flames" />
 
-                <div className="form-label">Cards</div>
+                <div className="form-label">Cards in Set</div>
                 <input type="number" value={newSet.cards} onChange={e => setNewSet(s => ({ ...s, cards: e.target.value }))} placeholder="0" />
 
-                <div className="form-label">Total Cards</div>
+                <div className="form-label">Total Cards in Set</div>
                 <input type="number" value={newSet.totalCards} onChange={e => setNewSet(s => ({ ...s, totalCards: e.target.value }))} placeholder="0" />
 
                 <div className="form-label">Image Link</div>
@@ -732,7 +774,7 @@ export default function Database() {
                   const ref = doc(db, 'Pokemon Packs', selection.lang, selection.cat, name);
                   await setDoc(ref, {
                     'Cards': Number.parseInt(String(newSet.cards || '').trim(), 10) || 0,
-                    'Total Cards': Number.parseInt(String(newSet.totalCards || '').trim(), 10) || 0,
+                    'Total Cards in Set': Number.parseInt(String(newSet.totalCards || '').trim(), 10) || 0,
                     'image': String(newSet.image || ''),
                     'CanImportCards': !!newSet.canCards,
                     'CanImportSealed': !!newSet.canSealed
