@@ -24,10 +24,10 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
   useEffect(() => {
     if (!open) return;
     if (view === 'Cards') {
-      const arr = Array.from({ length: 10 }, (_, i) => ({ id: i + 1, amount: '1' }));
+      const arr = Array.from({ length: 10 }, (_, i) => ({ id: i + 1, amount: '1', location: '' }));
       setRows(arr);
     } else {
-      setRows([{ id: 1, amount: '1' }]);
+      setRows([{ id: 1, amount: '1', location: '' }]);
     }
   }, [open, view]);
 
@@ -92,11 +92,13 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
       }
       return {
         type: 'sealed',
-        sealedName: String(r.sealedName || '').trim(),
+        // IMPORTANT: Use the exact doc ID selected without trimming to avoid creating new docs
+        sealedName: String(r.sealedName || ''),
         amount: Number.parseInt(String(r.amount ?? '1').trim(), 10) || 1,
         location: String(r.location || '').trim()
       };
-    }).filter(r => (r.type === 'card' ? r.number > 0 : r.sealedName));
+    // For sealed rows, check emptiness using a trimmed string but do not alter the stored ID
+    }).filter(r => (r.type === 'card' ? r.number > 0 : String(r.sealedName ?? '').trim()));
     if (cleanRows.length === 0) { alert('Add at least one row.'); return; }
 
     const batch = writeBatch(db);
@@ -185,7 +187,7 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
         <div className="modal-body">
           <div className="space-top">
             {view === 'Cards' ? (
-              <div className="quick-list">
+              <div className="quick-list" key="cards">
                 <div className="quick-cards-header">
                   <div>Number</div>
                   <div>Printing</div>
@@ -201,12 +203,12 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
                       <option>Holofoil</option>
                     </select>
                     <input placeholder="1" defaultValue="1" onChange={e => updateRow(r.id, { amount: e.target.value })} />
-                    <input placeholder="optional" onChange={e => updateRow(r.id, { location: e.target.value })} />
+                    <input placeholder="optional" value={r.location || ''} onChange={e => updateRow(r.id, { location: e.target.value })} />
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="quick-list">
+              <div className="quick-list" key="sealed">
                 <div className="quick-sealed-header">
                   <div>Product</div>
                   <div>Amount</div>
@@ -219,7 +221,7 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
                       {sealedOptions.map(n => <option key={n} value={n}>{n}</option>)}
                     </select>
                     <input placeholder="1" defaultValue="1" onChange={e => updateRow(r.id, { amount: e.target.value })} />
-                    <input placeholder="optional" onChange={e => updateRow(r.id, { location: e.target.value })} />
+                    <input placeholder="optional" value={r.location || ''} onChange={e => updateRow(r.id, { location: e.target.value })} />
                   </div>
                 ))}
               </div>
