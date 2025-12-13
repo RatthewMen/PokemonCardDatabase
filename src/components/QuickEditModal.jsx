@@ -78,6 +78,14 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
   const removeRow = (id) => setRows(rs => rs.filter(r => r.id !== id));
   const updateRow = (id, patch) => setRows(rs => rs.map(r => (r.id === id ? { ...r, ...patch } : r)));
 
+  // Generate a lexicographically sortable document ID based on current UTC time.
+  // Example: 2025-12-13T20-15-03-123Z-abcd
+  function generateAlphabeticalLogId() {
+    const iso = new Date().toISOString().replace(/[:.]/g, '-'); // safe for Firestore IDs
+    const suffix = Math.random().toString(36).slice(2, 6);
+    return `${iso}-${suffix}`;
+  }
+
   async function apply() {
     if (!lang || !cat || !setName) { alert('Select a set first.'); return; }
     const cleanRows = rows.map(r => {
@@ -141,7 +149,7 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
       // Logs
       const now = serverTimestamp();
       if (cleanRows.some(r => r.type === 'card')) {
-        const logRef = doc(collection(db, 'CardLogs'));
+        const logRef = doc(db, 'CardLogs', generateAlphabeticalLogId());
         await writeBatch(db).set(logRef, {
           time: now,
           items: cleanRows.filter(r => r.type === 'card').map(it => ({
@@ -159,7 +167,7 @@ export default function QuickEditModal({ open, onClose, lang, cat, setName, defa
         }).commit();
       }
       if (cleanRows.some(r => r.type === 'sealed')) {
-        const logRef = doc(collection(db, 'SealedLogs'));
+        const logRef = doc(db, 'SealedLogs', generateAlphabeticalLogId());
         await writeBatch(db).set(logRef, {
           time: now,
           items: cleanRows.filter(r => r.type === 'sealed').map(it => ({
