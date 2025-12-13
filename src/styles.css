@@ -84,7 +84,7 @@ body { background: #F7FAFC; color: #1A202C; font-family: -apple-system, BlinkMac
 .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; top: 3px; background: #FFFFFF; transition: .2s; border-radius: 50%; }
 .switch input:checked + .slider { background: #2B6CB0; }
 .switch input:checked + .slider:before { transform: translateX(20px); }
-.set-overview { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.set-overview { display: flex; flex-direction: column; align-items: center; gap: 16px; }
 .kv-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
 .kv-item { display: flex; align-items: baseline; gap: 10px; }
 .kv-label { color: #4A5568; min-width: 90px; }
@@ -95,5 +95,22 @@ body { background: #F7FAFC; color: #1A202C; font-family: -apple-system, BlinkMac
 .set-item { list-style: disc; margin-left: 18px; padding: 4px 6px; border-radius: 6px; cursor: pointer; }
 .set-item:hover { background: #EDF2F7; }
 @media (max-width: 800px) { .app { grid-template-columns: 1fr; } .sidebar { flex-direction: row; gap: 8px; position: sticky; top: 0; z-index: 10; } }
+
+.stats-grid { display: grid; gap: 12px; width: 100%; }
+.stats-grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.stats-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.stat-card { display: flex; align-items: center; gap: 10px; padding: 12px; background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
+.stat-icon { width: 28px; height: 28px; border-radius: 999px; display: inline-flex; align-items: center; justify-content: center; background: #EBF8FF; color: #2B6CB0; font-size: 14px; }
+.stat-meta { display: flex; flex-direction: column; line-height: 1.2; }
+.stat-title { font-size: 11px; text-transform: uppercase; letter-spacing: .04em; color: #4A5568; }
+.stat-value { font-weight: 700; font-size: 18px; color: #1A202C; }
+@media (max-width: 1000px) { .stats-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stats-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .stats-grid-4, .stats-grid-2, .toggles-grid { grid-template-columns: 1fr; } }
+
+.set-overview-left { max-width: 100%; }
+.set-image.set-image-lg { width: min(40vw, 520px); height: auto; max-height: 240px; }
+@media (max-width: 900px) { .set-image.set-image-lg { width: 100%; height: auto; max-height: 220px; } }
+
+.toggles-grid { margin-top: 4px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
 
 
